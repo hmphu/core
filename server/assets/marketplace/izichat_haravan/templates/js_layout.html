@@ -1,0 +1,74 @@
+<script id="tpl_info_orders" type="text/x-kendo-template">
+    <ul>
+        <li class="field"><p><span class="field_label">#= lng.text.orders_count #</span></p><p>#= orders_count #</p></li>
+        <li class="field"><p><span class="field_label">#= lng.text.total_spent #</span></p><p>#= total_spent # #= currency #</p></li>
+        <li class="field">
+            <p class="actions-note">
+                <span class="field_label">#= lng.text.notes # </span>
+                <span class="act-note modify-note">#= lng.text.modify #</span>
+                <span class="act-note cancel-modify-note">#= lng.text.cancel #</span>
+            </p>
+            <p class="content-note">#= note ? note : lng.text.no_notes #.</p>
+            <div class="form-update-note">
+                <textarea name="note" class="note-textarea">#= note ? note: '' #</textarea>
+                <button class="button-act act-update-customer" data-id-customer="#= id_customer#">#= lng.text.update #</button>
+            </div>
+        </li>
+    </ul>
+</script>
+
+<script id="tpl_row_order" type="text/x-kendo-template">
+    <div class="rowgri"><span class="rowgri-#= id_row #">&num;#= id_row #</span><span><button type="button" class="status #= status_css #">#= status #</button></span></div>
+</script>
+
+<script id="tpl_detail_order" type="text/x-kendo-template">
+    <div class="detail detail-#= id_row #" style="display: none">
+        <p class="close-detail">#= lng.text.close #</p>
+        <p>#= lng.text.order_detail_for_id # <span>&num;#= id_row #</span></p>
+        <ul>
+            <li class="field"><p><span class="field_label">#= lng.text.payment_status #</span></p><p><button type="button" class="status #= status_payment_css #">#= status_payment #</button></p></li>
+            <li class="field"><p><span class="field_label">#= lng.text.fullfillment_status #</span></p><p><button type="button" class="status #= status_fullfill_css #">#= status_fullfill #</button></p></li>
+            <li class="field"><p><span class="field_label">#= lng.text.subtotal_price #</span></p><p>#= subtotal # #= currency #</p></li>
+            <li class="field"><p><span class="field_label">#= lng.text.shipping #</span></p>
+                # for (var i = 0; i < shippings.length; i++) { #
+                    <p>#= shippings[i].price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") # #= currency # #= shippings[i].code ? '('+shippings[i].code+')' : ''#</p>
+                # } #
+            </li>
+            <li class="field"><p><span class="field_label">#= lng.text.total_price #</span></p><p>#= total_price # #= currency #</p></li>
+            <li class="field">
+                <p><span class="field_label">#= lng.text.items #:</span></p>
+                <div class="header-items"><span class="header-item-name">#= lng.text.name #</span><span class="header-item-price">#= lng.text.price #</span></div>
+                <div class="content-items">
+                    # for (var i = 0; i < line_items.length; i++) { #
+                        <div class="row-item"><div class="row-item-name"><span title="#= line_items[i].name #">#= line_items[i].name #</span></div><div  class="row-item-price">#= line_items[i].price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") #</div></div>
+                    # } #
+                </div>
+            </li>
+            <li class="field">
+                <p class="actions-note">
+                    <span class="field_label">#= lng.text.order_notes #</span>
+                    <span class="act-note modify-note">#= lng.text.modify #</span>
+                    <span class="act-note cancel-modify-note">#= lng.text.cancel #</span>
+                </p>
+                <p class="content-note">#= note ? note : lng.text.no_notes #</p>
+                <div class="form-update-note">
+                    <textarea name="note" class="note-textarea">#= note ? note: '' #</textarea>
+                    <button class="button-act act-update" data-id-order="#= id_order#">#= lng.text.update #</button>
+                </div>
+            </li>
+            <li class="field">
+                <p><span class="field_label">#= lng.text.address_shipping #</span></p>
+                <ul class="info_address">
+                    <li class="field"><span class="field_label">- #= lng.text.fullname #:</span><span> #= shipping_address.first_name ? shipping_address.first_name : '' # #= shipping_address.last_name ? shipping_address.last_name : '' #</span></li>
+                    <li class="field"><span class="field_label">- #= lng.text.phone #:</span><span> #= shipping_address.phone #</span></li>
+                    <li class="field"><span class="field_label">- #= lng.text.district #:</span><span> #= shipping_address.district ? shipping_address.district : '' #</span></li>
+                    <li class="field"><span class="field_label">- #= lng.text.address1 #:</span><span> #= shipping_address.address1 ? shipping_address.address1 : '' #</span></li>
+                    # if (shipping_address.address2) {#
+                        <li class="field"><span class="field_label">- address2:</span><span> #= shipping_address.address2 #</span></li>
+                    # } #
+                </ul>
+            </li>
+            <li class="field"><p><span class="field_label">#= lng.text.date_created #</span></p><p>#= kendo.toString(new Date(date_created), "MMMM dd, yyyy HH:mm:ss") #</p></li>
+        </ul>
+    </div>
+</script>

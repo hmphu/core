@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+    <title>Virtual Payment Client Example</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf8'>
+    <style type="text/css">
+        <!-- h1 {
+            font-family: Arial, sans-serif;
+            font-size: 24pt;
+            color: #08185A;
+            font-weight: 100
+        }
+        
+        h2.co {
+            font-family: Arial, sans-serif;
+            font-size: 24pt;
+            color: #08185A;
+            margin-top: 0.1em;
+            margin-bottom: 0.1em;
+            font-weight: 100
+        }
+        
+        h3.co {
+            font-family: Arial, sans-serif;
+            font-size: 16pt;
+            color: #000000;
+            margin-top: 0.1em;
+            margin-bottom: 0.1em;
+            font-weight: 100
+        }
+        
+        body {
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 10pt;
+            color: #08185A background-color: #FFFFFF
+        }
+        
+        a:link {
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 8pt;
+            color: #08185A
+        }
+        
+        a:visited {
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 8pt;
+            color: #08185A
+        }
+        
+        a:hover {
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 8pt;
+            color: #FF0000
+        }
+        
+        a:active {
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 8pt;
+            color: #FF0000
+        }
+        
+        .shade {
+            height: 25px;
+            background-color: #CED7EF
+        }
+        
+        tr.title {
+            height: 25px;
+            background-color: #0074C4
+        }
+        
+        td {
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 8pt;
+            color: #08185A
+        }
+        
+        th {
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 10pt;
+            color: #08185A;
+            font-weight: bold;
+            background-color: #CED7EF;
+            padding-top: 0.5em;
+            padding-bottom: 0.5em
+        }
+        
+        .background-image {
+            font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+            font-size: 12px;
+            width: 100%;
+            text-align: left;
+            border-collapse: collapse;
+            background: url("...") 330px 59px no-repeat;
+            margin: 0px;
+        }
+        
+        .background-image th {
+            font-weight: normal;
+            font-size: 14px;
+            color: #339;
+            padding: 12px;
+        }
+        
+        .background-image td {
+            color: #669;
+            border-top: 1px solid #fff;
+            padding: 9px 12px;
+        }
+        
+        .background-image tfoot td {
+            font-size: 11px;
+        }
+        
+        .background-image tbody td {
+            background: url("./back.png");
+        }
+        
+        * html .background-image tbody td {
+            filter: progid: DXImageTransform.Microsoft.AlphaImageLoader ( src='table-images/back.png', sizingMethod='crop');
+            background: none;
+        }
+        
+        .background-image tbody tr:hover td {
+            color: #339;
+            background: none;
+        }
+        
+        .background-image .tb_title {
+            font-family: Verdana, Arial, sans-serif;
+            color: #08185A;
+            background-color: #CED7EF;
+            font-size: 14px;
+            color: #339;
+            padding: 12px;
+        }
+        
+        -->
+    </style>
+    
+</head>
+
+<body>
+    <table width='100%' border='2' cellpadding='2' bgcolor='#0074C4'>
+        <tr>
+            <td bgcolor='#CED7EF' width='90%'>
+                <h2 class='co'>&nbsp;Payment Client Example</h2>
+            </td>
+            <td bgcolor='#0074C4' align='center'>
+                <h3 class='co'>OnePAY</h3>
+            </td>
+        </tr>
+    </table>
+    <form id="payment" action="/api/subscription/purchase" method="post">
+        <input type="hidden" name="Title" value="VPC 3-Party" />
+<!--
+        <table width="100%" align="center" border="0" cellpadding='0' cellspacing='0'>
+            <tr class="shade">
+                <td width="1%">&nbsp;</td>
+                <td width="40%" align="right"><strong><em>URL cổng thanh toán - Virtual Payment Client
+            URL:&nbsp;</em></strong></td>
+                <td width="59%">
+                    <input type="text" name="virtualPaymentClientURL" size="63" value="http://mtf.onepay.vn/onecomm-pay/vpc.op" maxlength="250" />
+                </td>
+            </tr>
+        </table>
+-->
+        <center>
+            <table class="background-image" summary="Meeting Results">
+                <thead>
+                    <tr>
+                        <th scope="col" width="250px">Name</th>
+                        <th scope="col" width="250px">Input</th>
+                        <th scope="col" width="250px">Chú thích</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong><em>Plan</em></strong></td>
+                        <td>
+                            <select class="mar0" name="plan_id" id="plan_id" onchange="applyDiscountopts(this.value)">
+                                {% for plan in plans %}
+                                    <option value="{{plan.id | safe}}" >{{plan.name.value}}</option>
+                                {% endfor %}
+                            </select>
+<!--                            <input type="text" name="vpc_Merchant" value="ONEPAY" size="20" maxlength="16" />-->
+                        </td>
+                        <td>Được cấp bởi OnePAY</td>
+                        <td>Provided by OnePAY</td>
+                    </tr>
+                    <tr>
+                        <td><strong><em>Merchant AccessCode</em></strong></td>
+                        <td>
+                            <select  class="mar0" name="discount_opt_id" id="discount_opt_id">
+                                {% for discount in discount_opts %}
+                                    <option value="{{discount._id | safe}}" >{{discount.name}} {{discount.terms}}%</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>Được cấp bởi OnePAY</td>
+                        <td>Provided by OnePAY</td>
+                    </tr>
+                    <tr>
+                        <td><strong><em>Phuong thức thanh toán</em></strong></td>
+                        <td>
+                            <label> <input type="radio" name="payment_method" value="credit" checked/> Credit</label>
+                            <label> <input type="radio" name="payment_method" value="atm"/> Atm </label>
+                        </td>
+                        <td>Atm or Credit 
+                        </td>
+                        <td>Mạc định Credit</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong><em>Giảm giá</em></strong></td>
+                        <td>
+                            <input type="text" name="coupon_id" />
+                        </td>
+                        <td>Mã giảm giá
+                        </td>
+                        <td>Giảm giá</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong><em>Giảm giá giới thiệu</em></strong></td>
+                        <td>
+                            <input type="text" name="ref_code" />
+                        </td>
+                        <td>Mã giảm giá giới thiệu
+                        </td>
+                        <td>Mã giảm giá giới thiệu</td>
+                    </tr>
+                    <tr>
+                        <td align="center" colspan="4"><input type="submit"	value="Pay Now!" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </center>
+    </form>
+    
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var plansMaster = {{ plans | safe  | json }};
+        var plans = {};
+        $(document).ready(function() {
+            
+            $.each(plansMaster,function(index, plan){
+                plans[plan.id] = plan;
+            });
+            
+//            $("#plan_id").change(function(){
+//                console.log("dadass");
+//                applyDiscountopts(this.value);
+//            });
+        });
+        $("#payment").submit(function(){
+            $(this).attr("action", "/api/subscription/purchase/"+$("#plan_id").val());
+        });
+            
+        window.applyDiscountopts = function(plan){
+            console.log("khfasfhasd");
+            var plan = plans[plan];
+            console.log(plan);
+            $("#discount_opt_id").html("");
+            var html = ""
+            $.each(plan.discount_opts, function(index, diccount){
+               html += "<option value='"+ diccount._id +"'>"+diccount.name+" " +diccount.terms+"%</option>";
+            });
+            console.log(html);
+            $("#discount_opt_id").html(html);
+            var data = {
+                auth_pass: "value",
+                sub_domain: "value",//(optional),
+            }
+        };
+    </script>
+</body>
+</html>

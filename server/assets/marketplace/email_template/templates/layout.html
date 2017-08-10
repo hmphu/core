@@ -1,0 +1,64 @@
+<!--include javascrip-->
+<script type="text/javascript" src="/js/slick.js"></script>
+<script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
+<!--include css-->
+<link rel="stylesheet" type="text/css" href="/css/slick.css"/>
+
+<div class="app-content">
+    <div class="container">
+        <div class="body">
+            <div class="div_manage">
+                    <div class="main">
+                        <div id="sidebar">
+                            <div class="panel-customization">
+                                <div class="panel-toolbar">
+                                    <button class="btn btn_spacing" id="edit_template" >
+                                        {{lng.edit_current_tmpl}}
+                                    </button>
+                                    <button class="btn branded" id="apply" disabled>
+                                      <span>{{lng.apply_template}}</span>
+                                    </button>
+                                </div>
+                                <section id="email_temp_slider"class="section" >
+
+                                    <h4 class="title_div_app title_slide_app">{{lng.all_template}}</h4>
+
+                                    <div class="slide_email_tmpl">
+
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                        <div id="preview">
+                             <iframe src="about:blank" id="template_preview" style="display: none"></iframe>
+                             <textarea id="editor_content" style="display: none;"></textarea>
+<!--
+                            <div class="center">
+
+                                 <div class=" row-fluid">
+
+                                        <div class="col-md-12 editor-container" >
+                                            <div id="editor_content">
+                                            </div>
+
+
+                                        </div>
+
+                                </div>
+                            </div>
+-->
+
+                           <section class="section " id="footer">
+                                <div class="powered-by">
+                                    <a></a>
+                                </div>
+
+                            </section>
+                        </div>
+
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</div>

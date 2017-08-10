@@ -1,0 +1,36 @@
+{
+  "name": "sugarcrm",
+  "author": {
+    "name": "Dientn",
+    "email": "tranngocdien2991@gmail.com",
+    "url": "http://www.fireflyinnov.com"
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "location": "ticket_sidebar",
+  "version": "1.0",
+  "frameworkVersion": "1.0",
+  "parameters": [
+    {
+      "name": "url",
+      "type": "text",
+      "required": true,
+      "default": "",
+      "value": "http://116.102.130.184:8080/sugarce"
+    },
+    {
+      "name": "username",
+      "type": "text",
+      "required": true,
+      "value": "admin",
+      "is_only_server": true
+    },
+    {
+      "name": "password",
+      "type": "password",
+      "required": true,
+      "value": "123",
+      "is_only_server": true
+    }
+  ]
+}

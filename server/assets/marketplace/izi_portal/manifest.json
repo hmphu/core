@@ -1,0 +1,20 @@
+{
+  "author": {
+    "name": "Tran Ngoc Dien",
+    "email": "dientnfireflyinnov.com",
+    "url": "www.izihelp.com"
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "location": "nav_bar",
+  "version": "1.2.0",
+  "frameworkVersion": "1.0",
+  "parameters": [
+    {
+      "name": "current_agent",
+      "type": "checkbox",
+      "required": true,
+      "value": "true"
+    }
+  ]
+}

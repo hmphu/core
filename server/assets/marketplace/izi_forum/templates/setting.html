@@ -1,0 +1,85 @@
+<script id="tpl_tab_setting" type="text/html">
+
+    <div class="mde-box-detail mde-pT10 mde-pB10 mde-mB10 mde-mT10">
+        <div class="mde-dIB mde-pR10">
+            <mde-autocomplete placeholder="Forum" mde-id="forum_filter" change.delegate="searchChanged($event, 'forum')" url="${master.forum.url}" mapping.one-way="master.forum.mapping"></mde-autocomplete>
+        </div>
+        <div class="mde-dIB mde-pR10">
+            <!--            <mde-autocomplete-v2 placeholder="Profile" mde-id="profile_filter" change.delegate="searchChanged($event)" url="${master.profile.url}" mapping.one-way="master.profile.mapping"></mde-autocomplete-v2>-->
+            <mde-input mde-style="vertical-align: baseline" placeholder="Profile" value.bind="filter.profile" change.delegate="searchChanged($event, 'profile')"></mde-input>
+        </div>
+        <div class="mde-dIB mde-pR10">
+            <mde-autocomplete placeholder="Agent" mde-id="forum_user" change.delegate="searchChanged($event, 'user')" url="${master.user.url}" mapping.one-way="master.user.mapping"></mde-autocomplete>
+        </div>
+        <label class="mde-checkbox mde-mB5">
+            <input type="checkbox" checked.bind="filter.is_error" change.delegate="searchChanged($event)">
+            <i></i>
+            <span><strong >${_t.is_error}</strong></span>
+        </label>
+        <div class="mde-barbtn mde-fRight">
+            <a class="mde-default-btn" click.delegate="showImportPopup()"><i class="fa fa-upload mde-pR10"></i><span>${_t.import}</span></a>
+        </div>
+    </div>
+    <div class="mde-list-items">
+        <div class="mde-box-detail mde-mB20">
+            <div>
+                <ul class="mde-items-container">
+                    <li repeat.for="forum of forums">
+                        <div class="mde-vaTop ${canEdit(forum)? '': 'mde-disabled'}">
+                            <!--           COL1-->
+                            <div class="mde-dIB mde-mB10 mde-mR10 group-input">
+                                <mde-autocomplete url.bind="options.url" chooser.bind="forum.domain" change.delegate="keyChanged($event, forum)" mapping.bind="options.mapping" mde-id="dropdown-${forum.id}"></mde-autocomplete>
+                                <input type="hidden" id="forum-${forum.id}" />
+                            </div>
+                            <template if.bind="forum.domain">
+                                <div class="mde-dIB mde-mR10 mde-mB10">
+                                    <mde-input mde-style="vertical-align: baseline" type="text" value.bind="forum.username" placeholder="username"></mde-input>
+                                </div>
+                                <div class="mde-dIB mde-mR10 mde-mT10">
+                                    <mde-input mde-style="vertical-align: baseline" type="password" value.bind="forum.password" placeholder="password"></mde-input>
+                                </div>
+                            </template>
+                            <div class="mde-dIB">
+                                <button class="mde-default-btn mde-mRight" click.delegate="save(forum)" if.bind="canEdit(forum)">
+                                    <span if.bind="!forum._id" t="common.save"></span>
+                                    <span if.bind="forum._id" t="common.update"></span>
+                                </button>
+                                <!--                            <a class="mde-gray-btn"><span t="common.cancel"></span></a>-->
+                            </div>
+                        </div>
+                        <div>
+                            <a if.bind="!forum._id" class="mde-remove-trigger-btn mde-icon-btn" click.delegate="remove(forum)"><i class="material-icons">remove_circle</i></a>
+                            <a if.bind="forum._id" class="mde-remove-trigger-btn mde-icon-btn" click.delegate="confirmRemove(forum)"><i class="material-icons">remove_circle</i></a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="mde-vaMiddle"><span class="mde-cl-gray-light">Add</span></div>
+
+                        <div><a class="mde-add-trigger-btn mde-icon-btn" click.delegate="add()"><i id="add_all" class="material-icons">add_circle</i></a></div>
+                    </li>
+
+                </ul>
+                <div class="mde-loadmore-btn mde-tCenter mde-mT20" if.bind="canLoadMore">
+                    <a class="mde-default-btn" t="common.load_more" click.delegate="getData(forums[forums.length - 1].add_time)"><span></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <mde-popup mde-show.bind="isShowConfirmDelete" mde-id="modal-confirm-delete-forum" mde-title="${ 'common.confirm_delete'| t & signal: 'translation'}">
+        <p t="manage.people.confirm"></p>
+        <div class="mde-mTop mde-tRight">
+            <a class="mde-default-btn mde-mRight btn-yes" click.delegate="remove(currentDelete)"><span t="common.yes"></span></a>
+            <label class="mde-orange-btn" for="modal-confirm-delete-forum" click.delegate="closePopup()"><span t="common.no"></span></label>
+        </div>
+    </mde-popup>
+    <mde-popup mde-show.bind="isShowImport" mde-id="modal-import-profile" mde-title="Import profile">
+        <p t="Import forum profile"></p>
+        <div class="mde-mTop">
+            <mde-file file.bind="importProfile.file" accept="${importProfile.accept}" change.delegate="fileChanged($event)"></mde-file>
+        </div>
+        <div class="mde-mTop mde-tRight">
+            <a class="mde-default-btn mde-mRight btn-yes" click.delegate="importExcute()"><span t="common.ok"></span></a>
+            <label class="mde-orange-btn" for="modal-import-profile" click.delegate="cancelImport()"><span t="common.cancel"></span></label>
+        </div>
+    </mde-popup>
+</script>

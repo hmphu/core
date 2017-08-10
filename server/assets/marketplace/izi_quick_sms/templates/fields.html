@@ -1,0 +1,86 @@
+<script id="tpl_field_number" type="text/html">
+    <div class="group-input">
+        <mde-input value.bind="field.value" type="field.cs_type_data.is_decimal?'float':'integer'"></mde-input>
+        <input type="hidden" id="${field_key}" name="${field_key}">
+    </div>
+</script>
+
+<script id="tpl_field_dropdown" type="text/html">
+    <div class="group-input">
+        <mde-dropdown chooser.bind="value" options.bind="cs_type_data.values" mapping.bind="mapping"></mde-dropdown>
+        <input type="hidden" id="${field_key}" name="${field_key}">
+    </div>
+</script>
+
+<script id="tpl_field_dropdown_multi" type="text/html">
+    <div class="group-input">
+        <mde-chips chooser.bind="value" options.bind="cs_type_data.values" mapping.bind="mapping"></mde-chips>
+        <input type="hidden" id="${field_key}" name="${field_key}">
+    </div>
+</script>
+<script id="tpl_field_choice" type="text/html">
+    <div class="group-input">
+        <mde-chips chooser.bind="value" options.bind="cs_type_data.options" mapping.bind="mapping"></mde-chips>
+        <input type="hidden" id="${field_key}" name="${field_key}">
+    </div>
+</script>
+
+<script id="tpl_field_choice_radio" type="text/html">
+    <div class="group-input">
+        <mde-dropdown chooser.bind="value" options.bind="cs_type_data.options" mapping.bind="mapping"></mde-dropdown>
+        <input type="hidden" id="${field_key}" name="${field_key}">
+    </div>
+</script>
+
+<script id="tpl_field_text" type="text/html">
+     <div class="group-input">
+        <mde-input value.bind="value" is-disabled.bind="!cs_type_data.is_edittable"></mde-input>
+        <input type="hidden" id="${field_key}" name="${field_key}">
+    </div>
+</script>
+
+<script id="tpl_field_multi_text" type="text/html">
+    <div class="group-input">
+        <mde-input type="textarea" value.bind="value" is-disabled.bind="!cs_type_data.is_edittable"></mde-input>
+        <input type="hidden" id="${field_key}" name="${field_key}">
+    </div>
+</script>
+
+<script id="tpl_field_link" type="text/html">
+    <div class="group-input">
+        <mde-input value.bind="value" type="url" is-disabled.bind="!cs_type_data.is_edittable"></mde-input>
+        <input type="hidden" id="${field_key}" name="${field_key}">
+    </div>
+</script>
+
+<script id="tpl_field_slider" type="text/html">
+    <div class="group-input mde-pTop">
+        <!--slider-->
+        <mde-slider class="mde-mBottom" min.bind="cs_type_data.min" max.bind="cs_type_data.max" value.bind="value"></mde-slider>
+    </div>
+</script>
+
+<script id="tpl_field_switch" type="text/html">
+    <div class="group-input">
+        <mde-switch value.bind="value"></mde-switch>
+    </div>
+</script>
+
+<script id="tpl_field_time_picker" type="text/html">
+    <require from="./resources/value-converters/datetime-format"></require>
+    <require from="./resources/custom-elements/datetime"></require>
+    <div class="group-input">
+        <datetime value.bind="value | datetimeFormat" format.bind="{timepicker:false}"></datetime>
+        <input type="hidden" id="${field_key}" name="${field_key}">
+    </div>
+</script>
+
+<script id="tpl_field_datetime_picker" type="text/html">
+    <require from="./resources/value-converters/datetime-format"></require>
+    <require from="./resources/custom-elements/datetime"></require>
+    <div class="group-input">
+        <datetime value.bind="value | datetimeFormat: true"></datetime>
+        <input type="hidden" id="${field_key}" name="${field_key}">
+    </div>
+</script>
+

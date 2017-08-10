@@ -1,0 +1,503 @@
+<script>
+    var log_info = {{logged_in_info|json|safe}};
+</script>
+
+<script type="text/javascript" src="/js/jquery.tagsinput.js"></script>
+<script type="text/javascript" src="/js/izi.kendo.all.js"></script>
+<script type="text/javascript" src="/js/socket/socket.io.ticket.js"></script>
+<script type="text/javascript" src="/js/squence.js"></script>
+ <script type="text/javascript" src="/js/select2-4.0.0/js/select2.min.js"></script>
+<!--<script src="//kendo.cdn.telerik.com/2015.3.930/js/kendo.all.min.js"></script>-->
+
+<link rel="stylesheet" type="text/css" href="/css/jquery.tagsinput.css" />
+<link rel="stylesheet" type="text/css" href="/css/kendo.mobile.all.min.css">
+<link rel="stylesheet" type="text/css" href="/js/select2-4.0.0/css/select2.min.css" />
+
+<link rel="stylesheet" href="/css/kendo.mobile.all.min.css">
+
+<div class="body_menu2 body_menu3" style="display: none">
+    <!-- Modal filter ticket fields-->
+    <div class="modal fade" id="filter_ticket_fields" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">{{lng.filter_ticket_fields}}</h4>
+          </div>
+          <div class="modal-body">
+              <form class="form-horizontal" data-template="{{name}}_tpl_ticket_field" data-bind="source: ticketFields">
+<!--
+                  <ul >
+                  </ul>
+-->
+              </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn_black" id="ticket_field_apply" data-bind="events:{click: filterSettings.applyFilterTicketField}
+                                                                                           enabled: filterSettings.enabledApplyTicketField">{{lng.apply}}</button>
+            <button type="button" class="btn btn-default" data-bind="events:{click: filterSettings.cancelFilterTicketField}">{{lng.cancel}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- edit tags -->
+    <div id="editTags" class="k-popup-edit-form"
+         data-role="window"
+         data-title="Edit tags"
+         data-min-width="300"
+         data-actions="['Close']"
+         data-position="{top: '40%', left: '50%'}"
+         data-height="auto"
+         data-append-to="#{{name}}"
+         style="display: none">
+        
+        <div class="k-edit-form-container">
+            <p><strong>Tag:</strong></p>
+            <div style="padding-left: 15px;padding-right: 15px;">
+                <input type="text" id="tags" data-bind="value: messageSetting.tags" class="input"/>
+            </div>
+            
+            <div class="k-edit-buttons k-state-default">
+                <button type="button" class="btn btn-primary btn_black" data-bind="events:{click: messageSetting.editTags}">
+                    <i class="fa fa-check"></i>
+                    <span>Chỉnh sửa tag</span>
+                </button>
+                <button type="button" class="btn btn-default" data-bind="events:{click: messageSetting.closeEditTags}">
+                    <i class="fa fa-ban"></i>
+                    <span>{{lng.cancel}}</span>
+                </button>
+            </div>
+        </div>
+<!--
+        <div class="k-edit-buttons">
+            <div class="pull-right">
+                <button type="button" class="btn btn-default" >Hủy</button>
+                <button type="button" class="btn btn-primary" data-bind="click: ClickEditConversationTags">Chỉnh sửa tag</button>
+            </div>
+        </div>
+-->
+    </div>
+    <div id="app_container">
+        <div id="app_content">
+            <div id="app_wrapper">
+                <div id="app_content_column">
+                    <div id="filter_settings">
+                        <div class="dropdown filter-dropdown">
+                            <a id="setting_dropdown" class="filter-btn dropdown-toggle btn-navbar" data-bind="events:{click: filterSettings.showFilter">
+                                <i class="fa fa-filter fa-2x"></i>
+                            </a>
+                            <ul class="dropdown-menu filter-menu drop_acc" role="menu" aria-labelledby="drop2" style="top: 10px;">
+                                <li >
+                                    <a style="text-decoration: none"  data-bind="events: {click : filterSettings.changeFilter}" data-filter="all">
+                                        <i class="icon fa fa-th fa-1_5x"></i>{{lng.all}}
+                                    </a>
+                                </li>
+                                <li class="li_acc dropdown dropdown-submenu">
+                                    <a  style="text-decoration: none" >
+                                        <i class="icon fa fa-calendar fa-1_5x"></i>{{lng.date_range}}
+                                    </a>
+<!--
+                                    <span  class="dropdown-toggle badge pull-right" data-toggle="dropdown">
+                                        
+                                    </span >
+-->
+<!--                                    <span class="badge btn-dropdown pull-right" >{{lng.select}} <span class="caret"></span></span>-->
+                                    <ul class="dropdown-menu date-menu" role="menu">
+                                        <li class="filter-date">
+                                            <a >
+                                                <label for="filter-date-1" >{{lng.today}} 
+                                                    <input type="radio" name="filter-date" id="filter-date-1" class="badgebox" value="now_date" 
+                                                           data-bind="events:{change: filterSettings.changeDateFilter},
+                                                                      checked: filterSettings.dateType">
+                                                </label>
+                                            </a>
+                                        </li>
+                                        <li class="filter-date">
+                                            <a >
+                                                <label for="filter-date-2" >{{lng.yesterday}} 
+                                                    <input type="radio" name="filter-date" id="filter-date-2" class="badgebox" value="yesterday" 
+                                                           data-bind="events:{change: filterSettings.changeDateFilter},
+                                                                      checked: filterSettings.dateType">
+                                                </label>
+                                            </a>
+                                        </li>
+                                        <li class="filter-date">
+                                            <a >
+                                                <label for="filter-date-3" >{{lng.last_7_days}}
+                                                    <input type="radio" name="filter-date" id="filter-date-3" class="badgebox" value="lastweek" 
+                                                           data-bind="events:{change: filterSettings.changeDateFilter},
+                                                                      checked: filterSettings.dateType">
+                                                </label>
+                                            </a>
+                                        </li >
+                                        <li class="filter-date">
+                                            <a>
+                                                <label for="filter-date-5" >{{lng.this_month}}
+                                                    <input type="radio" name="filter-date" id="filter-date-5" class="badgebox" value="now_month" 
+                                                           data-bind="events:{change: filterSettings.changeDateFilter},
+                                                                      checked: filterSettings.dateType">
+                                                </label>
+                                            </a>
+                                        </li>
+                                        <li class="filter-date">
+                                            <a href="#its_equal">
+                                                <label for="filter-date-6" >{{lng.last_month}}
+                                                    <input type="radio" name="filter-date" id="filter-date-6" class="badgebox" value="lastmonth" 
+                                                           data-bind="events:{change: filterSettings.changeDateFilter},
+                                                                      checked: filterSettings.dateType">
+                                                </label>
+                                            </a>
+                                        </li>
+                                        <li class="filter-date custom-date">
+                                            <a href="#custom">
+                                                <label for="filter-date-7" >{{lng.custom}}
+                                                    <input type="radio" name="filter-date" id="filter-date-7" class="badgebox" value="custom" 
+                                                           data-bind="events:{change: filterSettings.changeDateFilter},
+                                                                      checked: filterSettings.dateType">
+                                                </label>
+                                            </a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <div id="custom" class="filter-date" style="padding: 15px;">
+                                            <form method="post" action="login" accept-charset="UTF-8">
+                                                <div class="row">
+                                                    <div class="col-xs-6 col-sm-6 col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{lng.from}}</label>
+                                                            <input class="filter-control" data-role="datepicker" data-format="{{logged_in_info.client_date_format}}"
+                                                       data-bind="value: filterSettings.fromDate,
+                                                                  events: {
+                                                                    open: filterSettings.openDate,
+                                                                    change: filterSettings.startDateChange
+                                                                  }
+                                                                  enabled: filterSettings.dateEnable"
+                                          style="width: 100%;" type="date" id="from_date" name="from_date">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-6 col-sm-6 col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">{{lng.to}}</label>
+                                                             <input class="filter-control" data-role="datepicker" data-format="{{logged_in_info.client_date_format}}"
+                                                       data-bind="value: filterSettings.toDate,
+                                                                  events: {
+                                                                    open: filterSettings.openDate,
+                                                                    change: filterSettings.toDateChange
+                                                                  },
+                                                                  enabled:filterSettings.dateEnable" style="width: 100%;" type="date"  id="to_date" name="to_date">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="btn_action">
+                                                    <input class="btn btn_black btn-action" type="button" id="sign-in" value="{{lng.apply}}" 
+                                                           data-bind="events: {click: filterSettings.applyFilter},
+                                                                      enabled:filterSettings.dateEnable">
+<!--                                                    <input class="btn btn-primary btn-action" type="button" id="sign-in-google" value="Cancel" data-bind="events: {click: filterSettings.cancelFilter}">-->
+                                                </div>
+                                               
+                                            </form>
+                                        </div>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a style="text-decoration: none"  data-bind="events: {click : filterSettings.changeFilter}" data-filter="unread">
+                                        <i class="icon fa fa-circle fa-1_5x no-read-icon"></i>{{lng.unread}}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a style="text-decoration: none" data-bind="events: {click: filterSettings.changeFilter}" data-filter="read">
+                                        <i class="icon fa fa-circle-o  fa-1_5x"></i>{{lng.readed}}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a style="text-decoration: none"  data-filter="ticket-fields" data-toggle="modal" data-target="#filter_ticket_fields">
+                                        <i class="icon fa fa-edit  fa-1_5x"></i>{{lng.ticket_fields}}
+                                    </a>
+                                </li>
+                                <li class="line"></li>
+                                <li class="li_acc dropdown dropdown-submenu" data-bind="events:{ mouseover: filterSettings.filterHover}">
+                                    <a  style="text-decoration: none" >
+                                        <i class="icon fa fa-gear  fa-1_5x"></i>
+                                        <span>{{lng.layout_setting}}</span>
+                                    </a>
+<!--                                    <span class="badge btn-dropdown pull-right" >{{lng.select}}<span class="caret"></span></span>-->
+                                    <ul class="dropdown-menu date-menu" role="menu">
+                                        <li class="group-by">
+                                            <a >
+                                                <label for="theme-1" >{{lng.requester}}
+                                                    <input type="radio" name="theme-setting" id="theme-1" class="badgebox" value="requester" 
+                                                           data-bind="events:{change: appSettings.changeTheme},
+                                                                      checked: appSettings.groupBy">
+                                                </label>
+                                            </a>
+                                        </li>
+                                        <li class="group-by">
+                                            <a >
+                                                <label for="theme-2" >{{lng.ticket}}
+                                                    <input type="radio" name="theme-setting" id="theme-2" class="badgebox" value="ticket" 
+                                                           data-bind="events:{change: appSettings.changeTheme},
+                                                                      checked: appSettings.groupBy">
+                                                </label>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="content_column_wrapper" >
+                        <div class="not_selected">
+                            <div>
+                                <i class="fa fa-inbox fa-5x block-display"></i>
+                                <p>{{lng.choose_convertation}}</p>
+                                <div class="info-message">
+                                    <i class="fa fa-question-circle fa-2"></i>
+                                    {{lng.can_view}}
+                                    <a  target="_blank" href="http://wiki.izihelp.com" class="hover-underline">
+                                         Wiki IziHelp Support
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="app_left_column">
+                <div class="app_setting">
+                    <div class="search_content">
+                        <form class="search_form form-horizontal" id="search_form">
+                             <div class="form-group">
+                                <div class="filter-channel">
+                                    <select id="filter_channel" class="form-control" data-role="dropdownlist" data-text-field="name" data-value-field="value" data-value-primitive="true" data-bind="source: filterChannel.dataSource, value: selectedChannel, events:{change: filterChannel.change}"></select>
+                                </div>
+<!--
+                                <div class="dropdown-filter">
+                                    <a class="pull-right" data-bind="events:{click: filterSettings.showFilter"><i class="fa fa-ellipsis-v fa-2x"></i></a>
+                                </div>
+-->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="channel_tab" class="k-tabstrip-scrollable" data-role="tabstrip" data-animation="false"  data-bind="events: { select: channelTabControl.onSelect}">
+                    <ul>
+                        <li id="tab_email" data-tab-name="email" >
+                            <i class="fa fa-envelope-o"></i>
+                            <span class="badge badge-default" data-bind="visible: email.noReaded, text: email.notifyResponses">  </span>
+                        </li>
+                        <li id="tab_fb" data-tab-name="facebook">
+                            <i class="fa fa-facebook-square"></i>
+                            <span class="badge badge-default" data-bind="visible: facebook.noReaded, text: facebook.notifyResponses">  </span>
+                        </li>
+                        <li id="tab_sms" data-tab-name="sms">
+                            <i class="fa fa-mobile"></i>
+                            <span class="badge badge-default" data-bind="visible: sms.noReaded, text: sms.notifyResponses">  </span>
+                        </li>
+                        <li id="tab_chat" data-tab-name="chat">
+                            <i class="fa fa-comments-o"></i>
+                            <span class="badge badge-default" data-bind="visible: chat.noReaded, text: chat.notifyResponses"></span>
+                        </li>
+                        <li id="tab_comment" data-tab-name="comment">
+                           <i class="fa fa-commenting"></i>
+                            <span class="badge badge-default" data-bind="visible: comments.noReaded, text: comments.notifyResponses"></span>
+                        </li>
+                    </ul>
+<!--
+                    <span class="k-button k-button-icon k-button-bare k-tabstrip-prev" unselectable="on">
+                        <span class="fa fa-caret-left"></span>
+                    </span>
+                    <span class="k-button k-button-icon k-button-bare k-tabstrip-next" unselectable="on" >
+                        <span class="fa fa-caret-right"></span>
+                    </span>
+-->
+                    <div class="tab_email_content">
+                        <div class="search_form" >
+                            <form>
+                                <div class="right-inner-addon">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                    <input type="search"
+                                           class="form-control"
+                                           id="search_input"
+                                           placeholder="{{lng.search_value}}" autocomplete="on"
+                                           data-bind="value: email.filter, events:{keyup: email.submitFilter}"/>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="lisview_wrapper content-scroll">
+                            <div id="email_list_view"  data-role="listview" data-selectable="true",
+                                 data-template="{{name}}_tpl_list_item"
+                                 data-bind="source: email.dataSource,
+                                            events:{
+                                                change: email.change
+                                            }">
+                            </div>
+                            <div class="load-more-wrap" data-bind="visible: email.loadMoreVisible">
+                                <div class="load-more" >
+                                    <a class="load-more-btn" data-bind="events:{click: email.loadMore}">{{lng.load_more}}</a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!--End tab content-->
+                    <div>
+                        <div id="fb_tab_ctrl" class="content-scroll" data-role="tabstrip" data-animation="false" data-bind="events:{select: facebook.tabChange}">
+                            <ul>
+                                <li id="fb_tab_inbox" class="k-state-active">
+                                    <i class="fa fa-facebook"></i>
+                                    <i class="fa fa-comments fa-lg" ></i>
+                                    <span class="badge badge-default" data-bind="visible: facebook.messages.noReaded, text: facebook.messages.notifyResponses">  </span>
+                                </li>
+                                <li id="fb_tab_comment">
+                                    <i class="fa fa-facebook"></i>
+                                    <span class="badge badge-default" data-bind="visible: facebook.comments.noReaded, text: facebook.comments.notifyResponses">  </span>
+                                </li>
+                            </ul>
+                           <div>
+                               <div class="search_form" id="search_form">
+                                    <div class="right-inner-addon">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                        <input type="search"
+                                               class="form-control"
+                                               id="search_input"
+                                               placeholder="{{lng.search_value}}" autocomplete="on"
+                                               data-bind="value: email.messages.filter, events:{keyup: facebook.messages.submitFilter}"/>
+                                    </div>
+                                </div>
+                                <div class="lisview_wrapper content-scroll">
+                                    <div id="fb_messages_list_view" data-role="listview" data-selectable="true",
+                                     data-template="{{name}}_tpl_list_item"
+                                     data-bind="source: facebook.messages.dataSource,
+                                                events:{
+                                                    change: facebook.messages.change,
+                                                }">
+                                    </div>
+                                    <div class="load-more-wrap" data-bind="visible: facebook.messages.loadMoreVisible">
+                                        <div class="load-more">
+                                            <a class="load-more-btn" data-bind="events:{click: facebook.messages.loadMore}">{{lng.load_more}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                           </div>
+                            <!-- End span-->
+                           <div>
+                               <div class="search_form" id="search_form">
+                                    <div class="right-inner-addon">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                        <input type="search"
+                                               class="form-control"
+                                               id="search_input"
+                                               placeholder="{{lng.search_value}}" autocomplete="on"
+                                               data-bind="value: email.comments.filter, events:{keyup: facebook.comments.submitFilter}"/>
+                                    </div>
+                                </div>
+                                <div class="lisview_wrapper content-scroll">
+                                    <div id="fb_comment_list_view" data-role="listview" data-selectable="true",
+                                         data-template="{{name}}_tpl_list_item"
+                                         data-bind="source: facebook.comments.dataSource,
+                                                    events:{
+                                                        change: facebook.comments.change,
+                                                    }">
+                                    </div>
+                                    <div class="load-more-wrap" data-bind="visible: facebook.comments.loadMoreVisible">
+                                        <div class="load-more" >
+                                            <a class="load-more-btn" data-bind="events:{click: facebook.comments.loadMore}">{{lng.load_more}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                           </div>
+                             <!-- End span-->
+                        </div>
+                    </div>
+                    <!--End tab content-->
+                    <div>
+                        <div class="search_form" id="search_form">
+                            <div class="right-inner-addon">
+                                <i class="glyphicon glyphicon-search"></i>
+                                <input type="search"
+                                       class="form-control"
+                                       id="search_input"
+                                       placeholder="{{lng.search_value}}" autocomplete="on"
+                                       data-bind="value: sms.filter, events:{keyup: sms.submitFilter}"/>
+                            </div>
+                        </div>
+                        <div class="lisview_wrapper content-scroll">
+                            <div id="sms_list_view" data-role="listview" data-selectable="true",
+                                data-template="{{name}}_tpl_list_item"
+                                data-bind="source: sms.dataSource,
+                                        events:{
+                                            change: sms.change
+                                        }">
+                            </div>
+                            <div class="load-more-wrap" data-bind="visible: sms.loadMoreVisible">
+                                <div class="load-more" >
+                                    <a class="load-more-btn" data-bind="events:{click: sms.loadMore}">{{lng.load_more}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End sms tab content-->
+                    <div >
+                        <div class="search_form" id="search_form">
+                            <div class="right-inner-addon">
+                                <i class="glyphicon glyphicon-search"></i>
+                                <input type="search"
+                                       class="form-control"
+                                       id="search_input"
+                                       placeholder="{{lng.search_value}}" autocomplete="on"
+                                        data-bind="value: chat.filter, events:{keyup: chat.submitFilter}"/>
+                            </div>
+                        </div>
+                        <div class="lisview_wrapper content-scroll">
+                            <div id="chat_list_view" data-role="listview" data-selectable="true",
+                                data-template="{{name}}_tpl_list_item"
+                                data-bind="source: chat.dataSource,
+                                        events:{
+                                            change: chat.change
+                                        }">
+                            </div>
+                            <div class="load-more-wrap" data-bind="visible: chat.loadMoreVisible">
+                                <div class="load-more" >
+                                    <a class="load-more-btn" data-bind="events:{click: chat.loadMore}">{{lng.load_more}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End chat tab content-->
+                    <div >
+                        <div class="search_form" id="search_form">
+                            <div class="right-inner-addon">
+                                <i class="glyphicon glyphicon-search"></i>
+                                <input type="search"
+                                       class="form-control"
+                                       id="search_input"
+                                       placeholder="{{lng.search_value}}" autocomplete="on"
+                                        data-bind="value: comments.filter, events:{keyup: comments.submitFilter}"/>
+                            </div>
+                        </div>
+                        <div class="lisview_wrapper content-scroll">
+                            <div id="comment_list_view" data-role="listview" data-selectable="true",
+                                data-template="{{name}}_tpl_list_item"
+                                data-bind="source: comments.dataSource,
+                                        events:{
+                                            change: comments.change
+                                        }">
+                            </div>
+                            <div class="load-more-wrap" data-bind="visible: comments.loadMoreVisible">
+                                <div class="load-more" >
+                                    <a class="load-more-btn" data-bind="events:{click: comments.loadMore}">{{lng.load_more}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End commet tab content-->
+                </div>
+            </div>
+            <div id="app_right_column" class="app_column_hide" data-bind="slideHorizontal: appSettings.rightSideBar">
+            </div>
+
+            <div id="app_footer"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<require from='./resources/custom-elements/facebook'></require>
+<div class="mde-app-ticket-wrapper">
+    <div class="mde-p10"><a class="mde-default-btn" click.delegate="refresh()"><span>Refresh</span></a></div>
+    <div class="mde-p10 mde-mTop mde-brTop mde-brBottom">
+        <div class="mde-mB10">
+            <strong>Requester: </strong><a route-href="route: manageUserModify;params.bind:{id: currentRequesterId || ''}">${requester.name}</a>
+        </div>
+        <div>
+            <div class="mde-mB10" if.bind="contacts.email.length > 0">
+                <strong class="mde-cl-gray-light" t="dashboard.email"></strong>
+                <ul>
+                    <li repeat.for="contact of contacts.email">
+                        <div class="mde-wbBa">${contact.value}</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="mde-mB10" if.bind="contacts.phone.length > 0">
+                <strong class="mde-cl-gray-light" t="manage.people.phone"></strong>
+                <ul>
+                    <li repeat.for="contact of contacts.phone">
+                        <div class="mde-wbBa">${contact.value}</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="mde-mB10" if.bind="contacts.facebook.length > 0">
+                <strong class="mde-cl-gray-light">Facebook</strong>
+                <ul>
+                    <li repeat.for="contact of contacts.facebook">
+                        <div class="mde-wbBa"><a href="//facebook.com/${contact.value}" target="_blank"><facebook id.bind="contact.value" is_page='0'></facebook></a></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <ul>
+            <li repeat.for="result of searchResponse.results">
+                <i class="material-icons">confirmation_number</i>
+                <div>
+                    <a route-href="route: ticket; params.bind: {id: result._id, type: 'edit' }">
+                        <span>${result.subject}</span>
+                    </a>
+                    <span>${toLocaleDateString(result.add_time)}</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="mde-loadmore-btn mde-p10">
+        <a class="mde-default-btn" show.bind="hasMore" click.delegate="more()">
+            <span>More</span>
+        </a>
+    </div>
+</div>

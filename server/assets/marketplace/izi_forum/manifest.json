@@ -1,0 +1,22 @@
+{
+  "name": "Forum posting",
+  "author": {
+    "name": "IZIHelp",
+    "email": "support@izihelp.com",
+    "url": "https://izihelp.com/"
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "location": "nav_bar",
+  "version": "1.2",
+  "frameworkVersion": "1.0",
+  "is_maximize": true,
+  "parameters": [
+    {
+      "name": "api_url",
+      "type": "text",
+      "readonly": true,
+      "value": "http://localhost:3012/api/"
+    }
+  ]
+}

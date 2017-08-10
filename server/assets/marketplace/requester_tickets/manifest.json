@@ -1,0 +1,17 @@
+{
+  "name": "haravan",
+  "author": {
+    "name": "izihelp-dev",
+    "email": "tratt@fireflyinnov.com",
+    "url": "https://www.izihelp.com/"
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "location": [
+    "ticket_sidebar",
+    "new_ticket_sidebar",
+    "portal_sidebar"
+  ],
+  "version": "1.1",
+  "frameworkVersion": "1.0"
+}

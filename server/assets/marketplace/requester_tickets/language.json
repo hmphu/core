@@ -1,0 +1,34 @@
+{
+    "en": {
+        "package": "Requester ticket history",
+        "text": {
+            "title": "List tickets of the requester",
+            "no_result" : "No results!"
+        },
+        "profile_requester": {
+            "title" : "Profile",
+            "phone" : "Phone",
+            "email" : "Email",
+            "facebook" : "Facebook",
+            "org" : "Org.",
+            "language" : "Language",
+            "details" : "Details"
+        }
+    },
+    "vi": {
+        "package": "Requester ticket history",
+        "text": {
+            "title": "Danh sách yêu cầu",
+            "no_result" : "Không tìm thấy kết quả !"
+        },
+        "profile_requester": {
+            "title" : "Thông tin người dùng",
+            "phone" : "Điện thoại",
+            "email" : "Email",
+            "facebook" : "Facebook",
+            "org" : "Tổ chức",
+            "language" : "Ngôn ngữ",
+            "details" : "Chi tiết"
+        }
+    }
+}

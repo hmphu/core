@@ -1,0 +1,21 @@
+{
+  "name": "Ticket listing",
+  "author": {
+    "name": "IZIHelp",
+    "email": "support@support.izihelp.com",
+    "url": "https://izihelp.com/"
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "location": ["ticket_sidebar", "facebook_sidebar"],
+  "version": "1.8",
+  "frameworkVersion": "1.0",
+  "parameters": [
+    {
+      "name": "page_size",
+      "type": "text",
+      "required": true,
+      "value": "10"
+    }
+  ]
+}

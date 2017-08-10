@@ -1,0 +1,12 @@
+'use strict'
+
+var NotificationEvent = {
+    SESSION_RESET : 'SESSION_RESET',
+    ENABLE_CHAT : 'ENABLE_CHAT',
+    TICKET_SAVED : 'TICKET_SAVED',
+    CONCURRENT_LOGIN : 'CONCURRENT_LOGIN',
+    SUBDOMAIN_CHANGED : 'SUBDOMAIN_CHANGED',
+    SUSPENDED_STATUS : 'SUSPENDED_STATUS'
+};
+
+exports.NotificationEvent = NotificationEvent;

@@ -1,0 +1,79 @@
+{
+  "name": "Email template app",
+  "author": {
+    "name": "Tran Ngoc Dien",
+    "email": "tranngocdien2991@gmail.com",
+    "url": ""
+  },
+  "templateData": {
+    "data1": "okla",
+    "data2": "oklu",
+    "template_list": [
+        {
+            "name": "rich template",
+            "path": "rich_template"
+        },
+        {
+            "name": "blue template",
+            "path": "blue_template"
+        },
+        {
+            "name": "standard template",
+            "path": "standard_template"
+        },
+        {
+            "name": "template 1",
+            "path": "template_1"
+        },
+        {
+            "name": "template 2",
+            "path": "template_2"
+        },
+        {
+            "name": "tempalte 3",
+            "path": "template_3"
+        },
+        {
+            "name": "tempalte 4",
+            "path": "template_4"
+        },{
+            "name": "template 5",
+            "path": "template_5"
+        },{
+            "name": "template 6",
+            "path": "template_6"
+        },{
+            "name": "template 7",
+            "path": "template_7"
+        },{
+            "name": "template 8",
+            "path": "template_8"
+        },{
+            "name": "template 9",
+            "path": "template_9"
+        },{
+            "name": "template 10",
+            "path": "template_10"
+        }
+    ]
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "location": "nav_bar",
+  "version": "1.1.0",
+  "frameworkVersion": "1.0",
+  "is_paid": true,
+  "prices": [
+    {
+      "price": 2,
+      "locale": "en",
+      "currency": "USD"
+    },
+    {
+      "price": 43600,
+      "locale": "vi",
+      "currency": "VND"
+    }
+  ],
+  "parameters": []
+}

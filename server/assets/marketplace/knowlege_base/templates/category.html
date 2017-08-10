@@ -1,0 +1,89 @@
+<script id="tpl_view_category_view" type="text/html">
+    <!--CATEGORY PAGE-->
+
+    <!--        Breadcrumb category-->
+    <div class="mde-pT10 mde-pB10 mde-mB10">
+        <span>
+                <a click.delegate="parent.route('index')">${parent.app_data.lng.translates.home}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            </span>
+        <span>
+                 <a>${model.cate.title}</a>
+            </span>
+    </div>
+    <!--        Search category-->
+    <div class="mde-pT10 mde-pB10 mde-pR48">
+        <form class="mde-search w100per" submit.delegate="parent.search()">
+            <input type="text" autocomplete="on" value.bind="parent.query" placeholder="${'search.enter_value' | t & signal: 'translation'}"><i></i>
+            <label for="mde-reset" class="mde-close-btn mde-icon-small-btn"><i class="material-icons">clear</i>
+                <input type="reset" id="mde-reset">
+            </label>
+        </form>
+    </div>
+
+    <!--    content category-->
+    <div class="mde-pT10 mde-pB10">
+        <h4>${model.cate.title}</h4>
+        
+        <div class="mde-bg-white mde-boxShadow">
+             <div if.bind="(model.cate.description || '') != ''" class="mde-p10" innerhtml="${model.cate.description || '' | sanitizeHTML}"></div>
+            <compose class="mde-list-section" view.bind="app_data.templates.tpl_view_section_list" view-model.bind="model.cate.sections" />
+        </div>
+    </div>
+</script>
+
+<script id="tpl_view_category_edit" type="text/html">
+    <require from="./resources/value-converters/datetime-format"></require>
+    <div id="edit-category">
+        <div class="mde-dIB-wrapper">
+            <div class="mde-dIB mde-wCol7 mde-vaTop">
+                <div class="mde-pLeft">
+                    <h3><strong>${model.cate._id? parent.app_data.lng.translates.edit : parent.app_data.lng.translates.add} ${parent.app_data.lng.translates.category}</strong></h3>
+                </div>
+                <div class="mde-p10">
+                    <div class="mde-mBottom">
+                        <div class="mde-cl-gray-light">${parent.app_data.lng.translates.title}</div>
+                        <mde-input id="content" value.bind="model.cate.title" rows="8" mde-class="w100per" />
+                    </div>
+                    <div>
+                        <div class="mde-cl-gray-light">${parent.app_data.lng.translates.description}</div>
+                        <mde-input id="content" type="textarea" value.bind="model.cate.description" rows="8" mde-class="w100per" />
+                    </div>
+                </div>
+            </div>
+            <div class="mde-dIB mde-wCol3 mde-p10">
+                <div if.bind="model.cate._id" class="mde-br mde-bg-white mde-brRa5">
+                    <div class="mde-dIB-wrapper w100per mde-pLeft mde-pRight">
+                        <div class="mde-dIB mde-wDi2 mde-vaTop mde-tCenter mde-brRight mde-p10">
+                            <strong>${parent.app_data.lng.translates.created}</strong>
+                            <br>
+                            <time title="${model.cate.add_time | datetimeFormat:true}">${model.cate.add_time | timeFromNow}</time>
+                            <span>${parent.app_data.lng.translates.by}</span>
+                            <!--                                <a href="/profile/5539be35fc3a0a3d0717ed7f" target="_blank">${model.sect.user_created.name}</a> -->
+                            <strong if.bind="parent.me.roles[0] =='agent'">${model.cate.user_created.name}</strong>
+                            <a if.bind="parent.me.roles[0] =='owner' || (parent.me.roles[0] =='admin' && model.cate.user_created.roles[0] !='owner')" route-href="route:manageUserModify; params.bind:{id:model.sect.user_created._id}" target="_blank"><strong>${model.cate.user_created.name}</strong></a>
+                        </div>
+                        <div class="mde-dIB mde-wDi2 mde-tCenter mde-p10">
+                            <strong>${parent.app_data.lng.translates.updated}</strong>
+                            <br>
+                            <time title="${model.art.upd_time | datetimeFormat:true}">${model.cate.upd_time | timeFromNow}</time>
+                            <span>${parent.app_data.lng.translates.by}</span>
+                            <strong if.bind="parent.me.roles[0] =='agent'">${model.cate.user_created.name}</strong>
+                            <a if.bind="parent.me.roles[0] =='owner' || (parent.me.roles[0] =='admin' && model.cate.user_updated.roles[0] !='owner')" route-href="route:manageUserModify; params.bind:{id:model.cate.user_updated._id}" target="_blank"><strong>${model.sect.user_updated.name}</strong></a>
+                        </div>
+                    </div>
+                </div>
+                <div if.bind="model.cate.totalSections == 0" class="mde-bg-white mde-p10 mde-tCenter">
+                    <a t="common.delete_title" click.delegate="model.remove()"></a>
+                </div>
+            </div>
+        </div>
+        <div class="mde-p10">
+            <button click.delegate="model.save()" class="mde-orange-btn mde-mRight">
+                <span t="common.save"></span>
+            </button>
+            <button class="mde-gray-btn" click.delegate="parent.route('index')">
+                <span t="common.cancel"></span>
+            </button>
+        </div>
+    </div>
+</script>

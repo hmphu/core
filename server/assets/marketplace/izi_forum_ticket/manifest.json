@@ -1,0 +1,44 @@
+{
+  "name": "Izi forum ticket",
+  "author": {
+    "name": "IZIHelp",
+    "email": "support@izihelp.com",
+    "url": "https://izihelp.com/"
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "location": "ticket_sidebar",
+  "version": "1.2",
+  "frameworkVersion": "1.0",
+  "is_maximize":true,
+  "parameters": [
+    {
+      "name": "api_url",
+      "type": "text",
+      "readonly": true,
+      "value": "http://localhost:3001/api/"
+    },
+    {
+      "name": "custom_field",
+      "type": "dropdown",
+      "required": true,
+      "value": "text",
+      "url": "apps/forum/custom-setting",
+      "mapping": {
+        "id": "field_key",
+        "text": "name"
+      }
+    },
+    {
+      "name": "poster_name",
+      "type": "dropdown",
+      "required": true,
+      "value": "dcnhan",
+      "url": "apps/forum/custom-setting",
+      "mapping": {
+        "id": "field_key",
+        "text": "name"
+      }
+    }
+  ]
+}

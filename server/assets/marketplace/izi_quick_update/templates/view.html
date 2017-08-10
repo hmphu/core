@@ -1,0 +1,115 @@
+<script id="tpl_tab_view" type="text/html">
+    <require from="./resources/custom-attributes/checked"></require>
+    <require from="./resources/custom-attributes/show"></require>
+
+    <require from="./resources/value-converters/datetime-format"></require>
+    <require from="./resources/custom-elements/datetime"></require>
+    <require from="./resources/custom-elements/mde-table"></require>
+    <div id="tab-item-view">
+        <div class="mde-mTop mde-p10">
+            <div>
+                <div class="mde-dIB mde-mRight mde-mBottom">
+                    <div class="mde-cl-gray-light">${_t.select_date}</div>
+                    <mde-dropdown id="dateSelect" chooser.bind="filterData.dateType" is-reset.bind="false" options.bind="master.dateOptions"></mde-dropdown>
+                </div>
+                <div class="mde-dIB">
+                    <div class="mde-dIB mde-mRight mde-mBottom">
+                        <div class="mde-cl-gray-light">${_t.from_date}</div>
+                        <datetime id.bind="start_date" name.bind="start_date" value.bind="filterData.fromDate | datetimeFormat" format.bind="{timepicker: false}" />
+                    </div>
+                    <div class="mde-dIB mde-mRight mde-mBottom">
+                        <div class="mde-cl-gray-light">${_t.to_date}</div>
+                        <datetime id.bind="end_date" name.bind="end_date" value.bind="filterData.toDate | datetimeFormat" format.bind="{timepicker: false}" />
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="mde-dIB mde-mRight mde-mBottom">
+                    <div class="mde-cl-gray-light">${_t.group}</div>
+                    <mde-autocomplete id="group" chooser.bind="filterData.group" url.bind="master.group.url" mapping.bind="master.group.mapping" change.trigger="groupChange($event)"></mde-autocomplete>
+                </div>
+                <div class="mde-dIB mde-mRight mde-mBottom">
+                    <div class="mde-cl-gray-light">${_t.assignee}</div>
+                    <!--                <mde-opt-autocomplete id="agent"  chooser.bind="filterData.agent" search-param="text_search" url.bind="master.agent.url" mapping.bind="master.agent.mapping" change.trigger="agentChange($event)"></mde-autocomplete>-->
+                    <mde-autocomplete id="agent" chooser.bind="filterData.agent" search-param="text_search" url.bind="master.agent.url" mapping.bind="master.agent.mapping" change.trigger="agentChange($event)"></mde-autocomplete>
+                </div>
+                <div class="mde-dIB mde-mRight mde-mBottom">
+                    <div class="mde-cl-gray-light">${_t.status}</div>
+                    <!--    placeholder="${'dashboard.all' | t & signal: 'translation'}"-->
+                    <mde-dropdown id="status" chooser.bind="filterData.status" options.bind="master.ticketStatus" change.trigger="statusChange($event)" placeholder="${'dashboard.all' | t & signal: 'translation'}"></mde-dropdown>
+                </div>
+            </div>
+            <div>
+                <div class="mde-dIB mde-mRight mde-mBottom">
+                    <div class="mde-cl-gray-light">${_t.organization}</div>
+                    <mde-autocomplete id="org" chooser.bind="filterData.org" url.bind="master.org.url" mapping.bind="master.org.mapping" change.trigger="orgChange($event)"></mde-autocomplete>
+                </div>
+                <div class="mde-dIB mde-mRight mde-mBottom">
+                    <div class="mde-cl-gray-light">${_t.requester}</div>
+                    <mde-autocomplete id="requester" chooser.bind="filterData.requester" url.bind="master.requester.url" mapping.bind="master.requester.mapping" change.trigger="requesterChange($event)"></mde-autocomplete>
+                </div>
+            </div>
+            <div class="mde-mTop">
+                <button click.delegate="filter(true)" class="mde-default-btn">
+                    <i class="fa fa-filter" aria-hidden="true"></i>
+                    <!--                    <span if.bind="exporting" class="fa fa-spinner fa-pulse fa-fw"></span>-->
+                    <span>${_t.filter}</span>
+                </button>
+            </div>
+        </div>
+        <!--<div class="mde-mTop mde-brTop">
+            <div class="filter-left mde-fLeft mde-wCol5">
+                <h5 class="h5"><b>${_t.filtered_organization}</b></h5>
+            </div>
+            <div class="filter-right mde-fLeft mde-wCol5">
+                <h5 class="h5"><b>${_t.filtered_requester}</b></h5>
+            </div>
+            <div class="mde-clearfix"></div>
+        </div>-->
+        <div class="mde-mTop mde-pLeft mde-pRight mde-ofYA" style="max-height:50vh;">
+            <mde-table total.two-way="total" selected-rows.two-way="formData.ids" mde-reset.bind="table.is_reset" checkable.bind="table.checkable" group.bind="table.group" headers.bind="table.headers" url.bind="table.url" mde-id.bind="table.id" mde-configs.bind="table.config"></mde-table>
+        </div>
+        <div class="mde-p10 mde-mTop" show.bind="formData.ids.length > 0">
+            <div class="mde-brTop mde-pTop">
+                <div class="mde-mBottom">
+                    <div class="mde-dIB mde-mRight">
+                        <div class="mde-cl-gray-light">${_t.assignee}</div>
+                        <mde-opt-autocomplete id="form-agent" group-chooser.bind="formData.group+formData.agent" group.bind="formData.group" chooser.bind="formData.agent" group-param="group_id" search-param="text_search" url.bind="master.replyAgent.url" mapping.bind="master.replyAgent.mapping" change.trigger="agentChange($event)"></mde-opt-autocomplete>
+                        <!--                        <mde-autocomplete id="agent"  chooser.bind="formData.agent" search-param="text_search" url.bind="master.agent.url" mapping.bind="master.agent.mapping" change.trigger="agentChange($event)"></mde-autocomplete>-->
+                    </div>
+                    <div class="mde-dIB">
+                        <div class="mde-cl-gray-light">${_t.status}</div>
+                        <mde-dropdown id="status" chooser.bind="formData.status" options.bind="master.replyStatus" change.trigger="statusChange($event)"></mde-dropdown>
+                    </div>
+                </div>
+
+                <div class="mde-mBottom">
+                    <div class="mde-cl-gray-light">${_t.comment}</div>
+                    <mde-input id="content" type="textarea" value.bind="formData.comment" rows="8" mde-class="w100per" />
+                </div>
+
+                <div class="mde-mTop">
+                    <button class="mde-mTop mde-dIB mde-default-btn mde-mRight ${progress.reply? 'mde-actived-loading': ''}" disabled.bind="progress.reply" click.delegate="replyTickets()">
+                        <span>${_t.update_selected}</span>
+                        <span class="mde-loading"></span>
+                    </button>
+                    <button class="mde-mTop mde-dIB mde-orange-btn mde-mRight ${progress.single? 'mde-actived-loading': ''}" disabled.bind="progress.single" click.delegate="exportTicket('single')">
+                        <span>${_t.export_single_ticket}</span>
+                        <span class="mde-loading"></span>
+                    </button>
+                    <button class="mde-mTop mde-dIB mde-orange-btn ${progress.multi? 'mde-actived-loading': ''}" disabled.bind="progress.multi" click.delegate="exportTicket('multi')">
+                        <span>${_t.export_multi_ticket}</span>
+                        <span class="mde-loading"></span>
+                    </button>
+                </div>
+
+                <!--
+                    <div class="mde-dIB mde-mRight">
+                        <div>${_t.group}</div>
+                        <mde-autocomplete id="group"  chooser.bind="formData.group" url.bind="master.group.url" mapping.bind="master.group.mapping" change.trigger="groupChange($event)"></mde-autocomplete>
+                    </div>
+-->
+            </div>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,519 @@
+<script id="tpl_msg_error" type="text/x-kendo-template">
+    <div class="error-msg">
+        <img src="/img/error-icon.png" />
+        <h3>#= title #</h3>
+        <p>#= message #</p>
+    </div>
+</script>
+
+<script id="tpl_msg_success" type="text/x-kendo-template">
+    <div class="success-msg">
+        <img src="/img/success-icon.png" />
+        <h3>#= message #</h3>
+    </div>
+</script>
+
+<script id="tpl_file_upload" type="text/x-kendo-template">
+    <span class="k-progress"></span>
+    <i class="fa #:addExtensionClass(files[0].extension)#"></i>
+    <span class="k-filename" title="#:name#">#=name#</span>
+    <strong class="k-upload-status">
+        <span class="k-upload-pct">100%</span>
+        <button type="button" class="k-upload-action">
+            <span class="k-icon k-i-close k-delete" title="Remove"></span>
+        </button>
+    </strong>
+</script>
+
+<script id="tpl_tab_items" type="text/x-kendo-template">
+    <ul>
+        #for (var i=0; i< tab_items.length; i++){ #
+            # var item = tab_items[i]; #
+             <li id="#: item.name#" data-url="#:item.url#">
+                <span class="k-link">#=window.lng[item.title]#</span>
+            </li>
+        # } #
+    </ul>
+    #for (var i=0; i< tab_items.length; i++){ #
+            # var item = tab_items[i]; #
+             <div id="#item.name#_content">
+               
+                # var html = $.apps.render_layout(app_name,"tpl_"+item.name+"_content",{})#
+                #= html#
+             </div>
+    # } #
+
+</script>
+<script id="tpl_empty_conversation" type="text/x-kendo-template">
+    <div class="not_selected">
+        <div>
+            <i class="fa fa-inbox fa-5x block-display"></i>
+            <p>#:lng.choose_convertation#</p>
+            <div class="info-message">
+                <i class="fa fa-question-circle fa-2"></i>
+               #:lng.can_view#
+                <a  target="_blank" href="http://wiki.izihelp.com" class="hover-underline">
+                     Wiki IziHelp Support
+                </a>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script id="tpl_message" type="text/x-kendo-template">
+    # 
+        var res_time =   moment(response_time).utcOffset(current_time_zone);
+        var index = data.parent().indexOf(data);
+        var prev_res = index != -1 ? data.parent().at(index -1) : null;
+        var avartar = "";
+        var profileUrl = baseurl+"/profile/";
+        var isUser = false;
+        var isRequester = false;
+        if(current_user){
+            isUser = true ;
+            avartar = "http://placehold.it/50/55C1E7/fff&text=ME";
+            profileUrl = profileUrl + user._id;
+        }else if(user){
+            isUser = true ;
+            avartar = "/media/"+user._id+"/avatar.jpg?"+Date.now();
+            profileUrl = profileUrl + user._id;
+           
+        }else if(data.requester){
+            isRequester = true;
+            profileUrl = profileUrl+"requester/"+ requester._id;
+            
+            if(requester.contacts && requester.contacts[0]){
+                var pri_contact = requester.contacts[0];
+                if(pri_contact.type == 2){
+                    avartar = 'https://graph.facebook.com/' + pri_contact.value + '/picture';
+                }else{
+                    avartar = "/media/"+requester._id+"/avatar.jpg?_="+Date.now();
+                }
+            }else{
+                avartar = "/media/"+requester._id+"/avatar.jpg?_="+Date.now();
+            }
+             
+        }else{
+            avartar = "/img/user_sm.png?_="+Date.now();
+        }
+        
+        avartar = avartar || "/img/user_sm.png?_="+Date.now();
+        var float = current_user? "right": "left";
+        var name = data.requester ? requester.display_name: user? user.display_name : "";
+    #
+    <!--<div class="divider-horz">
+        <p class="text-center">Center aligned</p>
+    </div>-->
+    
+    <li class="#:float# clearfix #:data.is_public === false ? "internal" : ""#" data-id="#:id#">
+        #
+        var duplicate = false;
+        if(prev_res){ #
+            # var prev_time = moment(prev_res.response_time).utcOffset(current_time_zone);
+            if(prev_time.format(log_info.date_format) != res_time.format(log_info.date_format)){ 
+            #
+                <fieldset class="divider-horz text-center">
+                    <legend class="divider-legend" align="center">#:res_time.format('D MMMM YYYY')#</legend>
+                </fieldset>
+                <span class="chat-img pull-#:float#" title="#:name#" data-toggle="tooltip" data-placement="#:float =="left"? "right":"left" #" >
+                    <a href="#:profileUrl#" target="_blank" data-img="#:avartar#">
+                        <img src="#:avartar#" onerror="this.onerror=null;this.src='/img/user_sm.png';" alt="User Avatar" class="img-circle" />
+                    </a>
+                </span>
+           # }else if( (isRequester && prev_res.requester &&  data.requester && prev_res.requester._id == data.requester._id) || (isUser && prev_res.user && data.user && prev_res.user._id == data.user._id) ){ 
+                duplicate = true; 
+            }else{ #
+                <span class="chat-img pull-#:float#" title="#:name#" data-toggle="tooltip" data-placement="#:float =="left"? "right":"left" #" >
+                    <a href="#:profileUrl#" target="_blank" data-img="#:avartar#">
+                        <img src="#:avartar#" onerror="this.onerror=null;this.src='/img/user_sm.png';" alt="User Avatar" class="img-circle" />
+                    </a>
+                </span>
+            #} #
+        # }else{ #
+            <fieldset class="divider-horz text-center">
+                <legend class="divider-legend" align="center">#:res_time.format('DD MMMM YYYY')#</legend>
+            </fieldset>
+            <span class="chat-img pull-#:float#" title="#:name#" data-toggle="tooltip" data-placement="#:float =="left"? "right":"left" #" >
+                <a href="#:profileUrl#" target="_blank" data-img="#:avartar#">
+                    <img src="#:avartar#" onerror="this.onerror=null;this.src='/img/user_sm.png';" alt="User Avatar" class="img-circle" />
+                </a>
+            </span>
+       # } #
+        <div class="chat-body clearfix">
+            <div class="popover chat-popover"  style="display: block;" 
+                data-toggle="tooltip" title="<span class='glyphicon glyphicon-time' style='margin-right: 5px;'></span>#:res_time.format(log_info.time_format)#"
+                data-placement="#:float =="left"? "right":"left" #"
+                data-template='<div class="tooltip time-tooltip" role="tooltip"><div class="tooltip-inner"></div></div>'>
+                # if(!duplicate){ #
+                <div class="arrow" ></div>
+                # } #
+                <div class="popover-content">
+                    <div>
+                        #=data.channel_type == 0? mail_simplify(response, false): mail_simplify(response, true)#
+                    </div>
+                   
+                    <!-- attachment is file -->
+                    <div class="attachment_file">
+                        #if(data.attachment_uri){ #
+                            # for(var i=0; i< attachment_uri.length; i++){ #
+                                 # if(getFileType(attachment_uri[i]) == "file") { #
+                                    <div class="file-item">
+                                        <a href="/media/#:parent_user#/#:attachment_uri[i]#?#:Date.now()#" target="_blank">
+                                            <i class="fa #:getExtensionClass(attachment_uri[i])#"></i>
+                                            <span class="filename" title="#:attachment_uri[i]#">#=attachment_uri[i]#</span>
+                                        </a>
+                                    </div>
+                                 # } #
+                            # }#
+                        # } #
+                    </div>
+                    <!-- attachment is image -->
+                    <div class="attachment_img">
+                    #if(data.attachment_uri){ #
+                        # for(var i=0; i< attachment_uri.length; i++){ #
+                             # if(getFileType(attachment_uri[i]) == "image") { #
+                                <a href="/media/#:parent_user#/#:attachment_uri[i]#?#:Date.now()#" target="_blank"><img src="/media/#:parent_user#/#:attachment_uri[i]#?#:Date.now()#"></a>
+                             # } #
+                        # }#
+                    # } #
+                    </div>
+                </div>
+                <div class="popover-footer">
+                    <a class="link-to bar-btn" href="/ticket/#:ticket_id#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="#:lng.view_on_izihelp#">
+                        <i class="fa fa-external-link"></i>
+                    </a>
+                    # if(appViewModel.appSettings.groupBy == "requester"){ #
+                    <a class="link-to bar-btn" href="javascript:" data-toggle="tooltip" data-placement="bottom" title="<p class='text-ellipsis' style='color: \\#fff'>#: subject#</p>">
+                        <i class="fa fa-text-width"></i>
+                    </a>
+                    # } #
+                    # if(data.contact_type == 21 && data.thread_message_id){
+                        var id_split = data.thread_message_id.split("_");
+                        var mes_id = id_split.length > 2 ?  id_split[1] +"_"+ id_split[2]: data.thread_message_id;
+                    #
+
+                    <a class="link-to bar-btn"  href="https://facebook.com/#:mes_id#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="#:lng.view_on_fb#">
+                        <i class="fa fa-facebook"></i><i class="sub-icon fa fa-external-link"></i>
+                    </a>
+                        # if(data.requester){ #
+                        <a class="link-to bar-btn" href="\\#" data-bind="events:{click:facebook.comments.hide}"  data-method="#:data.is_hidden? 'false': 'true'#" data-toggle="tooltip" data-placement="bottom" title="#:data.is_hidden? 'Unhide': 'Hide'#">
+                            <i class="fa fa-eye#:data.is_hidden? '-slash': ''#"></i>
+                        </a>
+                        <a class="link-to bar-btn" href="\\#" data-bind="events:{click:facebook.comments.like}" data-method="#:data.is_like? 'DELETE': 'POST'#" data-toggle="tooltip" data-placement="bottom" title="#:data.is_like? 'Unlike': 'like'#">
+                            <i class="fa fa-thumbs#:data.is_like? '': '-o'#-up"></i>
+                        </a>
+                        # } #
+
+                    # } #
+                </div>
+            </div>
+        </div>
+    </li>
+</script>
+<script id="tpl_contact" type="text/x-kendo-template">
+    # var contact_types = {
+        "0": "envelope",
+        "1": "phone-square",
+        "2": "facebook-square",
+        "3": "weixin"
+        };
+    #
+    <li class="contact_item"><i class="fa fa-#:contact_types[data.type || 0]#"></i><span>#:value#</span></li>
+</script>
+<script id="tpl_selected_conversation" type="text/x-kendo-template">
+    #
+        var avartar = "";
+        if(selectedConversation.requester && selectedConversation.requester.contacts){
+            var pri_contact = null;
+            for(var i= 0; i<selectedConversation.requester.contacts.length; i++){
+                if(selectedConversation.requester.contacts[i].is_primary){
+                    pri_contact = selectedConversation.requester.contacts[i];
+                    break;
+                }
+            }
+            var type = "";
+            (pri_contact && pri_contact.type)? (type = pri_contact.type ||  pri_contact.type()): null;
+            if(pri_contact && pri_contact.type == 2){
+                avartar = 'https://graph.facebook.com/' + pri_contact.value + '/picture?_='+Date.now();
+            }else{
+                avartar = "/media/" + selectedConversation.requester._id + "/avatar.jpg?_=" +Date.now();
+            }
+        }else{
+            avartar = "/media/"+ selectedConversation.requester._id+"/avatar.jpg?_="+Date.now();
+        }
+    #
+
+    <div class="app_conversation_info">
+        <div class="dropdown pull-right">
+               <a class="pull-right" aria-haspopup="true" aria-expanded="true" data-toggle="dropdown"><i class="fa fa-gear fa-2x"></i></a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li>
+                    <a>
+                        <label for="default" >#:lng.right_sidebar#<input type="checkbox" id="default" class="badgebox" data-bind="checked: appSettings.rightSideBar"><span class="badge">&check;</span></label>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="requester_info">
+            <div class="requester_avartar">
+                <a href="/profile/requester/#:selectedConversation.requester._id#" target="_blank"><img class="img-thumbnail" src="#:avartar#" onerror="this.onerror=null;this.src='/img/user_sm.png';"></a>
+            </div>
+            <div class="requester_content">
+                <a href="/profile/requester/#:selectedConversation.requester._id#" target="_blank"><span class="h4">#:selectedConversation.requester.display_name#</span></a>
+                <div class="requester_contacts tags">
+                    <ul data-template="#:app_name#_tpl_tag" data-bind="source: selectedResponse.tags">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="app_conversation_content content-scroll">
+        <div class="message-content lisview_wrapper">
+            # if(appSettings.groupBy == "ticket" && selectedConversation.contact_type == 21){ #
+                <p id="response_ticket"></p>
+            # } #
+            <div class="load-more load-more-top" data-bind="visible: conversloadMoreVisible"><a class="load-more-btn" data-bind="events:{click: conversloadMore}">#:lng.load_more#</a></div>
+            <ul class="chat" data-role="listview" data-selectable="true"
+                 data-template="#:app_name#_tpl_message"
+                 data-bind="source: selectedConversation.responses,
+                            events:{
+                                change: messageSetting.onListViewSelected,
+                                dataBound: conversationsDataBound
+                            }">
+            </ul>
+            <!--<ul class="chat" data-template="#:app_name#_tpl_message" data-bind="source: selectedConversation.responses">
+                
+            </ul>-->
+        </div>
+    </div>
+    <div class="app_conversation_tags">
+        <div class="item response_channel">
+            <select id="response_channel">
+            </select>
+        </div>
+        <div class="item response_channel" data-bind="style:{display: messageSetting.displayFbUser}">
+            <select id="fb_users" data-role="dropdownlist"
+                data-value-primitive="true"
+                data-text-field="name"
+                data-option-label= "#:lng.reply_as#",
+                data-value-field="facebook_user_id"
+                data-bind=" value: messageSetting.fbUser,
+                            source: messageSetting.fbUserDatasource">
+            </select>
+        </div>
+        <div class="item response_channel">
+            <select id="group_assignee">
+            </select>
+        </div>
+        <!--<div class="tags">
+            <ul data-template="#:app_name#_tpl_tag" data-bind="source: selectedResponse.tags">
+            </ul>
+        </div>
+        <a class="btn btn-default btn-xs pull-right" data-bind="events:{click: messageSetting.showEditTags}">
+            <i class="fa fa-tags"></i>
+            #:lng.edit_tags#
+        </a>-->
+    </div>
+    <div class="app_conversation_replay_message" >
+        <div class="message-input">
+            <div class="message-input-group">
+                <textarea class="input-control" placeholder="#:lng.enter_msg# " data-bind="enabled: messageSetting.enableComment,value:messageSetting.message, events:{keypress:messageSetting.pressEnter}"></textarea>
+                <input id="hidden_control" type="text" style="    height: 0;padding: 0;border: 0;width: 0;position: absolute;"/>
+                <div class="message-input-group-addon">
+                    # if(selectedConversation.contact_type != 8){ #
+                    <button data-toggle="tooltip" data-placement="left" title="Thêm tập tin" class="addon-item" data-bind="enabled: messageSetting.enableComment,events: { click: messageSetting.addFile }">
+                        <span class="icon glyphicon glyphicon-paperclip"></span></button>
+                    <button data-toggle="tooltip" data-placement="left" title="Thêm ảnh" class="addon-item" data-bind="enabled: messageSetting.enableComment,events{ click: messageSetting.addImage }">
+                             <span class="icon glyphicon glyphicon-camera"></span>
+                    </button>
+                    # } #
+                    <button data-toggle="tooltip" data-placement="left" title="#:lng.edit_tags#" class="addon-item" data-bind="enabled: messageSetting.enableComment,events{ click: messageSetting.showEditTags}">
+                             <span class="icon glyphicon glyphicon-tag"></span>
+                    </button>
+                </div>
+                <span class="reply_for text-ellipsis">
+                    @: <span  data-bind="text: selectedResponse.response.toString().mailSimplify( false ).stripTags()"></span>
+                </span>
+            </div>
+        </div>
+        <div class="upload_file">
+            <input name="files" accept="image/*"
+                   type="file"
+                   data-role="upload"
+                   data-template="#:app_name#_tpl_file_upload"
+                   data-async="{ saveUrl: '/rest/ticket/upload',
+                                 removeUrl: '/rest/ticket/upload/remove',
+                                 saveField: 'upload_files' }"
+                   data-bind="events: { select: messageSetting.upload.onSelect, remove:messageSetting.upload.onRemove, success:messageSetting.upload.onSuccess }">
+        </div>
+        <div class="message-setting">
+            <ul class="nav navbar-nav navbar-right">
+                <!--<li>
+                    <a class="edit-tags btn btn-default btn-xs" data-bind="events:{click: messageSetting.showEditTags}">
+                        <i class="fa fa-tags"></i>
+                        #:lng.edit_tags#
+                    </a>
+                </li>-->
+                <li >
+                    <div class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <div style="width: 100px;">
+                            <select id="ticket-status" data-role="dropdownlist"
+                                data-value-primitive="true"
+                                data-text-field="text"
+                                data-value-field="value"
+                                data-bind=" value: selectedResponse.status,
+                                            enabled: messageSetting.enableComment,
+                                            source: messageSetting.statusDatasource">
+                            </select>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                               #:lng.pre_enter#
+                            </label>
+                            <input type="checkbox" data-bind="  enabled: messageSetting.enableComment,
+                                                                checked: messageSetting.isPressEnter,events: {change: messageSetting.pressEnterChange}">
+                        </div>
+                        <button id="btnSend"  class="btn btn-default reply-btn" data-bind="enabled: messageSetting.enableComment,invisible: messageSetting.isPressEnter, events: {click: messageSetting.sendMessage}">
+                             <i class="fa fa-reply"></i> #:lng.reply#
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</script>
+
+<!--tab email content view-->
+<script id="tpl_conversation" type="text/x-kendo-template">
+    # if(data.selectedConversation){ #
+        #=$.apps.render_layout(app_name,"tpl_selected_conversation", {})#
+    # }else{ # 
+        #=$.apps.render_layout(app_name,"tpl_empty_conversation", {})#
+    # } #
+</script>
+<script id="tpl_tag" type="text/x-kendo-template">
+    <li>
+        <span  class="label-item">#:data.name#</span>
+    </li>
+</script>
+<script id="tpl_ticket_field" type="text/x-kendo-template">
+    <div class="form-group">
+        # if(data.type == appViewModel.ticketFieldType.Drop_down){
+            appViewModel.dropdownTicketFields[data.id] = data.default_value ;
+        #
+
+            <label for="custom_#:data.id#" class="col-sm-4 control-label">#: data.name#</label>
+            <div class="col-sm-6">
+              <select id="custom_#:data.id#" class="ticket-field" data-type="#:data.type#" data-role="dropdownlist" data-text-field="key" data-value-field="value" data-value-primitive="true" data-option-label="Select A Value">
+              </select>
+            </div>
+        # }else if(data.type == appViewModel.ticketFieldType.Checkbox){ #
+            <!--<div class="col-sm-offset-4 col-sm-6">
+              <div class="checkbox">
+                <label class="control-label" for="custom_#:data.id#">
+                  <input type="checkbox" id="custom_#:data.id#" data-type="#:data.type#" class="ticket-field">#:data.name#
+                </label>
+              </div>
+            </div>-->
+        # }else if(data.type == appViewModel.ticketFieldType.Numeric){ #
+            <label for="custom_#:data.id#" class="col-sm-4 control-label">#: data.name#</label>
+            <div class="col-sm-6">
+              <input  id="custom_#:data.id#" class="ticket-field" data-type="#:data.type#" data-role="numerictextbox" data-format="n0" data-decimals="0" data-placeholder="Select A Value" data-min="0" >
+            </div>
+        # } else if(data.type == appViewModel.ticketFieldType.Decimal){ #
+            <label for="custom_#:data.id#" class="col-sm-4 control-label">#: data.name#</label>
+            <div class="col-sm-6">
+              <input id="custom_#:data.id#" class="ticket-field" data-type="#:data.type#" data-role="numerictextbox"  data-placeholder="Select A Value">
+            </div>
+        # }else if(data.type == appViewModel.ticketFieldType.Date){ #
+            <label for="custom_#:data.id#" class="col-sm-4 control-label">#: data.name#</label>
+            <div class="col-sm-6">
+              <input id="custom_#:data.id#" class="ticket-field" data-type="#:data.type#" data-role="datepicker"  >
+            </div>
+        # }else if(data.type == appViewModel.ticketFieldType.Text_area){ #
+            <label for="#:data.id#" class="col-sm-4 control-label">#: data.name#</label>
+            <div class="col-sm-6">
+              <textarea class="ticket-field" id="custom_#:data.id#" data-type="#:data.type#"></textarea>
+            </div>
+        # }else{ #
+            <label for="#:data.id#" class="col-sm-4 control-label">#: data.name#</label>
+            <div class="col-sm-6">
+              <input type="text" class="ticket-field" id="custom_#:data.id#" data-type="#:data.type#"/>
+            </div>
+        # } #
+        # if(data.type != appViewModel.ticketFieldType.Checkbox){ #
+            <div class="col-sm-2">
+                <div class="switch">
+                    <input id="checked_custom_#:data.id#" class="checked_custom cmn-toggle cmn-toggle-round-flat" type="checkbox">
+                    <label for="checked_custom_#:data.id#"></label>
+                </div>
+            </div>
+        # } #
+    </div>
+
+</script>
+<!--tab email list view item-->
+<script id="tpl_list_item" type="text/x-kendo-template">
+    #   var selected = (data.parent().parent() || data.parent()).selectedConversation;
+        var selected = (selected && data.requester &&  selected.requester._id == data.requester._id);
+    #
+    #
+        var avartar = "";
+        if(requester.contacts){
+            var pri_contact = null;
+            for(var i= 0; i<requester.contacts.length; i++){
+                if(requester.contacts[i].is_primary){
+                    pri_contact = requester.contacts[i];
+                    break;
+                }
+            }
+            
+            if(pri_contact && pri_contact.type == 2){
+                avartar = 'https://graph.facebook.com/' + pri_contact.value + '/picture';
+            }else{
+                avartar = "/media/" + requester._id + "/avatar.jpg?_=" +Date.now();
+            }
+        }else{
+            avartar = "/media/"+ requester._id+"/avatar.jpg?-+"+Date.now();
+        }
+        var dataId = null;
+        if(appViewModel.appSettings.groupBy == "requester"){
+            dataId = data._id;
+        }else{
+            dataId = data._id.requester+ "_"+ data._id.id;
+        }
+    #
+    <div class="listview-item #:is_read# #: selected? "k-state-selected" : ""#" data-id="#:dataId#">
+        <div class="conversation-avatar conversation-item">
+            <img class="img-circle"  src="#:avartar#" onerror="this.onerror=null;this.src='/img/user_sm.png';">
+        </div>
+        <div class="conversation-content conversation-item">
+            <p class="text-ellipsis">#:requester.display_name#</p>
+            <!--<div class="tags" >
+                 <ul data-template="#:app_name#_tpl_tag" data-bind="source: tags">
+                 </ul>
+            </div>-->
+            <div class="conversation-snippet" data-content="<p>#:response#</p>" data-title="Response message" data-popover="list-hover" data-toggle="popover" data-placement="right" data-trigger="hover" >
+                <!--<i class="fa fa-reply"></i>-->
+                <span  >#:response.stripTags()#</span>
+            </div>
+        </div>
+        <div class="conversation-info conversation-item">
+            <div>
+                <i class="fa fa-clock-o"></i>
+                <span >
+                    #:moment(response_time).utcOffset(current_time_zone).format(log_info.time_format)#
+                </span>
+            </div>
+            <div class="status-container">
+                <a class="conversation-status pull-right"  data-toggle="tooltip" data-placement="bottom" title="#:lng.status#"></a>
+            </div>
+             <div class="no-read-container">
+                 <span class="#:data.no_read == 0? "hide": ""# ">#:data.no_read# #: lng.message_no_read#</span>
+            </div>
+        </div>
+    </div>
+</script>

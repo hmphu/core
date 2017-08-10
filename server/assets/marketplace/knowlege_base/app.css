@@ -1,0 +1,74 @@
+.mde-menu-knowlege {
+    position: fixed;
+    top: 58px;
+    right: 0px;
+    z-index: 5;
+    display: inline-block;
+    height: 0px;
+    width: 50%;
+}
+
+.mde-menu-knowlege > div {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+.mde-menu-knowlege > div > .mde-content > ul .mde-item {
+    display: block;
+    cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    font-size: 0px;
+    line-height: 0px;
+    text-align: right;
+}
+
+.mde-menu-knowlege > div > .mde-content > ul >li:hover {
+    background-color: #868686;
+}
+
+.mde-menu-knowlege > div > .mde-content .mde-item > span {
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.mde-menu-knowlege > div > .mde-content .mde-item > label {
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+    width: 38px;
+    display: inline-block;
+}
+
+.mde-menu-knowlege > div > .mde-content .mde-item > span:nth-child(2) {
+    text-align: center;
+    width: 38px;
+    display: inline-block;
+}
+
+.mde-menu-knowlege > div > .mde-content .mde-item > span:nth-child(1) {
+    display: none;
+    padding-left: 10px;
+}
+
+.mde-menu-knowlege:hover > div > .mde-content .mde-item > span:nth-child(1) {
+    display: inline-block;
+}
+
+.mde-list-latest {
+    display: block;
+    position: relative;
+    padding-left: 20px;
+    list-style: disc;
+    color: #3f51b5;
+}
+
+.mde-list-section > section > div > a{
+    color: #3f51b5;
+}
+
+a:hover {
+    color: #3f51b5;
+}

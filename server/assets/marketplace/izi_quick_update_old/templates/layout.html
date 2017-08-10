@@ -1,0 +1,173 @@
+<script type="text/javascript" src="/js/select2-4.0.0/js/select2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/js/select2-4.0.0/css/select2.min.css" />
+<div class="main-content">
+    <div id="tab_account">
+        <ul>
+            <li class="k-state-active">{{lng.translate.view}}</li>
+            <li>{{lng.translate.overdue_tasks}}</li>
+            <li>{{lng.translate.report}}</li>
+        </ul>
+        <div>
+            <div id="view-tab">
+                <div class="content-top filter">
+                    <table>
+                        <tr>
+                            <td><span class="title fitler-type">{{lng.translate.select_date}}</span></td>
+                            <td><input class="fitler-type value"></td>
+
+                            <td><span class="title from-date">{{lng.translate.from_date}}</span></td>
+                            <td><input class="from-date value"></td>
+
+                            <td><span class="title to-date">{{lng.translate.to_date}}</span></td>
+                            <td><input class="to-date value"></td>
+
+                            <td></td>
+
+                        </tr>
+
+                        <tr>
+                            <td><span class="title group">{{lng.translate.group}}</span></td>
+                            <td><input class="group value"></td>
+
+                            <td><span class="title agent">{{lng.translate.assignee}}</span></td>
+                            <td><input class="agent value"></td>
+
+                            <td><span class="title stat">{{lng.translate.status}}</span></td>
+                            <td><input class="stat value"></td>
+
+                        </tr>
+
+                        <tr>
+                            <td><span class="title organization">{{lng.translate.organization}}</span></td>
+                            <td><input class="organization value"></td>
+
+                            <td><span class="title requester name">{{lng.translate.requester}}</span></td>
+                            <td><select class="requester value"></select></td>
+
+                            <td></td>
+
+                            <td>
+                                 <div class="button-actions">
+                                    <span class="act-filter btn"><i class="fa fa-filter">&nbsp;</i>{{lng.translate.filter}}</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="query-filter filter">
+                    <div class="filter-left" style="float:left;width:49%;padding-left:10px;">
+                        <h5 class="h5"><b>{{lng.translate.filtered_organization}}</b></h5>
+                        <div class="organization-filter-field"></div>
+                    </div>
+                    <div class="filter-right" style="float:left;width:49%;padding-left:10px;">
+                        <h5 class="h5"><b>{{lng.translate.filtered_requester}}</b></h5>
+                        <div class="requester-filter-field"></div>
+                    </div>
+                </div>
+                <div class="content-query">
+                    <div class="content-left select" style="margin-top:20px;">
+                        <div class="top-button-actions" style="margin-left:10px;margin-right:10px;display:inline-block;">
+                            <input type="checkbox" class="act-select_all">
+                        </div>
+                        <span class="ticket-counter">{{lng.translate.tickets}} <span class="counter">(0)</span></span>
+                        <div class="table-ticket-container">
+                            <div class="table-ticket"></div>
+                        </div>
+                        <div class="button-actions">
+                            <span class="act-more" style="display:none">
+                                <span class="text text-blue">{{lng.translate.load_more_}}</span>
+                                <span><input class="item_per_page" type="text" style="width: 28px; padding: 0px; margin: 0px; height: 18px; text-indent: 0px; line-height: 0px; text-align: center;" value="10"></span>
+                                /<span class="number text-blue">0</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div style="float:left;height:100%;">
+	                    <span style="font-size: 18px;height: 32px;display:inline-block;float:left;line-height: 30px;padding-left:20px;margin-top:25px">{{lng.translate.custom_fields}}</span>
+	                    <div class="content-right update" style="clear:both;">
+	                        <div class="table-cs-container" style="display:none">
+	                           	 <div class="table-custom-setting"></div>
+	                        </div>
+
+	                    </div>
+                    </div>
+                </div>
+                <div class="update update1" style="height:200px">
+                    <div class="table-cs-container" style="display:none">
+                       	 <div class="table-custom-setting"></div>
+                    </div>
+                    <div>
+                        <h5>{{lng.translate.comment}}</h5>
+                        <textarea class="comment value" style="height:112px;"></textarea>
+                    </div>
+               	</div>
+              	<div class="update update1" style="height:200px;width:367px;float:left;clear:inherit;margin-top:12px;">
+                    <div style="height:90px;">
+                        <div class="small-2-col">
+                            <h5 style="margin:0;padding:0;">{{lng.translate.group}}</h5>
+                            <input class="group value">
+                        </div>
+                        <div class="small-2-col">
+                            <h5 style="margin:0;padding:0;">{{lng.translate.assignee}}</h5>
+                            <input class="assignee value">
+                        </div>
+                    </div>
+                    <div>
+                        <h5>{{lng.translate.status}}</h5>
+                        <input class="stat value">
+                    </div>
+
+                </div>
+                <div class="button-actions act-for-update">
+                    <span class="btn act-update text-green">{{lng.translate.update_selected}}</span>
+                    <span class="btn act-clear">{{lng.translate.clear_selected}}</span>
+                    <span class="btn act-export-single">{{lng.translate.export_single_ticket}}</span>
+                    <span class="btn act-export-multi">{{lng.translate.export_multi_ticket}}</span>
+                </div>
+            </div>
+        </div>
+        <div>
+             <div id="overdue-tab">
+                <div class="content">
+                    <div class="button-actions">
+                        <span class="btn text-blue act-reload">{{lng.translate.refresh}}</span>
+                    </div>
+                    <div class="ticket-table"></div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div id="report-tab">
+                <div class="content-top filter">
+                    <div class="attribute">
+                        <div class="table-filter-container">
+                            <table>
+                                <tr>
+                                    <td><span  class="title">{{lng.translate.ticket_type}}</span></td>
+                                    <td><input class="value ticket-type"></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="title">{{lng.translate.select_date}}</span></td>
+                                    <td><input class="value date-type"></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="title">{{lng.translate.select_month}}</span></td>
+                                    <td><input class="value select-month"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="table-cs-container">
+                            <table class="table-cs">
+                            </table>
+                        </div>
+                    </div>
+                    <div class="button-actions">
+                        <span class="btn act-report">{{lng.translate.report}}</span>
+                    </div>
+                </div>
+                <div class="content-bottom report">
+                    <div class="bar-chart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

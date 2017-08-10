@@ -1,0 +1,39 @@
+<script id="tpl_msg_error" type="text/x-kendo-template">
+    <div class="error-msg">
+        <img src="/img/error-icon.png" />
+        <h3>#= title #</h3>
+        <p>#= message #</p>
+    </div>
+</script>
+
+<script id="tpl_msg_success" type="text/x-kendo-template">
+    <div class="success-msg">
+        <img src="/img/success-icon.png" />
+        <h3>#= message #</h3>
+    </div>
+</script>
+
+<script id="tpl_img_slider" type="text/x-kendo-template">
+
+    #for (var i=0; i< template_list.length; i++){ #
+        # var template = template_list[i]; #
+        <div>
+            <span data-href="#:template.path#.html">
+                                            <img src="/apps/assets/#:app_name#/#:template.path#.jpg" />
+                                            </span>
+            <span data-href="#:template.path#.html" class="name">#=template.name#</span>
+        </div>
+    # } #
+    # if(template_list.length < 3){ #
+        #for (var i=0; i< template_list.length; i++){ #
+        # var template = template_list[i]; #
+        <div>
+            <span data-href="#:template.path#.html">
+                                            <img src="/apps/assets/#:app_name#/#:template.path#.jpg" />
+                                            </span>
+            <span data-href="#:template.path#.html" class="name">#=template.name#</span>
+        </div>
+        # } #
+    # } #
+
+</script>

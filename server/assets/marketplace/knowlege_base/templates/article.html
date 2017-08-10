@@ -1,0 +1,139 @@
+<script id="tpl_view_article_view" type="text/html">
+    <require from="./resources/value-converters/datetime-format"></require>
+    <!--    ARTICLE PAGE-->
+
+    <!--        Breadcrumb article-->
+    <div class="mde-pT10 mde-pB10">
+        <span>
+                <a click.delegate="parent.route('index')">${ parent.app_data.lng.translates.home }</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            </span>
+        <span>
+                 <a click.delegate="parent.route('section_view', {id: model.art.section_id._id})">${model.art.section_id.title}</a>
+            </span>
+    </div>
+    <!--        Search article-->
+    <div class="mde-pT10 mde-pB10">
+        <form class="mde-search-filter w100per" submit.delegate="parent.search()">
+            <input type="text" autocomplete="on" value.bind="parent.query" placeholder="Enter your search query"><i></i>
+            <label for="mde-reset" class="mde-close-btn mde-icon-small-btn"><i class="material-icons">clear</i>
+                <input type="reset" id="mde-reset">
+            </label>
+        </form>
+    </div>
+
+    <!--    content article-->
+    <div class="mde-pT10 mde-pB10">
+       <h4>${model.art.title}</h4>
+        <div class="mde-bg-white mde-boxShadow mde-pR10 mde-pL10 mde-pT20 mde-pB20">
+            <div class="mde-dIB-wrapper mde-mBottom">
+                <div class="mde-dIB mde-pRight">
+                    <a class="mde-avatar-general"><img src="/api/images/${model.art.user_created.profile_image}" /></a>
+                </div>
+                <div class="mde-dIB">
+                    <a class="block_el" href="#">${model.art.user_created.name}</a>
+                    <time>${model.art.created | timeFromNow}</time>
+                </div>
+            </div>
+            <div innerhtml="${model.art.content | sanitizeHTML}"></div>
+            <!--   list image article-->
+            <div class="mde-ouli">
+                <ul>
+                    <li class="mde-dIB mde-mRight" repeat.for="file of model.art.files">
+                        <a class="mde-img-general mde-bigger-img" href="/api/files/wiki/${file}" title="${file}" target="_blank">
+                            <template if.bind="!model.isImage(file)"><i class="icon-thumbnail fa fa-file-o"></i></template>
+                            <template if.bind="model.isImage(file)"><img class="image-thumbnail" src="/api/files/wiki/${file}" /></template>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<script id="tpl_view_article_edit" type="text/html">
+    <require from="./resources/custom-elements/mde-wysiwyg"></require>
+    <require from="./resources/value-converters/datetime-format"></require>
+    <!--    EDIT ARTICLE PAGE-->
+    <div id="edit-article">
+        <div class="mde-dIB-wrapper">
+            <div class="mde-dIB mde-wCol7 mde-vaTop">
+                <div class="mde-pLeft">
+                    <h4>${model.art._id? parent.app_data.lng.translates.edit : parent.app_data.lng.translates.add} ${parent.app_data.lng.translates.article}</h4>
+                </div>
+                <div class="mde-p10">
+
+                    <div class="mde-mBottom">
+                        <span class="mde-cl-gray-light">${parent.app_data.lng.translates.title}</span>
+                        <br>
+                        <mde-input id="title" value.bind="model.art.title" mde-class="w100per" />
+                    </div>
+                    <div class="mde-mBottom">
+                        <!--                    <mde-input id="content" type="textarea" value.bind="formData.comment" rows="8" mde-class="w100per" />-->
+                        <mde-wysiwyg content.bind="model.art.content" placeholder.bind="'ticket.enter_text'| t" mde-class="mde-mTop mde-mBottom mde-bg-white" mde-content-style="height:200px"></mde-wysiwyg>
+                    </div>
+                    <mde-files files.bind="model.art.files" accept.bind="model.accept_file" mde-class="w100per"></mde-files>
+                    <div class="mde-upFile-mul-wrapper">
+                        <ul class="mde-upload-file-results mde-boxShadow">
+                            <li repeat.for="file of model.art.oldFiles">
+                                ${file}
+                                <a class="mde-close-btn mde-icon-small-btn au-target" click.delegate="model.removeFile(file, $index)"><i class="material-icons">close</i></a>
+                                <i></i>
+                            </li>
+                            <!--anchor-->
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div class="mde-dIB mde-wCol3 mde-p10">
+                <div class="mde-br mde-bg-white mde-brRa5">
+                    <div class="mde-dIB-wrapper w100per mde-brBottom mde-pLeft mde-pRight" if.bind="model.art._id">
+                        <div class="mde-dIB mde-wDi2 mde-vaTop mde-tCenter mde-p10 mde-brRight">
+                            <strong>${parent.app_data.lng.translates.created}</strong>
+                            <br>
+                            <time title="${model.art.add_time | datetimeFormat:true}">${model.sect.add_time | timeFromNow}</time>
+                            <span>${parent.app_data.lng.translates.by}</span>
+                            <strong if.bind="parent.me.roles[0] =='agent'"></strong>
+                            <a if.bind="parent.me.roles[0] =='owner' || (parent.me.roles[0] =='admin' && model.art.user_created.roles[0] !='owner')" route-href="route:manageUserModify; params.bind:{id:model.art.user_created._id}" target="_blank"><strong>${model.art.user_created.name}</strong></a>
+
+                        </div>
+                        <div class="mde-dIB mde-wDi2 mde-tCenter mde-p10">
+                            <strong>${parent.app_data.lng.translates.updated}</strong>
+                            <br>
+                            <time title="${model.art.upd_time | datetimeFormat:true}">${model.art.upd_time | timeFromNow}</time>
+                            <span>${parent.app_data.lng.translates.by}</span>
+                            <strong if.bind="parent.me.roles[0] =='agent'"></strong>
+                            <a if.bind="parent.me.roles[0] =='owner' || (parent.me.roles[0] =='admin' && model.art.user_updated.roles[0] !='owner')" route-href="route:manageUserModify; params.bind:{id:model.art.user_updated._id}" target="_blank"><strong>${model.art.user_updated.name}</strong></a>
+                        </div>
+                    </div>
+                    <div class="mde-p10">
+                        <div>
+                            <div class="mde-cl-gray-light">${parent.app_data.lng.translates.show_in_section}</div>
+                            <div class="group-input">
+                                <!--                            <mde-dropdown id="section_id" chooser.bind="model.art.section_id" url.bind="parent.master.sections.url" mapping.bind="parent.master.sections.mapping"></mde-dropdown>-->
+                                <mde-opt-autocomplete id="section_id" group-chooser.bind="model.cate_id+model.art.section_id" group.bind="model.cate_id" chooser.bind="model.art.section_id" group-param="cate_id" search-param="title" url.bind="parent.master.sections.url" mapping.bind="parent.master.sections.mapping"></mde-opt-autocomplete>
+                                <input type="hidden" name="section_id">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div if.bind="!model.art._id == false" class="mde-br mde-bg-white mde-p10 mde-mTop mde-tCenter">
+                    <a t="common.delete_title" click.delegate="model.remove()"></a>
+                </div>
+            </div>
+        </div>
+        <div class="mde-p10">
+            <button click.delegate="model.save()" class="mde-orange-btn mde-mRight">
+                <span t="common.save"></span>
+            </button>
+            <button if.bind="!model.section_id == false" class="mde-gray-btn" click.delegate="parent.route('section_view',{id: model.section_id})">
+                <span t="common.cancel"></span>
+            </button>
+            <button if.bind="!model.section_id" class="mde-gray-btn" click.delegate="parent.route('index')">
+                <span t="common.cancel"></span>
+            </button>
+        </div>
+    </div>
+</script>

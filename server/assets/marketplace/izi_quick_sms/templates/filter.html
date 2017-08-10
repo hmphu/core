@@ -1,0 +1,82 @@
+<script id="tpl_tab_filter" type="text/html">
+    <require from="./resources/custom-attributes/checked"></require>
+    <require from="./resources/custom-attributes/show"></require>
+
+    <require from="./resources/value-converters/datetime-format"></require>
+    <require from="./resources/custom-elements/datetime"></require>
+    <require from="./resources/custom-elements/mde-table"></require>
+    <require from="./resources/custom-elements/mde-file"></require>
+    <div id="tab-item-filter">
+        <div class="mde-mTop mde-p10">
+            <div>
+                <div class="mde-dIB mde-mRight mde-mBottom">
+                    <div class="mde-cl-gray-light">${_t.select_date}</div>
+                    <mde-dropdown id="dateSelect" chooser.bind="filterData.dateType" is-reset.bind="false" options.bind="master.dateOptions"></mde-dropdown>
+                </div>
+                <div class="mde-dIB">
+                    <div class="mde-dIB mde-mRight mde-mBottom">
+                        <div class="mde-cl-gray-light">${_t.from_date}</div>
+                        <datetime id.bind="start_date" name.bind="start_date" value.bind="filterData.fromDate | datetimeFormat" format.bind="{timepicker: false}" />
+                    </div>
+                    <div class="mde-dIB mde-mRight mde-mBottom">
+                        <div class="mde-cl-gray-light">${_t.to_date}</div>
+                        <datetime id.bind="end_date" name.bind="end_date" value.bind="filterData.toDate | datetimeFormat" format.bind="{timepicker: false}" />
+                    </div>
+                </div>
+            </div>
+<!--
+            <div>
+                <div class="mde-dIB mde-mRight mde-mBottom">
+                    <div class="mde-cl-gray-light">${_t.group}</div>
+                    <mde-autocomplete id="group" chooser.bind="filterData.group" url.bind="master.group.url" mapping.bind="master.group.mapping" change.trigger="groupChange($event)"></mde-autocomplete>
+                </div>
+                <div class="mde-dIB mde-mRight mde-mBottom">
+                    <div class="mde-cl-gray-light">${_t.assignee}</div>
+                    <mde-autocomplete id="agent" chooser.bind="filterData.agent" search-param="text_search" url.bind="master.agent.url" mapping.bind="master.agent.mapping" change.trigger="agentChange($event)"></mde-autocomplete>
+                </div>
+                <div class="mde-dIB mde-mRight mde-mBottom">
+                    <div class="mde-cl-gray-light">${_t.status}</div>
+                    <mde-dropdown id="status" chooser.bind="filterData.status" options.bind="master.ticketStatus" change.trigger="statusChange($event)" placeholder="${'dashboard.all' | t & signal: 'translation'}"></mde-dropdown>
+                </div>
+            </div>
+-->
+            <div>
+                <div class="mde-dIB mde-mRight mde-mBottom">
+                    <div class="mde-cl-gray-light">${_t.organization}</div>
+                    <mde-autocomplete id="org" chooser.bind="filterData.org" url.bind="master.org.url" mapping.bind="master.org.mapping" change.trigger="orgChange($event)"></mde-autocomplete>
+                </div>
+                <div class="mde-dIB mde-mRight mde-mBottom">
+                    <div class="mde-cl-gray-light">${_t.requester}</div>
+                    <mde-autocomplete id="requester" chooser.bind="filterData.requester" url.bind="master.requester.url" mapping.bind="master.requester.mapping"></mde-autocomplete>
+                </div>
+            </div>
+             <div class="mde-table mde-mTop">
+                <div class="mde-div-row" repeat.for="field of fields">
+                    <div class="mde-table-cell mde-vaMiddle">
+                        <label class="mde-checkbox">
+                            <input type="checkbox" checked.bind="field.checked"><i></i>
+                            <strong>${field.name}</strong>
+                        </label>
+                    </div>
+                    <div class="mde-table-cell mde-vaMiddle" if.bind="field.checked">
+                        <compose view.bind="templates['tpl_field_'+field.field_type]" view-model.bind="field" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mde-p10 mde-mTop" >
+            <div class="mde-brTop mde-pTop">
+                <div class="mde-mBottom">
+                    <div class="mde-cl-gray-light">${_t.content}</div>
+                    <mde-input id="content" type="textarea" value.bind="formData.content" rows="8" mde-class="w100per" />
+                </div>
+                <div class="mde-mTop">
+                    <button if.bind="formData.content" class="mde-mTop mde-dIB mde-default-btn mde-mRight ${progressing? 'mde-actived-loading': ''}" disabled.bind="progressing" click.delegate="sendSms()">
+                        <span>${_t.send}</span>
+                        <span class="mde-loading"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

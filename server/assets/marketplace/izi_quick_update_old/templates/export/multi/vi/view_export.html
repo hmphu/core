@@ -1,0 +1,129 @@
+<html>
+    <head>
+    <meta charset="UTF-8">
+    </head>
+    <style>
+        ul {
+            list-style-type: none;
+            padding: 0px;
+            width: 100%;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 11px;
+        }
+        query {
+            padding: 20px;
+            font-family: sans-serif;
+        }
+        td, th {
+            border: 1px solid black;
+            vertical-align: top;
+        }
+        .checkbox {
+            float: left;
+            width: 13px;
+            height: 12px;
+            border: 1px solid black;
+            border-radius: 2px;
+            margin-right: 5px;
+        }
+        .b {
+            font-weight: bold;
+        }
+        .tct {
+            text-align: center;
+        }
+        .l5px {
+            margin-left:5px;
+        }
+        .bt0 {
+            border-top:0px;
+        }
+        .bb0 {
+            border-bottom:0px;
+        }
+        .dbl {
+            display: block;
+        }
+    </style>
+    <query>
+        <span style="display: block;padding: 30px 0px;">EMS</span>
+        <table>
+            <tr>
+                <td colspan="3">
+                    <span class="l5px b">Họ tên, địa chỉ người gửi</span>
+                    <span class="dbl l5px">{{ticket.organization.name}} - {{ticket.requester.display_name}}</span>
+                    <span class="dbl l5px">{{ticket.requester.address}}</span>
+                    <span class="dbl l5px">Tel: {{ticket.requester.phone}}</span>
+                </td>
+                <td colspan="2">
+                    <span class="l5px b">Họ tên, địa chỉ người nhận</span>
+                    <span class="dbl l5px">{{ticket.reciever_name}} - {{ticket.ticket_code}}</span>
+                    <span class="dbl l5px">{{ticket.reciever_address}}</span>
+                    <span class="dbl l5px">Tel: {{ticket.reciever_phone}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="bb0" style="width:25%;"><span class="l5px b dbl tct">Loại bưu gửi</span></td>
+                <td style="width:10%;"><span class="l5px tct dbl b">Số gói</span></td>
+                <td style="width:15%;"><span class="l5px tct dbl b">Khối lượng</span></td>
+                <td class="bb0" style="width:25%;"><span class="l5px tct dbl b">Cước phí</span></td>
+                <td class="bb0" style="width:25%;"><span class="l5px tct dbl b">Chữ ký người gửi</span></td>
+            </tr>
+            <tr>
+                <td class="bt0">
+                    <ul style="margin-top: 20px;" class="l5px">
+                        <li><span class="checkbox"></span>Giấy tờ giao dịch</li>
+                        <li style="margin-top: 5px;"><span class="checkbox"></span> Hàng hóa</li>
+                    </ul>
+                </td>
+                <td colspan="2"><span class="tct dbl b">Khối lượng quy đổi</span></td>
+                <td class="bt0">
+                    <ul class="l5px" style="margin-top: 10px;">
+                        <li>Cước chính:</li>
+                        <li>Cước DV đặt biệt:</li>
+                        <li>VAT:</li>
+                        <li>Tổng cộng:</li>
+                    </ul>
+                </td>
+                <td class="bt0">
+                    <span class="dbl" style="margin-top: 40px;">Ngày giờ gửi</span>
+                    <span class="dbl tct">h&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp/&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp/</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="dbl b l5px">Cam kết của người gửi</span>
+                    <span class="l5px">Trường hợp không phát được:</span>
+                    <ul class="l5px">
+                        <li><span class="checkbox"></span>Chuyển hoàn</li>
+                        <li style="margin-top: 5px;"><span class="checkbox"></span>Hủy</li>
+                    </ul>
+                </td>
+                <td colspan="2">
+                    <span class="b l5px dbl">Dịch vụ đặc biệt</span>
+                    <ul class="l5px">
+                        <li><span class="checkbox"></span>Phát hẹn giờ</li>
+                        <li style="margin-top: 5px;"><span>Ngày nhận &nbsp&nbsp&nbsph&nbsp&nbsp&nbsp&nbsp/&nbsp&nbsp&nbsp&nbsp&nbsp/</span></li>
+                        <li style="margin-top: 5px;"><span class="checkbox"></span>Phát hàng thu tiền/COD</li>
+                        <li style="margin-top: 5px;"><span class="checkbox"></span>Khai giá</li>
+                    </ul>
+                </td>
+                <td><span class="b tct dbl">Chữ ký của GDV</span></td>
+                <td>
+                    <span class="dbl b tct">Chữ ký người nhận</span>
+                    <span class="dbl tct">(Ký và ghi rõ họ tên)</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <span class="b l5px dbl">Phần kê khai nội dung:</span>
+                    <span class="l5px">{{ticket.desc}}</span>
+                </td>
+            </tr>
+        </table>
+    </query>
+
+</html>

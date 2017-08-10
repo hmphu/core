@@ -1,0 +1,135 @@
+<script id="tpl_app_requester_item_ticket" type="text/x-kendo-template">
+    <a href="/ticket/#= id_ticket#" target="_blank">
+        #
+            status_text = 'o';
+            switch(status) {
+                case 1 : status_text = 'n'; break;
+                case 2 : status_text = 'o'; break;
+                case 3 : status_text = 'p'; break;
+                case 4 : status_text = 's'; break;
+                case 5 : status_text = 'c'; break;
+            }
+        #
+        <span class="ico ico_adjust st_#= status#">#= status_text#</span>
+        <span class="subject">#= subject#</span>
+        <h6 class="date_request">#= date_request#</h6>
+    </a>
+</script>
+
+<script id="tpl_app_requester_no_result" type="text/x-kendo-template">
+    <p>#= lng.text.no_result #</p>
+</script>
+
+<script id="tpl_app_requester_contact" type="test/x-kendo-template">
+    <div class="box_menu left_bindding_menu">
+        <table cellpadding="5" width="100%" cellspacing="5">
+            <thead>
+                <tr>
+                    <td width="90"></td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                # if(contact.contact_email.length > 0) { #
+                <tr>
+                    <td align="right"><span class="null">#:lng.profile_requester.email# : </span></td>
+                    <td id="contacts_Email" style="overflow-y: inherit">
+                        # for (var i =0 ; i < contact.contact_email.length; i++) { #
+                            <div class="dropdown">
+                                <a data-toggle="dropdown" class="icon_acc" href="mailto:#:contact.contact_email[i]#">
+                                    <span>#:contact.contact_email[i]#</span>
+                                </a>
+                            </div>
+                        # } #
+                    </td>
+                </tr>
+                # } #
+                # if (contact.contact_phone.length > 0) { #
+                <tr>
+                    <td align="right"><span class="null">#:lng.profile_requester.phone# : </span></td>
+                    <td id="contacts_Email" style="overflow-y: inherit">
+                        # for (var i=0; i < contact.contact_phone.length; i++) { #
+                            <div class="dropdown">
+                                <a data-toggle="dropdown" class="icon_acc" href="">
+                                    <span>#:contact.contact_phone[i]#</span>
+                                </a>
+                            </div>
+                        # } #
+                    </td>
+                </tr>
+                # } #
+                # if (contact.contact_facebook.length > 0) { #
+                <tr>
+                    <td align="right"><span class="null">#:lng.profile_requester.facebook# : </span></td>
+                    <td id="contacts_Email" style="overflow-y: inherit">
+                        # for (var i = 0; i< contact.contact_facebook.length; i++) { #
+                            <div class="dropdown">
+                                <a class="icon_acc" href="https://www.facebook.com/#:contact.contact_facebook[i]#" target="_blank">
+                                    <span>#:contact.contact_facebook[i]#</span>
+                                </a>
+                            </div>
+                        # } #
+                    </td>
+                </tr>
+                # } #
+                <tr>
+                    <td colspan="2">
+                        <p class="line"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right"><span class="null">#:lng.profile_requester.language# : </span></td>
+                    <td id="contacts_Language" style="overflow-y: inherit"><span>#:data.language_name#</span></td>
+                </tr>
+                # if(data.organization != undefined) { #
+                <tr>
+                    <td align="right"><span class="null">#:lng.profile_requester.org# : </span></td>
+                    <td id="contacts_Language" style="overflow-y: inherit"><span>#:data.organization.name#</span></td>
+                </tr>
+                # } #
+                # if(data.details != undefined){ #
+                <tr>
+                    <td align="right"><span class="null">#:lng.profile_requester.details# : </span></td>
+                    <td id="contacts_Language" style="overflow-y: inherit"><span>#:data.details#</span></td>
+                </tr>
+                # } #
+                </tbody>
+        </table>
+    </div>
+   # if (data.custom_settings.length > 0) { #
+    <div class="box_menu left_bindding_menu">
+        <table cellpadding="5" width="100%" cellspacing="5">
+            <thead>
+                <tr>
+                    <td width="90"></td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody id="contact_custom_settings">
+            # for (var i =0 ; i < data.custom_settings.length; i++){ #
+                # if( !(data.custom_settings[i].value === 'Invalid date') && data.custom_settings[i].value !='') {#
+                <tr>
+                    <td align="right"><span class="null">#:data.custom_settings[i].custom_settings_id.name#</span></td>
+                    <td style="overflow-y: inherit">
+                        <div class="dropdown">
+                            <a data-toggle="dropdown" class="icon_acc" href="">
+                                # if(data.custom_settings[i].type == 7){ #
+                                     # var custom_settings_date = current_locale=="en"?moment(data.custom_settings[i].value).format("MM-DD-YYYY"): moment(data.custom_settings[i].value).format("DD-MM-YYYY"); #
+                                    <span>#:custom_settings_date#</span>
+                                    
+                                # } else if(data.custom_settings[i].type == 5) {#
+                                    <span> <input type="checkbox" #:data.custom_settings[i].value#></span>
+                                # } else { #
+                                    <span>#:data.custom_settings[i].value#</span>
+                                # } #
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                # } #
+            # } #
+            </tbody>
+        </table>
+    </div>
+    # } #
+</script>

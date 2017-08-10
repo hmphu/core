@@ -1,0 +1,52 @@
+<script id="tpl_msg_error" type="text/x-kendo-template">
+    <div class="error-msg">
+        <img src="/img/error-icon.png" />
+        <h3>#= title #</h3>
+        <p>#= message #</p>
+    </div>
+</script>
+
+<script id="tpl_msg_success" type="text/x-kendo-template">
+    <div class="success-msg">
+        <img src="/img/success-icon.png" />
+        <h3>#= message #</h3>
+    </div>
+</script>
+
+<script type="text/x-kendo-template">
+    <div class="success-msg">
+        <img src="/img/success-icon.png" />
+        <h3>#= message #</h3>
+    </div>
+</script>
+
+<script type="text/x-kendo-template" id="info-item">
+     <li class="field">
+        <p>
+            <a href="#:url#">
+                # if(typeof(record_referrer) != "undefined") { #
+                     <span class="field_label title">#: label# (#: record_type # of  #:record_referrer_type# #: record_referrer #)
+                    </span>
+                # }else { #
+                     <span class="field_label title">#: label# (#: record_type #)
+                    </span>
+                # } #
+
+            </a>
+        </p>
+
+        <ul class="sub-list">
+            # for (var i = 0; i < fields.length; i++) { #
+                <li class="field">
+                    <p>
+                        <span class="field_label ">#= fields[i].label #</span>
+                     </p>
+                     <p>#= fields[i].value #</p>
+
+                </li>
+            # } #
+        </ul>
+
+    </li>
+</script>
+

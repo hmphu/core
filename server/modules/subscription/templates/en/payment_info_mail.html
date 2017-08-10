@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="initial-scale=1.0">    <!-- So that mobile webkit will display zoomed in -->
+  <meta name="format-detection" content="telephone=no"> <!-- disable auto telephone linking in iOS -->
+
+</head>
+<body>
+
+    <table style="width: 100%">
+        <thead>
+             <tr>
+                <th style="text-align: left"><img src="{{full_url}}/img/logo.jpg"/> </th>
+                <th style="text-align: right">{{add_time}} </th>
+            </tr>
+            <tr>
+                <th><h2>Payment infomation</h2></th>
+            </tr>
+        </thead>
+    </table>
+    <table style="width: 100%">
+        <thead>
+        <tr>
+            <th style="width: 20%; text-align: left" >
+                <span>Plans</span>
+            </th>
+            <th style="width: 10%;">
+                <span>Agents</span>
+            </th>
+            <th style="width: 10%;">
+                <span>Price</span>
+            </th>
+            <th style="width: 10%;">
+                <span>Billing Cycle</span>
+            </th>
+            <th style="width: 20%;">
+                <span>Discount</span>
+            </th>
+            <th style="width: 20%; text-align: right" >
+                <span>Subtotal</span>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="width: 20%; text-align: left">
+               <span >{{plan_name}}</span>
+                </td>
+                <td style="width: 10%;text-align: center">
+                    <span>{{agents}}</span>
+                </td >
+                <td style="width: 10%;text-align: center">
+                    $<span >{{price}}</span>
+                </td>
+                <td style="width: 10%;text-align: center">
+                    <span >{{billing_cycle}} months</span>
+                </td>
+                <td style="width: 20%;text-align: center">
+<!--                     <span >{{discount}}months</span>-->
+                    {%if discount > 0 %}
+                        <span >{{discount}} months</span>
+                    {%else%}
+                        <span >no</span>
+                    {%endif%}
+                </td>
+                <td style="width: 20%; text-align: right" >
+                    <span >${{subtotal}}</span>
+                </td>
+            </tr>
+            <tr><td colspan="7"><hr style="margin:10px; border-color:  #A69D9D"></td></tr>
+            <tr >
+                <td style="width: 20%; text-align: left">
+                </td>
+                <td style="width: 10%;text-align: center">
+                </td >
+                <td style="width: 10%;text-align: center">
+                </td>
+                <td style="width: 10%;text-align: center">
+                </td>
+                <td style="width: 20%;text-align: center">
+                    <span style="font-weight: 600">Exchange Rate</span>
+                </td>
+                <td style="width: 20%; text-align: right" >
+                   <span >{{exchange_rate}}đ</span>
+                </td>
+            </tr>
+            <tr >
+                <td style="width: 20%; text-align: left">
+                </td>
+                <td style="width: 10%;text-align: center">
+                </td >
+                <td style="width: 10%;text-align: center">
+                </td>
+                <td style="width: 10%;text-align: center">
+                </td>
+                <td style="width: 20%;text-align: center">
+                    <span style="font-weight: 600">Total in VND</span>
+                </td>
+                <td style="width: 20%; text-align: right" >
+                    <span  >{{subtotal_vn}}đ</span>
+                </td>
+            </tr>
+            {%if is_promotion == "table-row"%}
+            <tr >
+                <td style="width: 20%; text-align: left">
+                </td>
+                <td style="width: 10%;text-align: center">
+                </td >
+                <td style="width: 10%;text-align: center">
+                </td>
+                <td style="width: 10%;text-align: center">
+                </td>
+                <td style="width: 20%;text-align: center">
+                    <span style="font-weight: 600">Discount Amount</span>
+                </td>
+                <td style="width: 20%; text-align: right" >
+                    <span  >{{coupon_amount}}đ</span>
+                </td>
+            </tr>
+            {%endif%}
+            {% if is_use_bonus === "table-row" %}
+            <tr >
+                <td style="width: 20%; text-align: left">
+                </td>
+                <td style="width: 10%;text-align: center">
+                </td >
+                <td style="width: 10%;text-align: center">
+                </td>
+                <td style="width: 10%;text-align: center">
+                </td>
+                <td style="width: 20%;text-align: center">
+                    <span style="font-weight: 600">Bonus amount</span>
+                </td>
+                <td style="width: 20%; text-align: right" >
+                   <span >{{bonus_amount}}đ</span>
+                </td>
+            </tr>
+            {%endif%}
+            <tr>
+                <td style="width: 20%; text-align: left">
+                </td>
+                <td style="width: 10%;text-align: center">
+                </td >
+                <td style="width: 10%;text-align: center">
+                </td>
+                <td style="width: 10%;text-align: center">
+                </td>
+                <td colspan="2" >
+                    <hr style="margin: 5px; border: 1px; border-bottom-style: dotted;">
+                </td>
+           </tr>
+            <tr >
+                <td style="width: 20%; text-align: left">
+                </td>
+                <td style="width: 10%;text-align: center">
+                </td >
+                <td style="width: 10%;text-align: center">
+                </td>
+                <td style="width: 10%;text-align: center">
+                </td>
+                <td style="width: 20%;text-align: center">
+                    <span style="font-weight: 600">Payments</span>
+                </td>
+                <td style="width: 20%; text-align: right" >
+                   <span >{{total_price}}đ</span>
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <hr style="margin:10px; border-color:  #A69D9D">
+    <footer><a href="{{pdf_url}}">Detail payment on PDF</a></footer>
+</body>
+</html>

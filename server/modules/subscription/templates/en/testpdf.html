@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="initial-scale=1.0">    <!-- So that mobile webkit will display zoomed in -->
+  <meta name="format-detection" content="telephone=no"> <!-- disable auto telephone linking in iOS -->
+</head>
+<body>
+    <pre>
+        <span class="pl-k">var</span> wkhtmltopdf <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>wkhtmltopdf<span class="pl-pds">'</span></span>);
+
+        <span class="pl-c">// URL</span>
+        <span class="pl-en">wkhtmltopdf</span>(<span class="pl-s"><span class="pl-pds">'</span>http://google.com/<span class="pl-pds">'</span></span>, { pageSize<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>letter<span class="pl-pds">'</span></span> })
+          .<span class="pl-en">pipe</span>(<span class="pl-smi">fs</span>.<span class="pl-en">createWriteStream</span>(<span class="pl-s"><span class="pl-pds">'</span>out.pdf<span class="pl-pds">'</span></span>));
+
+        <span class="pl-c">// HTML</span>
+        <span class="pl-en">wkhtmltopdf</span>(<span class="pl-s"><span class="pl-pds">'</span>&lt;h1&gt;Test&lt;/h1&gt;&lt;p&gt;Hello world&lt;/p&gt;<span class="pl-pds">'</span></span>)
+          .<span class="pl-en">pipe</span>(res);
+
+        <span class="pl-c">// output to a file directly</span>
+        <span class="pl-en">wkhtmltopdf</span>(<span class="pl-s"><span class="pl-pds">'</span>http://apple.com/<span class="pl-pds">'</span></span>, { output<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>out.pdf<span class="pl-pds">'</span></span> });
+
+        <span class="pl-c">// Optional callback</span>
+        <span class="pl-en">wkhtmltopdf</span>(<span class="pl-s"><span class="pl-pds">'</span>http://google.com/<span class="pl-pds">'</span></span>, { pageSize<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>letter<span class="pl-pds">'</span></span> }, <span class="pl-k">function</span> (<span class="pl-smi">code</span>, <span class="pl-smi">signal</span>) {
+        });
+        <span class="pl-en">wkhtmltopdf</span>(<span class="pl-s"><span class="pl-pds">'</span>http://google.com/<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">code</span>, <span class="pl-smi">signal</span>) {
+        });
+    </pre>
+</body>

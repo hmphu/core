@@ -1,0 +1,55 @@
+/* Error template */
+.k-notification-error.k-group {
+    background: rgba(100%,0%,0%,.7) !important;
+    color: #ffffff !important;
+}
+.error-msg {
+    width: 300px;
+    height: 100px;
+}
+.error-msg h3 {
+    font-size: 1.7em;
+    padding: 32px 10px 5px;
+}
+#id-okla {
+    padding: 32px 10px 5px;
+}
+body{
+    padding: 32px 10px 5px;
+}
+
+.content-app .nav{
+      margin-top: -15px;
+}
+ul {
+    list-style: outside none none;
+    margin-left: 0;
+}
+ul.sub-list {
+    margin-left: 10px;
+}
+li.field {
+    margin: 7px 0;
+}
+li.no-result {
+    text-align: center;
+}
+p {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.field p {
+    margin-bottom: 0;
+}
+
+.title {
+    color: #6896C7;
+   font-size: 1.2em;
+}
+
+.field_label {
+    font-weight: bold;
+    font-size : 1.2em
+    color: #555;
+}

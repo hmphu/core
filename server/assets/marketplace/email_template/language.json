@@ -1,0 +1,29 @@
+{
+  "en": {
+    "start_edit": "Start edit",
+    "end_edit": "End edit",
+    "all_template": "All template",
+    "apply_template" : "Apply template",
+    "apply_error" : "Failed to apply template",
+    "apply_success" : "The template have been applied",
+    "edit_current_tmpl" : "Edit current template",
+    "load_tmpl_success" : "Load template success",
+    "load_tmpl_error" : "Load template error",
+    "parameters": {
+    }
+  },
+  "vi": {
+    "start_edit": "Sửa",
+    "end_edit": "Kết thúc sữa",
+    "all_template": "Tất cả bản mẫu",
+    "apply_template" : "Áp dụng bản mẫu",
+    "apply_error" : "Không thể áp dụng bản mẫu",
+    "apply_success" : "Áp dụng bản mẫu thành công",
+    "edit_current_tmpl" : "Sủa bản mẫu hiện tại",
+    "load_tmpl_success" : "Tải bản mẩu thành công",
+    "load_tmpl_error" : "Tải bản mẩu thất bại",
+    "parameters": {
+
+    }
+  }
+}

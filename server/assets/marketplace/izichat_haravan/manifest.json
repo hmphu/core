@@ -1,0 +1,34 @@
+{
+  "name": "haravan",
+  "author": {
+    "name": "izihelp-dev",
+    "email": "tratt@fireflyinnov.com",
+    "url": "https://www.haravan.com/"
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "location": "top_bar",
+  "version": "1.0",
+  "frameworkVersion": "1.0",
+  "parameters": [
+    {
+      "name": "api_domain",
+      "type": "text",
+      "required": true,
+      "value": ""
+    },
+    {
+      "name": "api_key",
+      "type": "text",
+      "required": true,
+      "value": "",
+      "encode": "base64",
+      "is_only_server": true
+    },
+    {
+      "name": "script_tag_id",
+      "type": "hidden",
+      "value": ""
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+    "domain_black_list" : [
+        "cuongtdv",
+        "hochiminh",
+        "vonguyengiap",
+        "izihelp",
+        "fuck",
+        "admin",
+        "shit",
+        "fap",
+        "^api$",
+        "^firefly$",
+        "^masterpage$",
+        "^rest$",
+        "^sex$",
+        "^wiki$",
+        "^www$",
+        "^xxx$",
+        "^chat$",
+        "^support$",
+        "^logging$",
+        "^log$",
+        "^izi$",
+        "^test$",
+        "^staging$",
+        "^prod_test$"
+    ]
+}

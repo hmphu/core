@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style type="text/css">
+    table td {
+      border-collapse: collapse;
+    }
+    {{styles}}
+  </style>
+</head>
+<body {{attributes}} style="width: 100%!important; margin: 0; padding: 0;">
+    <div style="padding: 10px ; line-height: 18px; font-family: 'Lucida Grande',Verdana,Arial,sans-serif; font-size: 12px; color:#444444;">
+    <div style="color: #b5b5b5;">{{delimiter}}</div>
+        <p>Hi {{display_name}},</p>
+        <br/> Your primary email has been change to: {{email}}
+        <br/>
+        <br/> Afterwards, you can access your IZIHelp by going directly to <a href="{{url}}">{{url}}</a>.
+        <br/>
+        <br/>
+        <p>The IZIHelp Support Team</p>
+    <div style="color: #aaaaaa; margin: 10px 0 14px 0; padding-top: 10px; border-top: 1px solid #eeeeee;">
+        {{footer}} {{footer_link}}
+    </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+{
+    "en": {
+        "package": "crm",
+        "description": {
+            "value": "The application queries your SugarCRM to find the customer’s details"
+        },
+        "name": {
+            "value": "SugarCRM"
+        },
+        "parameters": {
+            "username": {
+                "label": {
+                    "value": "Username"
+                }
+            },
+            "url": {
+                "label": {
+                    "value": "SugarCRM URL"
+                }
+            },
+            "password": {
+                "label": {
+                    "value": "Password"
+                }
+            }
+        }
+    },
+    "vi": {
+        "package": "crm",
+        "description": {
+            "value": "Ứng dụng truy vấn SugarCRM của bạn để tìm thông tin chi tiết của khách hàng"
+        },
+        "name": {
+            "value": "SugarCRM"
+        },
+        "parameters": {
+            "username": {
+                "label": {
+                    "value": "Tên người dùng"
+                }
+            },
+            "url": {
+                "label": {
+                    "value": "URL của SugarCRM"
+                }
+            },
+            "password": {
+                "label": {
+                    "value": "Mật khẩu"
+                }
+            }
+        }
+    }
+}

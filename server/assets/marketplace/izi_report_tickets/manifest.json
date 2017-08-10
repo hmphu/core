@@ -1,0 +1,16 @@
+{
+  "name": "izi_report_tickets",
+  "author": {
+    "name": "Pham Quoc Khanh",
+    "email": "khanhpq@fireflyinnov.com",
+    "url": ""
+  },
+  "templateData": {
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "location": "nav_bar",
+  "version": "1.1",
+  "frameworkVersion": "1.0",
+  "parameters": []
+}

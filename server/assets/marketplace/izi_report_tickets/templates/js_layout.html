@@ -1,0 +1,34 @@
+<script id="tpl_msg_error" type="text/x-kendo-template">
+    <div class="error-msg">
+        <img src="/img/error-icon.png" />
+        <h3>#= title #</h3>
+        <p>#= message #</p>
+    </div>
+</script>
+
+<script id="tpl_msg_success" type="text/x-kendo-template">
+    <div class="success-msg">
+        <img src="/img/success-icon.png" />
+        <h3>#= message #</h3>
+    </div>
+</script>
+
+<script id="tpl_tab_items" type="text/x-kendo-template">
+    <ul>
+        #for (var i=0; i< tab_items.length; i++){ #
+            # var item = tab_items[i]; #
+             <li id="#: item.name#" data-url="#:item.url#">
+                <span class="k-link">#=window.lng[item.title]#</span>
+            </li>
+        # } #
+    </ul>
+    #for (var i=0; i< tab_items.length; i++){ #
+            # var item = tab_items[i]; #
+             <div id="#item.name#_content">
+               
+                # var html = $.apps.render_layout(app_name,"tpl_"+item.name+"_content",{})#
+                #= html#
+             </div>
+    # } #
+
+</script>

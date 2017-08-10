@@ -78,6 +78,7 @@ module.exports.initMiddleware = function (app) {
             // get raw_json_body
             req.raw_json_body = buf.toString();
             try {
+                console.log(111111111);
                 JSON.parse(req.raw_json_body);
             } catch (e) {
                 throw new TypeError('common.data.invalid');
@@ -269,7 +270,7 @@ module.exports.init = function (db) {
     this.initModulesServerEvents(app);
 
     // Configure Socket.io
-    // app = this.configureSocketIO(app, db);
+    app = this.configureSocketIO(app, db);
 
     return app;
 };

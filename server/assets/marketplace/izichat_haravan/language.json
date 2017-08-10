@@ -1,0 +1,66 @@
+{
+    "en": {
+        "package": "Haravan",
+        "description": {
+            "value": "Comprehensive sales solution from websites to store",
+            "title": "Haravan description"
+        },
+        "name": {
+            "value": "Haravan App"
+        },
+        "parameters": {
+            "api_domain": {
+                "label": {
+                    "value": "Domain Store"
+                },
+                "helpText": {
+                    "value": "Ex: shoptestapp.myharavan.com."
+                }
+            },
+            "api_key": {
+                "label": {
+                    "value": "Key"
+                },
+                "helpText": {
+                    "value": "VD: apikey:password"
+                }
+            }
+        },
+        "text": {
+            "connect" : "Connect",
+            "disconnect" : "Disconnect"
+        }
+    },
+    "vi": {
+        "package": "Haravan",
+        "description": {
+            "value": "Giải pháp bán hàng toàn diện từ các trang web lưu trữ.",
+            "title": "Haravan description"
+        },
+        "name": {
+            "value": "Haravan ứng dụng"
+        },
+        "parameters": {
+            "api_domain": {
+                "label": {
+                    "value": "Domain Store"
+                },
+                "helpText": {
+                    "value": "VD: shoptestapp.myharavan.com."
+                }
+            },
+            "api_key": {
+                "label": {
+                    "value": "Key"
+                },
+                "helpText": {
+                    "value": "VD: apikey:password"
+                }
+            }
+        },
+        "text": {
+            "connect" : "Kết nối",
+            "disconnect" : "Ngắt kết nối"
+        }
+    }
+}

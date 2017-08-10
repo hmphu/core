@@ -1,0 +1,54 @@
+{
+    "en": {
+        "package": "crm",
+        "description": {
+            "value": "The application queries your VtigerCRM to find the customer’s details"
+        },
+        "name": {
+            "value": "VtigerCRM"
+        },
+        "parameters": {
+            "username": {
+                "label": {
+                    "value": "Username"
+                }
+            },
+            "url": {
+                "label": {
+                    "value": "Vtiger URL"
+                }
+            },
+            "access_key": {
+                "label": {
+                    "value": "Access key"
+                }
+            }
+        }
+    },
+    "vi": {
+        "package": "crm",
+        "description": {
+            "value": "Ứng dụng truy vấn VtigerCRM của bạn để tìm thông tin chi tiết của khách hàng"
+        },
+        "name": {
+            "value": "VtigerCRM"
+        },
+        "parameters": {
+            "username": {
+                "label": {
+                    "value": "Tên người dùng"
+                }
+            },
+            "url": {
+                "label": {
+                    "value": "URL của VtigerCRM"
+                }
+            },
+            "access_key": {
+                "label": {
+                    "value": "Mã truy cập"
+                }
+            }
+        }
+    }
+}

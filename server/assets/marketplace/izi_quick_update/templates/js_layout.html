@@ -1,0 +1,76 @@
+<script id="tpl_custom_setting_row" type="text/x-kendo-template">
+    <div class="list-custom-item">
+        <div>
+            <span style="display: block;border-bottom: 1px dashed \#d3d3d3;margin-bottom: 5px;padding-bottom: 2px;">
+                <span style="margin-right:10px;"><input type="checkbox" class="cs-select" data-field-key="#:data.field_key#"></span><span class="title-field ellipsis">#:data.name#</span>
+            </span>
+            # if (data.type == "textarea") { #
+                <span class="value-field"><textarea class="cs-#:data.field_key#" data-field-key="#:data.field_key#"></textarea></span>
+            # } else { #
+                <span class="value-field"><input type="#:data.type#" class="cs-#:data.field_key#" data-field-key="#:data.field_key#"></span>
+            # } #
+        </div>
+    </div>
+</script>
+<script id="tpl_view_ticket_row" type="text/x-kendo-template">
+    <div class="ticket-row ticket-id-#:data.id#">
+        <div class="row-left">
+            <input type="checkbox" data-id="#:data.id#">
+        </div>
+        <div class="row-body">
+            <div class="inline-info">
+                <span class="status st_#:data.status_num + 1#">#:data.status_name#</span>
+                <span class="subject ellipsis text-blue" data-id="#:data.id#">#:data.subject#</span>
+                <span class="add-time text-gray" title="#:translate.created# #:data.add_value#">#:data.add_text#</span>
+            </div>
+            <span class="description ellipsis text-gray">#:data.description#</span>
+        </div>
+    </div>
+</script>
+<script id="tpl_overdue_ticket_row" type="text/x-kendo-template">
+    <tr class="ticket-row" data-ticket-id="#:data.id#">
+        <td>
+            <div class="ellipsis subject">
+                <span class="status-name ellipsis st_#:data.status_num#">#:data.status_name#</span><span class="ellipsis subject">#:data.subject#</span>
+            </div>
+        </td>
+        <td>
+        <span class="ellipsis"">#:data.description#</span>
+        </td>
+        <td>
+            <span title="#:data.due_date_value#">#:data.due_date_text#</span>
+        </td>
+        <td>
+            <span title="#:data.add_time_value#">#:data.add_time_text#</span>
+        </td>
+    </tr>
+</script>
+<script id="tpl_check_custom_setting_row" type="text/x-kendo-template">
+    <tr>
+        <td><input type="checkbox" class="select cs-check-#:data.field_key#" data-field-key="#:data.field_key#"></td>
+        <td><span class="title">#:data.name#</span></td>
+        <td>
+        # if (data.type == "textarea") { #
+            <span class="value">
+                <textarea class="cs-#:data.field_key#" data-field-key="#:data.field_key#"></textarea>
+            </span>
+        # } else { #
+            <span class="value">
+                <input type="#:data.type#" class="cs-#:data.field_key#" data-field-key="#:data.field_key#">
+            </span>
+        # } #
+        </td>
+    </tr>
+</script>
+
+<script id="tpl_filtered_requester" type="text/x-kendo-template">
+    <div class="filtered-requester-item filtered-item" data-id="#:data.id#" data-display_name="#:data.display_name#">
+        <span class="ellipsis" title="#:data.display_name#" style="display:block;text-align:center;font-size:13px;">#:data.display_name#</span>
+    </div>
+</script>
+
+<script id="tpl_filtered_organization" type="text/x-kendo-template">
+    <div class="filtered-organization-item filtered-item" data-id="#:data.id#">
+        <span class="ellipsis" title="#:data.name#" style="display:block;text-align:center;font-size:13px;">#:data.name#</span>
+    </div>
+</script>

@@ -1,0 +1,112 @@
+{
+    "en": {
+        "messages":{
+            "post_success":"Post comment successfully",
+            "remove_schdule_success": "Removed schdule post successfully",
+            "import_success": "Import profile success"
+        },
+        "translations": {
+            "post_title": "Post forum",
+            "setting_title": "Settings",
+            "post": "Post",
+            "note_forum": "You are can select than more one forum",
+            "select_forum": "Selection forum",
+            "list_forum": "List forum",
+            "type_post": "Enter post",
+            "title_app": "Post to forum",
+            "forum": "Forum",
+            "category": "Category",
+            "account": "Account",
+            "select_provider": "Select provider",
+            "post_content": "Post content",
+            "title": "Title",
+            "content": "Content",
+            "setting_time": "Setting time",
+            "start": "Start",
+            "end": "End",
+            "schedule_post": "Schedule post",
+            "schedule_post_recent": "Schedule post recent",
+            "empty_data": "Empty data",
+            "post_now": "Post now",
+            "prefix": "Prefix",
+            "is_error": "Is error",
+            "profile": "Profile",
+            "import": "Import",
+            "forum": "Forum"
+        },
+        "parameters": {
+            "custom_field": {
+                "label": {
+                    "value": "Ticket field"
+                }
+            },
+            "poster_name": {
+                "label": {
+                    "value": "Poster name"
+                }
+            },
+            "list_forum": {
+                "label": {
+                    "value": "Forum list",
+                    "value1": "Username",
+                    "value2": "Password"
+                }
+            }
+
+        }
+    },
+    "vi": {
+        "messages":{
+            "post_success":"Bình luận lên bài viết thành công",
+            "remove_schdule_success": "Xóa lịch hẹn đăng bài thành công",
+            "import_success": "Nhập dữ liệu thành công"
+        },
+        "translations": {
+            "post_title": "Đăng bài",
+            "setting_title": "Cài đặt",
+            "post": "Đăng bài",
+            "select_forum": "Chọn diễn đàn",
+            "note_forum": "Bạn có thể chọn nhiều nguồn diễn đàn cùng lúc để đăng bài",
+            "list_forum": "Danh sách diễn đàn",
+            "type_post": "Nhập nội dung",
+            "title_app": "Đăng bài lên diễn đàn",
+            "forum": "Diễn đàn",
+            "category": "Danh mục",
+            "account": "Tài khoản",
+            "select_provider": "Chọn nguồn này",
+            "post_content": "Nội dung bài đăng",
+            "title": "Tiêu đề",
+            "content": "Nội dung",
+            "setting_time": "Đặt thời gian",
+            "start": "Bắt đầu",
+            "schedule_post": "Lịch hẹn đăng bài",
+            "schedule_post_recent": "Lịch hẹn đăng bài gần đây",
+            "empty_data": "Không có dữ liệu",
+            "post_now": "Đăng ngay",
+            "prefix": "Tiền tố",
+            "is_error": "Bị lỗi",
+            "profile": "Tài khoản",
+            "import": "Nhập",
+            "forum": "Diễn đàn"
+        },
+        "parameters": {
+            "custom_field": {
+                "label": {
+                    "value": "Trường yêu cầu"
+                }
+            },
+            "poster_name": {
+                "label": {
+                    "value": "Người đăng bài"
+                }
+            },
+            "list_forum": {
+                "label": {
+                    "value": "Danh sách diễn đàn",
+                    "value1": "Tên tài khoản",
+                    "value2": "Mật khẩu"
+                }
+            }
+        }
+    }
+}

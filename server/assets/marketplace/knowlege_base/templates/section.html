@@ -1,0 +1,157 @@
+<script id="tpl_view_section_list" type="text/html">
+    <!--SECTION PAGE-->
+    <required from="./attributes/show"></required>
+
+    <div class="mde-p10" if.bind="sections.length == 0 " show.bind="cate.open">
+        <span>${parent.app_data.lng.translates.empty}</span>
+    </div>
+    <!--    EXPAND-->
+    <section show.bind="cate.open">
+        <!-- section-list-->
+        <div class="mde-p10 mde-brBottom mde-brBHidden mde-ouli" repeat.for="sec of sections">
+            <a class="mde-cl-main" click.delegate="parent.route('section_view', {id: sec._id})"><strong>${sec.title}</strong></a>
+            <div if.bind="sec.articles.length == 0 ">
+                <span>${parent.app_data.lng.translates.empty}</span>
+            </div>
+            <ul>
+                <li repeat.for="art of sec.articles"><a class="mde-cl-main" click.delegate="parent.route('article_view', {id:art._id})">${art.title}</a></li>
+            </ul>
+            <a if.bind="sec.articles.length > 0 " class="see-all mde-dB mde-mT10" click.delegate="parent.route('section_view', {id: sec._id})"><span t="common.load_more"></span></a>
+        </div>
+        <div class="mde-tCenter">
+            <a class="mde-p10 mde-dIB" if.bind="canLoadMore" t="common.load_more" click.delegate="loadMore()"></a>
+            <a class="mde-pT10 mde-dIB" if.bind="isLoadMore && sections.length > 0" t="common.load_more" click.delegate="parent.route('category_view',{id: cat._id})"></a>
+        </div>
+    </section>
+</script>
+
+<script id="tpl_view_section_view" type="text/html">
+    <require from="./resources/value-converters/datetime-format"></require>
+    <!--    SECTION PAGE-->
+    <div class="mde-pT10 mde-pB10">
+        <span>
+                <a click.delegate="parent.route('index')">${ parent.app_data.lng.translates.home}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            </span>
+        <span>
+                 <a click.delegate="parent.route('category_view',{id: model.section.category_id._id})">${model.section.category_id.title}</a>
+            </span>
+    </div>
+    <div class="mde-pT10 mde-pB10 mde-pR48">
+        <form class="mde-search w100per" submit.delegate="parent.search()">
+            <input type="text" autocomplete="on" value.bind="parent.query" placeholder="${'search.enter_value' | t & signal: 'translation'}"><i></i>
+            <label for="mde-reset" class="mde-close-btn mde-icon-small-btn"><i class="material-icons">clear</i>
+                <input type="reset" id="mde-reset">
+            </label>
+        </form>
+    </div>
+    <div class="mde-pT10 mde-pB10">
+        <h4>${model.section.title}</h4>
+        <div class="mde-bg-white mde-boxShadow">
+            <div class="mde-ouli">
+                <div if.bind="(model.section.description || '') != ''" class="mde-p10" innerhtml="${model.section.description || '' | sanitizeHTML}"></div>
+                <div class="mde-p10" if.bind="model.articles.length == 0 ">
+                    <span>${parent.app_data.lng.translates.empty}</span>
+                </div>
+                <ul>
+                    <li class="mde-brBottom mde-brBHidden mde-p10" repeat.for="art of model.articles">
+                        <a click.delegate="parent.route('article_view', {id: art._id})">${art.title}</a>
+                        <div class="article-meta block_el">
+                            ${app_data.lng.translates.by}
+                            <span if.bind="parent.me.roles[0] == 'agent'">${art.user_created.name}</span>
+                            <a if.bind="parent.me.roles[0] != 'agent'" route-href="route:manageUserModify; params.bind:{id:art.user_created._id}" target="_blank">${art.user_created.name}</a>
+                            <time title="${art.created | datetimeFormat:true}">${art.created | timeFromNow}</time>
+                            <!--
+                            ${app_data.lng.translates.in}
+                            <a click.delegate="parent.route('section_view', {id:art.section_id._id})">${art.section_id.title}</a>
+-->
+                        </div>
+                    </li>
+                </ul>
+                <div class="mde-p10">
+                    <a if.bind="model.canLoadMore" click.delegate="model.loadMore()" class="see-all mde-btn-default" t="common.load_more"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script id="tpl_view_section_edit" type="text/html">
+    <require from="./resources/value-converters/datetime-format"></require>
+    <!--    EDIT SECTION-->
+    <div id="edit-section">
+        <div class="mde-dIB-wrapper">
+            <div class="mde-dIB mde-wCol7 mde-vaTop">
+                <div class="mde-pLeft">
+                    <h4><strong>${model.sect._id? parent.app_data.lng.translates.edit : parent.app_data.lng.translates.add} ${parent.app_data.lng.translates.section}</strong></h4>
+                </div>
+                <div class="mde-p10">
+                    <div class="mde-mBottom">
+                        <span class="mde-cl-gray-light">${parent.app_data.lng.translates.title}</span>
+                        <br>
+                        <div class="group-input">
+                            <mde-input id="title" value.bind="model.sect.title" mde-class="w100per"></mde-input>
+                            <input type="hidden" name="title" />
+                        </div>
+                    </div>
+                    <div>
+                        <span class="mde-cl-gray-light">${parent.app_data.lng.translates.description}</span>
+                        <br>
+                        <div class="group-input">
+                            <mde-input id="description" type="textarea" value.bind="model.sect.description" rows="8" mde-class="w100per"></mde-input>
+                            <input type="hidden" name="content" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mde-dIB mde-wCol3 mde-p10">
+                <div class="mde-br mde-bg-white mde-brRa5">
+                    <div class="mde-dIB-wrapper w100per mde-brBottom mde-pLeft mde-pRight" if.bind="model.sect._id">
+                        <div class="mde-dIB mde-wDi2 mde-vaTop mde-tCenter mde-brRight mde-p10">
+                            <strong>${parent.app_data.lng.translates.created}</strong>
+                            <br>
+                            <time title="${model.sect.add_time | datetimeFormat:true}">${model.sect.add_time | timeFromNow}</time>
+                            <span>${parent.app_data.lng.translates.by}</span>
+                            <!--                                <a href="/profile/5539be35fc3a0a3d0717ed7f" target="_blank">${model.sect.user_created.name}</a> -->
+                            <strong if.bind="parent.me.roles[0] =='agent'">${model.sect.user_created.name}</strong>
+                            <a if.bind="parent.me.roles[0] =='owner' || (parent.me.roles[0] =='admin' && model.sect.user_created.roles[0] !='owner')" route-href="route:manageUserModify; params.bind:{id:model.sect.user_created._id}" target="_blank"><strong>${model.sect.user_created.name}</strong></a>
+                        </div>
+                        <div class="mde-dIB mde-wDi2 mde-tCenter mde-p10">
+                            <strong>${parent.app_data.lng.translates.updated}</strong>
+                            <br>
+                            <time title="${model.art.upd_time | datetimeFormat:true}">${model.sect.upd_time | timeFromNow}</time>
+                            <span>${parent.app_data.lng.translates.by}</span>
+                            <strong if.bind="parent.me.roles[0] =='agent'">${model.sect.user_created.name}</strong>
+                            <a if.bind="parent.me.roles[0] =='owner' || (parent.me.roles[0] =='admin' && model.sect.user_updated.roles[0] !='owner')" route-href="route:manageUserModify; params.bind:{id:model.sect.user_updated._id}" target="_blank"><strong>${model.sect.user_updated.name}</strong></a>
+                        </div>
+                    </div>
+                    <div class="mde-p10">
+                        <div class="mde-mBottom">
+                            <span class="mde-cl-gray-light">${parent.app_data.lng.translates.show_in_category}</span>
+                            <br>
+                            <div class="group-input">
+                                <mde-dropdown id="status" chooser.bind="model.sect.category_id" url.bind="parent.master.categories.url" mapping.bind="parent.master.categories.mapping"></mde-dropdown>
+                                <input type="hidden" name="category_id">
+                            </div>
+                        </div>
+                        <div>
+                            <span class="mde-cl-gray-light">${parent.app_data.lng.translates.order_articel_by}</span>
+                            <br>
+                            <mde-dropdown id="status" chooser.bind="model.sect.order_by" options.bind="parent.master.orderByList"></mde-dropdown>
+                        </div>
+                    </div>
+                </div>
+                <div class="mde-bg-white mde-p10 mde-tCenter" if.bind="model.sect.totalArtticles == 0">
+                    <a t="common.delete_title" click.delegate="model.remove()"></a>
+                </div>
+            </div>
+        </div>
+        <div class="mde-p10">
+            <button click.delegate="model.save()" class="mde-orange-btn mde-mRight">
+                <span t="common.save"></span>
+            </button>
+            <button class="mde-gray-btn" click.delegate="parent.route('index')">
+                <span t="common.cancel"></span>
+            </button>
+        </div>
+    </div>
+</script>

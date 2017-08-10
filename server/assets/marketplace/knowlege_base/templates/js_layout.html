@@ -1,0 +1,503 @@
+<script id="tpl_msg_error" type="text/x-kendo-template">
+    <div class="error-msg">
+        <img src="/img/error-icon.png" />
+        <h3>#= title #</h3>
+        <p>#= message #</p>
+    </div>
+</script>
+
+<script id="tpl_msg_success" type="text/x-kendo-template">
+    <div class="success-msg">
+        <img src="/img/success-icon.png" />
+        <h3>#= message #</h3>
+    </div>
+</script>
+
+<script id="tpl_img_slider" type="text/x-kendo-template">
+    <div id="carousel" class="carousel slide" data-ride="carousel" style="height: 100%">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        #for (var i =0 ; i<images.length; i++){ #
+            <li data-target="\\#carousel" data-slide-to="#:i#" class="#: currentIndex == i? 'active': ''#"></li>
+        # } #
+      </ol>
+
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" role="listbox" style="height: 100%">
+        #for (var i =0 ; i<images.length; i++){ #
+            # var image = images[i]; #
+            <div class="item #: currentIndex == i? 'active': ''#" style="width : 680px; height: 100%">
+              <img src="#:image.url#" alt="#:image.name#" style="margin: auto" >
+              <div class="carousel-caption" style ="font-size: 16px">
+                    #=image.name#
+              </div>
+            </div>
+        # } #
+      </div>
+
+      <!-- Controls -->
+      <a class="left carousel-control" href="\\#carousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="\\#carousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+</script>
+
+
+
+<script id="tpl_view_section" type="text/x-kendo-template">
+    <div id="view_section">
+        <main>
+            <nav class="sub-nav">
+                <ol class="breadcrumb">
+                    <li><a href="">#: lng.home#</a>
+                    </li>
+                    <li><a href="\\#/view/category/#: category_id._id#" data-method="get">#:category_id.title#</a>
+                    </li>
+                    <li class="active"><a>#:title#</a>
+                    </li>
+                </ol>
+                <form accept-charset="UTF-8"  class="search form-horizontal" method="get" role="search">
+                    <div style="display:none">
+                        <input name="utf8" type="hidden" value="✓">
+                    </div>
+
+                    <input id="query" name="query" placeholder="#: lng.search#" type="search">
+                    <input name="commit" type="submit" value="Search">
+                </form>
+            </nav>
+            <header class="page-header">
+                <h1> #:title#</h1>
+            </header>
+            <p>#: description#</p>
+            <ul class="article-list">
+                # if(articles.length > 0){ #
+                    # for (var i = 0 ; i< articles.length; i++) { #
+                        # var article = articles[i];# <li>
+                        <a href="\\#/view/article/#: article._id #" data-method="get">#:article.title#</a>
+                        </li>
+                    # } #
+                # }else{ #
+
+                    <li class="list-group-item">#= lng.empty#</li>
+                # } #
+            </ul>
+            <div class="powered-by">
+                <a href="\\#" target="_blank">Powered by IZIHelp</a>
+            </div>
+        </main>
+    </div>
+</script>
+
+<script id="tpl_view_article" type="text/x-kendo-template">
+    <main role="main" class="view_article">
+        <nav class="sub-nav">
+                <ol class="breadcrumb">
+                    </li>
+                    <li><a href="\\#/view/section/#:section_id._id#" data-method="get">#: section_id.title#</a>
+                    </li>
+                    <li class="active"><a>#: title#</a>
+                    </li>
+                </ol>
+                <form accept-charset="UTF-8"  class="search form-horizontal" method="get" role="search">
+                    <div style="display:none">
+                        <input name="utf8" type="hidden" value="✓">
+                    </div>
+
+                    <input id="query" name="query" placeholder="#: lng.search.capitalizeFirst()#" type="search">
+                    <input name="commit" type="submit" value="Search">
+                </form>
+        </nav>
+        <article class="main-column">
+            <header class="article-header">
+                <h1>#:title#</h1>
+                <div class="article-info">
+                    <div class="article-avatar">
+                        <img class="img-thumbnail" src="#:default_avatar#" alt="Avatar">
+                    </div>
+                    <div class="article-meta">
+                        # if(user_created){ #
+                        <strong class="article-author"><a href="/profile/#: user_created._id#"target="_blank">#: user_created.last_name +' ' + user_created.first_name#</a></strong>
+                        # } #
+                        <div class="article-updated meta">
+                            <time data-datetime="calendar"  title="#: moment(add_time).format(date_format_string.toUpperCase() +' LT' )#">#:moment(add_time).calendar()#</time>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="article-body markdown">
+               #= $('<textarea />').html(content).text()#
+            </div>
+
+            <div class="article-attachments">
+                <p >
+                     #for (var i=0; i< files.length; i++){ #
+                        # var file = files[i];#
+                        # if (image_extention.indexOf(file.extension) != -1){ #
+                            <a style=" width: auto; margin: 5px; height: 41px;">
+                                <img class="image-thumbnail" title="#:file.name#" src="#:media_url + file.name#">
+                            </a>
+                        # }else{ #
+                            <a href="#:media_url + file.name#" target="_blank" style="height: 41px; width: auto; margin: 5px;">
+                                <i style="font-size: 3em" href="#:media_url + file.name#" target="_blank" class="fa fa-file-text-o" title="#:file.name#" src="#:media_url + file.name#"></i>
+                            </a>
+
+                        # } #
+                    # } #
+                </p>
+
+            </div>
+
+            <div class="article-more-questions">
+            </div>
+        </article>
+        <div class="powered-by">
+            <a href="" target="_blank">Powered by IZIHelp</a>
+        </div>
+    </main>
+</script>
+
+<script id="tpl_view_category" type="text/x-kendo-template">
+    <div id="view_category">
+        <nav class="sub-nav">
+            <ol class="breadcrumb">
+                <li><a href="#:home_url#">#: lng.home#</a>
+                </li>
+                <li><a  disabled="disabled">#:title#</a>
+                </li>
+            </ol>
+            <form accept-charset="UTF-8" class="search form-horizontal" method="get" role="search">
+                <div style="display:none">
+                    <input name="utf8" type="hidden" value="✓">
+                </div>
+
+                <input id="query" name="query" placeholder="#: lng.search#" type="search">
+                <input name="commit" type="submit" value="Search">
+            </form>
+        </nav>
+        <section class="knowledge-base">
+            <div class="category-tree">
+                <section class="category">
+                    <h2>
+                        #: title#
+                    </h2>
+                    # if( sections.length > 0) { #
+                        # for (var i = 0; i< sections.length; i++) { #
+                        # var section= sections[i]; #
+                        <section class="section">
+                            <div class=" panel panel-info">
+                                <div class="panel-heading"><a href="\\#/view/section/#:section._id#" data-method="get" >#:section.title#</a>
+                                </div>
+                                <ul class="list-group">
+                                    # if(section.articles.length >0 ){ #
+                                        # var length = section.articles.length > 6 ? 6 : section.articles.length;#
+                                        # for (var j = 0; j< length; j++) { #
+                                            # article= section.articles[j]; #
+                                            <a class="list-group-item" href="\\#/view/article/#: article._id#" data-method="get" >
+                                                <div class="img-circle">
+                                                    <i class="fa fa-newspaper-o"></i>
+                                                </div>
+                                                #: article.title#
+                                            </a>
+                                        # } #
+                                    # }else { #
+                                        <li class="list-group-item">#= lng.empty#</li>
+                                    # } #
+
+                                </ul>
+                                # if(section.articles.length > 6){ #
+                                    <div class="panel-body">
+                                        <a href="\\#/view/section#:section._id#" data-method="get" class="see-all-articles">
+                                              See all 7 articles
+                                            </a>
+                                    </div>
+                                # } #
+                            </div>
+                        </section>
+                    # } #
+                # }else{ #
+                    <li class="list-group-item">#= lng.empty#</li>
+                # } #
+        </section>
+        </div>
+        </section>
+    </div>
+</script>
+
+<script id="tpl_edit_article" type="text/x-kendo-template">
+    <div class="edit_article" class="container">
+        <div class="container-inner clearfix">
+            <form accept-charset="UTF-8" enctype="multipart/form-data" action="/rest/wiki/article/#:id#" class="new_article" id="article-form" method="#:action.toLowerCase() == 'add'? 'post': 'put'#">
+                <div class="toolbar clearfix">
+                    <h1 class="toolbar-heading">#:lng[action]# article</h1>
+                    <div class="toolbar-tools">
+                        <a class="btn btn_wide" href="#:return_url#" data-method="get">#: lng.cancel#</a>
+                        <input class="btn btn_black btn_wide" name="commit" type="submit" value="#:action == 'edit'? lng.update : lng.add#">
+                    </div>
+                </div>
+                <div class="form-wrapper">
+                    <div class="form-left-col">
+                        <div class="form-field string optional article_translations_title">
+                            <label for="article_translations_attributes_0_title">Title</label>
+                            <input class="input-text-larger input-text-bold full-width" id="title" name="title" type="text" value="#:title#">
+                        </div>
+                        <div class="form-field form-field-farthest">
+                            <textarea class="full-width" id="content" name="content"></textarea>
+                            <div class="form-field-attachments" id="files_upload">
+                                <div class="demo-section k-header">
+                                    <input name="files" id="files" type="file" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-right-col">
+                        # if (action.toLowerCase() == 'edit') { #
+                        <section class="section-box record-info">
+                            <dl>
+                                <dt>#: lng.created#</dt>
+                                <dd>
+                                    <time data-datetime="calendar" datetime="#:add_time#" title="#: moment(add_time).format(date_format_string.toUpperCase()+ ' LT')#">#= moment(add_time).calendar()#</time> #: lng.by#
+                                    # if(user_created){ #
+                                    <strong><a href="/profile/#:user_created._id#" target="_blank">#:user_created.last_name# #:user_created.first_name#</a> </strong>
+                                    # } #
+                                </dd>
+
+                                <dt>#: lng.updated#</dt>
+                                <dd>
+                                    <time data-datetime="calendar" datetime="#:add_time#" title="#: moment(add_time).format(date_format_string.toUpperCase()+ ' LT')#">#= moment(upd_time).calendar()#</time> #:lng.by#
+                                    # if(user_updated){ #
+                                    <strong><a href="/profile/#:user_updated._id#" target="_blank">#:user_updated.last_name# #:user_updated.first_name#</a></strong>
+                                    # } #
+                                </dd>
+                            </dl>
+                        </section>
+                        # } #
+                        <section class="section-box">
+                            <div class="form-field">
+                                <label>#= lng.show_in_section#</label>
+                                <input type="hidden" id="section_id"  style="width: 274px;" value="#:section_id._id#">
+                                <select class="full-width" id="section" name="section" value="#:section_id._id#">
+                                    <option value="">#: lng.choose_section#</option>
+                                </select>
+                            </div>
+                        </section>
+                        # if (action.toLowerCase() == "edit") { #
+                        <div class="section-box delete-box">
+                            <a data-confirm="#: lng.delete_article_confim#" data-method="delete" href="\\#/delete/article/#:id#"  title="Delete article">#: lng.delete#</a>
+                        </div>
+                        # } #
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+
+<script id="tpl_list_category" type="text/x-kendo-template">
+        <div class="category-tree">
+            <section class="category">
+                <h2>
+                    <a href="\\#/view/category/#:_id#" data-method="get">#: title#</a>
+                </h2>
+                # if (sections.length > 0 ){ #
+                    # for (var i = 0; i< sections.length; i++) { #
+                    # var section= sections[i]; #
+                    <section class="section">
+                        <div class=" panel panel-info">
+                            <div class="panel-heading"><a href="\\#/view/section/#:section._id#" data-method="get" data-parent="#:_id#">#:section.title#</a>
+                            </div>
+                            <ul class="list-group">
+                                # if(section.articles.length >0 ){ #
+                                    # var length = section.articles.length > 6 ? 6 : section.articles.length;#
+                                    # for (var j = 0; j< length; j++) { #
+                                        # article = section.articles[j]; #
+                                        <a class="list-group-item" href="\\#/view/article/#: article._id#" data-method="get" data-parent="#:_id#_#:section._id#">
+                                            <div class="img-circle">
+                                                <i class="fa fa-newspaper-o"></i>
+                                            </div>
+                                            #: article.title#
+                                        </a>
+                                    # } #
+                                # }else { #
+                                    <li class="list-group-item">#= lng.empty#</li>
+                                # } #
+
+                            </ul>
+                            # if(section.articles.length > 6){ #
+                            <div class="panel-body">
+                                <a href="\\#/view/section/#:section._id#" data-method="get" class="see-all-articles">
+                                     #: lng.see_all_article.replace('{}', section.articles.length)#
+                                    </a>
+                            </div>
+                            # } #
+                        </div>
+                </section>
+                # } #
+            # }else{ #
+                <li class="list-group-item">#= lng.empty#</li>
+            # } #
+            </section>
+        </div>
+</script>
+
+<script id="tpl_search_result" type="text/x-kendo-template">
+    <main role="main">
+        <nav class="sub-nav">
+            <ol class="breadcrumb">
+                <li><a href="#: home_url#">#= lng.home#</a></li>
+                <li><a href="javascript:">#= lng.search_results#</a></li>
+            </ol>
+            <form accept-charset="UTF-8" class="search" method="post" role="search">
+                <div style="display:none"><input name="utf8" type="hidden" value="✓"></div>
+                <input autofocus="autofocus" id="query" name="query" placeholder="Search" type="search" value="#:search_text#">
+                <input name="commit" type="submit" value="Search">
+            </form>
+        </nav>
+
+        <div class="search-results">
+            <h1>#:data.length # #: lng.result_for# "#: search_text#"</h1>
+            <section class="search-results-container">
+            <h2 class="search-results-subheading">#= lng.knowleged_base#</h2>
+            <ul class="search-results-list">
+                # if(data.length == 0){ #
+                    <li class="search-result">No result</li>
+                # }else{ #
+
+                    # for (var i=0; i<data. length; i++){ #
+                        # var article = data[i]; #
+                        <li class="search-result">
+                          <a class="search-result-link" href="\\#/view/article/#:article._id#" data-method="get">#: article.title#</a>
+
+                          <div class="search-result-meta">
+                            # if(article.user_created){ #
+                                #:lng.by# <a href="/profile/#: article.user_created._id#" target="_blank">#: article.user_created.last_name # #: article.user_created.first_name #</a>
+                            # } #
+                                    <time data-datetime="relative" datetime="#:article.add_time#" title="#:moment(article.add_time).format(date_format_string.toUpperCase()+' LT')#">#: moment(article.add_time).fromNow()#</time>
+                                    #:lng.in#  <a href="\\#/view/section/#: article.section_id._id#" data-method="get">#:article.section_id.title#</a>
+                          </div>
+                          <div class="search-result-description">
+                                #= $('<textarea />').html(article.content).text() #
+                          </div>
+                        </li>
+                    # } #
+                # } #
+            </ul>
+            </section>
+        </div>
+        <div class="powered-by">
+            <a href="" target="_blank">Powered by Zendesk</a>
+        </div>
+    </main>
+</script>
+
+<script id="tpl_commuity" type="text/x-kendo-template">
+    <section class="community">
+        <div>
+            <div class="recent-activity">
+                <h2 class="recent-activity-header">#: lng.top_latest_article#</h2>
+                <ul class="recent-activity-list" style="">
+                    # for (var i=0 ; i<latestArticle.length; i++){ #
+                        # var article = latestArticle[i] ;#
+                        <li><a href="\\#/view/article/#: article._id#" data-method="get">#: article.title#</li>
+                    # } #
+                </ul>
+            </div>
+        </div>
+    </section>
+</script>
+
+<script id="tpl_edit_category" type="text/x-kendo-template">
+    <div id="edit_category" class="container">
+        <div class="container-inner clearfix">
+            <form accept-charset="UTF-8" action="/rest/wiki/#:object_type#/#:id#" class="edit_category" id="category-form" method="#:action.toLowerCase() == 'add'? 'post': 'put'#" novalidate="novalidate">
+                <div class="toolbar clearfix">
+                    <h1 class="toolbar-heading">#: lng[action]# #:object_type#</h1>
+                    <div class="toolbar-tools">
+                        <a class="btn btn_wide" href="#:return_url#" data-method="get">#: lng.cancel#</a>
+                        <input class="btn btn_black btn_wide" name="commit" type="submit" value="#:action == 'edit'? lng.update : lng.add#">
+                    </div>
+                </div>
+                <div class="form-wrapper">
+                    <div class="form-left-col">
+                        # if(action.toLowerCase() == 'edit') { #
+                        <div class="form-field hidden #:object_type#_id">
+                            <input id="#:object_type#_id" name="#:object_type#_id" type="hidden" value="#:id#">
+                        </div>
+                        # } #
+                        <div class="form-field string optional category_name">
+                            <label for="category_title">#:lng.name#</label>
+                            <input class="input-text-larger input-text-bold full-width" id="title" name="#:object_type#_title" type="text" value="#:title#">
+                        </div>
+
+                        <div class="form-field text optional section_description form-field-farthest">
+                            <label for="section_translations_attributes_0_description">#: lng.description#</label>
+                            <textarea class="full-width" id="description" name="description">#:description#</textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="form-right-col">
+                        # if (action == "edit") { #
+                        <section class="section-box record-info">
+                            <dl>
+                                <dt>#: lng.created#</dt>
+                                <dd>
+                                    <time data-datetime="calendar" datetime="#:add_time#" title="#: moment(add_time).format(date_format_string.toUpperCase()+' LT')#">#= moment(add_time).calendar()#</time> #: lng.by#
+                                        # if(user_created){ #
+                                        <strong><a href="/profile/#:user_created._id#" target="_blank">#:user_created.last_name# #:user_created.first_name#</a> </strong>
+                                        # } #
+                                </dd>
+
+                                <dt>#: lng.updated#</dt>
+                                <dd>
+                                    
+                                    <time data-datetime="calendar" datetime="#:upd_time#" title="#: moment(upd_time).format(date_format_string.toUpperCase()+' LT')#">#= moment(upd_time).calendar()#</time> #:lng.by#
+                                    # if(user_updated){ #
+                                    <strong><a href="/profile/#:user_updated._id#" target="_blank">#:user_updated.last_name# #:user_updated.first_name#</a></strong>
+                                    # } #
+                                </dd>
+                            </dl>
+                        </section>
+                        # } #
+                        # if (object_type == 'section') {#
+                        <section class="section-box">
+                            <div class="form-field select required section_category">
+                                <label for="category">#= lng.show_in_category#</label>
+                                <input type="hidden" id="category_id" value="#:category_id._id#"/>
+                                <select class="full-width" id="category" name="category" value="#: category_id._id#">
+                                    <option value="">#: lng.choose_category#</option>
+                                </select>
+                            </div>
+                        </section>
+                        <section class="section-box">
+                            <div class="form-field select required section_category">
+                                <label for="section_category_id">Order articles by</label>
+                                 <input type="hidden" id="order_by_id" value="#:order_by#"/>
+                                <select class="full-width" id="order_by" name="order_by">
+                                </select>
+                            </div>
+                        </section>
+                        # } #
+                        # if (action.toLowerCase() == "edit") { #
+                        <div class="section-box delete-box">
+                            # if(object_type == "category"){ #
+                                <a data-confirm="#: lng.delete_category_confim#" data-method="delete" href="\\#/delete/#:object_type#/#:id#"  title="Delete #:object_type#">#= lng.delete#</a>
+                            # }else{ #
+                                <a data-confirm="#: lng.delete_section_confim#" data-method="delete" href="\\#/delete/#:object_type#/#:id#"  title="Delete #:object_type#">#= lng.delete#</a>
+                            # } #
+                        </div>
+                        # } #
+
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</script>

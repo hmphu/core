@@ -1,0 +1,20 @@
+{
+    "en": {
+        "parameters": {
+            "page_size": {
+                "label": {
+                    "value": "Page size"
+                }
+            }
+        }
+    },
+    "vi": {
+        "parameters": {
+            "page_size": {
+                "label": {
+                    "value": "Phân trang"
+                }
+            }
+        }
+    }
+}

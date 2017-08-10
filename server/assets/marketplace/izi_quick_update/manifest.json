@@ -1,0 +1,15 @@
+{
+  "name": "Izi Quick Update",
+  "author": {
+    "name": "Tran Ngoc Dien",
+    "email": "vulamdhtv2004@gmail.com",
+    "url": "http://www.fireflyinnov.com"
+  },
+  "templateData": {},
+  "defaultLocale": "en",
+  "private": true,
+  "location": "nav_bar",
+  "version": "1.6",
+  "frameworkVersion": "1.1",
+  "parameters": []
+}

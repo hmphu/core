@@ -1,0 +1,75 @@
+<require from="./resources/custom-elements/mde-wysiwyg"></require>
+<!--IZI Forum ticket-->
+<div class="mde-app-ticket-wrapper" id="forum-app-ticket">
+    <div class="mde-p10"><a class="mde-default-btn" click.delegate="refresh()"><span>${_t.refresh}</span></a></div>
+    <div class="mde-p10 mde-mTop mde-brTop mde-brBottom mde-tCenter" if.bind="!domain || !forum">
+        <span class="mde-cl-danger">${_t.not_found_forum}</span>
+    </div>
+    <div class="mde-p10 mde-mTop mde-brTop mde-brBottom" if.bind="domain && forum">
+        <div class="mde-mB10">
+            <strong>${_t.forum}: </strong><a href="${url}" target="_blank"><img src="${forum.icon_link}" width="25px" if.bind="forum.icon_link"/>${domain}</a>
+        </div>
+        <div class="mde-mB20">
+            <div class="mde-form-group group-input">
+<!--                <label class="mde-cl-gray-light">${_t.choose_profile}<span class="mde-cl-danger">*</span></label>-->
+                <mde-autocomplete url.bind="master.forumAuths.url" mapping.bind="master.forumAuths.mapping" change.delegate="profileChanged($event)" placeholder="${_t.choose_profile}" ></mde-autocomplete>
+                <input type="hidden" id="forum-profile" name="forum-profile" >
+            </div>
+        </div>
+        <div class="mde-tCenter">
+            <div class="mde-dIB mde-tCenter mde-bg-warning mde-brCircle mde-lh14 mde-pT5 mde-pB5 mde-pL10 mde-pR10 mde-fs14 mde-cl-white"><i class="fa fa-warning mde-mR10"></i><span>${_t.warning_post}</span></div>
+        </div>
+    </div>
+    <div class="mde-p10" if.bind="domain && forum">
+        <div if.bind="!forum.is_auto">
+            <button class="mde-mTop mde-orange-btn" click.delegate="showPopup()"><span>Open popup to post</span></button>
+        </div>
+        <div if.bind="forum.is_auto">
+            <div class="mde-mB10 group-input">
+                <div class="bar-btns">
+                    <button class="mde-icon-btn" title="Quote post" click.delegate="quote()"><i class="material-icons mde-cl-danger">format_quote</i></button>
+                    <!--                    <button class="mde-icon-small-btn" title="Quote Description" click.delegate="quote()">&#34;</button>-->
+                    <!--                    <button class="mde-icon-small-btn" title="Break line" click.delegate="breakLine()">&#8629;</button>-->
+                </div>
+                <div class="group-input">
+                    <mde-input type="textarea" value.bind="comment" mde-class="w100per" mde-style="min-width:auto; width:100%;" placeholder="${_t.type_comment}"></mde-input>
+                    <input type="hidden" id="forum-post-comtent" name="forum-post-comtent"/>
+                </div>
+
+            </div>
+            <button class="mde-default-btn mde-mR10" click.delegate="post()"><span>Post</span></button>
+            <button class="mde-orange-btn" click.delegate="showPopup()"><span>Open popup to post</span></button>
+        </div>
+    </div>
+</div>
+
+<!--POPUP-->
+<input type="checkbox" class="mde-modal-open" id="mde-popup-${app_data.id}">
+<div class="mde-modal">
+    <div class="mde-pop-up">
+        <label class="mde-bg-overlay-mask" for="mde-popup-${app_data.id}"></label>
+        <div class="mde-popup-container">
+            <div class="mde-header">
+                <span>${domain}</span>
+                <label class="mde-modal-close mde-icon-small-negative-btn" for="mde-popup-${app_data.id}"><i class="material-icons">clear</i></label>
+            </div>
+            <div class="mde-content">
+                <div class="bar-btns">
+                    <button class="mde-icon-btn" title="Quote post" click.delegate="quote()"><i class="material-icons mde-cl-danger">format_quote</i></button>
+                </div>
+                <mde-wysiwyg  mde-id="izi-forum-comment"  content.two-way="comment" placeholder.bind="'ticket.enter_text'| t" mde-class="mde-mBottom" mde-content-style="height:150px"></mde-wysiwyg>
+
+                <button class="mde-default-btn" click.delegate="post()">Post</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--
+<mde-popup  mde-show.bind="showPopup" mde-id="modal-payment" mde-title="${ 'user.subscription.check_out' | t & signal: 'translation' }">
+    <div class="mde-form">
+        <iframe src.bind='url' target="_parent" load.trigger="completePost($event)" style="width: 600px;height: 545px;border:none"></iframe>
+    </div>
+</mde-popup>-->

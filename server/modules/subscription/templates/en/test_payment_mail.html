@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="initial-scale=1.0">    <!-- So that mobile webkit will display zoomed in -->
+  <meta name="format-detection" content="telephone=no"> <!-- disable auto telephone linking in iOS -->
+
+  <style type="text/css">
+    body{
+      font-size: 12px;
+    }
+    .header-row {
+        display: table;
+        table-layout: fixed;
+        height: 30px;
+        font-weight: 600;
+        width: 100%;
+
+    }
+    #plan_cart {
+      display: table;
+      table-layout: fixed;
+      text-align: center;
+      width: 100%;
+    }
+    .product-row {
+        display: table-row;
+        height: 25px;
+    }
+    .table-cell {
+        display: table-cell;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 20%;
+        padding-right: 4px;
+        text-align:center;
+    }
+
+    .name {
+        width: 30%;
+        text-align: left;
+    }
+
+    .price {
+        width: 25%;
+        text-align: left;
+         vertical-align: middle;
+    }
+   .align-right {
+      text-align: right ;
+    }
+   .align-center{
+        text-align: center;
+    }
+  </style>
+
+</head>
+<body>
+  <div class="header align-center">
+        <img src="{{full_url}}/img/logo.jpg"/> <h2 class="">Infomation payment</h2>
+    </div>
+    <div class="setting_temp_3" style="padding:10px">
+        <div class="div_list_macro">
+            <div class="header-row" >
+                <div class="table-table-cell name">
+                    <span>Plans</span>
+                </div>
+                <div class="table-cell">
+                    <span>Month</span>
+                </div>
+                <div class="table-cell">
+                    <span>Agents</span>
+                </div>
+                <div class="table-cell">
+                    <span>Price</span>
+                </div>
+                <div class="table-cell">
+                    <span>Billing Cycle</span>
+                </div>
+                <div class="table-cell">
+                    <span>Discount</span>
+                </div>
+                <div class="table-cell align-right price">
+                    <span>Subtotal</span>
+                </div>
+            </div>
+            <div id="plan_cart">
+                 <div class="product-row" data-uid="#: uid #" data-id="#:_id#">
+                    <div class="table-cell name">
+                       <span >{{plan_name}}</span>
+                    </div>
+                    <div class="table-cell unit-cost">
+                         <span >{{duration_months}}</span>
+                    </div>
+                    <div class="table-cell agent-count">
+                        <span>{{agents}}</span>
+                    </div>
+                    <div class="table-cell subtotal">
+                        $<span >{{price}}</span>
+                    </div>
+                    <div class="table-cell ">
+                        <span id="billing_cycle">{{billing_cycle}} months</span>
+                    </div>
+                    <div class="table-cell agent-count">
+                         <span id="discount_percent">{{discount}}%</span>
+                    </div>
+                    <div class="table-cell align-right price">
+                        <span id="subtotal">${{subtotal}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr style="margin:10px; border-color:  #A69D9D">
+    <div class="setting_temp_3" style="padding:10px">
+        <div class="div_list_macro">
+            <div class="header-row" style="display: {{is_promotion}}">
+                <div class="table-cell name">
+
+                </div>
+                 <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                    <span>Discount Amount</span>
+                </div>
+                <div class="table-cell align-right price">
+                    <span id="coupon_amount" style="font-weight: normal">${{coupon_amount}}</span>
+                </div>
+            </div>
+            <div class="header-row">
+                <div class="table-cell name">
+
+                </div>
+                 <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                    <span>Untaxed Amount</span>
+                </div>
+                <div class="table-cell align-right price">
+                    <span id="untaxed_amount" style="font-weight: normal">${{untaxed_amount}}</span>
+                </div>
+            </div>
+             <div class="header-row">
+                <div class="table-cell name">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                    <span>Tax</span>
+                </div>
+                <div class="table-cell align-right price">
+                    <span id="tax_amount" style="font-weight: normal">${{tax_amount}}</span>
+                </div>
+            </div>
+            <hr style="width: 30%;margin: 5px; border: 1px; border-bottom-style: dotted;float:right">
+             <div class="header-row">
+                <div class="table-cell name">
+                </div>
+                 <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                    <span>Fee USD</span>
+                </div>
+                <div class="table-cell align-right price">
+                    <span style="font-weight: normal">
+                         $<span id="totalPrice" class="value"  style="display: inline-block">{{total_price}}</span>
+                    </span>
+                </div>
+            </div>
+
+             <div class="header-row">
+                <div class="table-cell name">
+                </div>
+                 <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                    <span>Exchange Rate</span>
+                </div>
+                <div class="table-cell align-right price">
+                    <span style="font-weight: normal">
+                          <span  class="value" style="display: inline-block">{{exchange_rate}}</span>
+                    </span>
+                </div>
+            </div>
+            <div class="header-row ">
+                <div class="table-cell name">
+                </div>
+                 <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell">
+                </div>
+                <div class="table-cell ">
+                    <span>Fee VND</span>
+                </div>
+                <div class="table-cell align-right price">
+                    <span style="font-weight: normal">
+                        <span id="totalPriceVND" class="value" style="display: inline-block">{{total_price_vn}}VND</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr style="margin:10px; border-color:  #A69D9D">
+    <footer><a href="{{pdf_url}}">Detail payment pdf</a></footer>
+</body>

@@ -1,0 +1,70 @@
+{
+    "en": {
+        "messages":{
+            "post_success":"Post comment successfully",
+            "profile_required": "Please choose profile !",
+            "content_required": "Please enter content !"
+        },
+        "translations": {
+            "type_comment": "Enter comment",
+            "warning_post": "Unsave ticket content will be lost when posting",
+            "choose_profile": "Choose profile",
+            "not_found_forum": "Not found forum",
+            "refresh": "Refresh",
+            "forum": "Forum"
+        },
+        "parameters": {
+            "custom_field": {
+                "label": {
+                    "value": "Ticket field"
+                }
+            },
+            "poster_name": {
+                "label": {
+                    "value": "Poster name"
+                }
+            },
+            "list_forum": {
+                "label": {
+                    "value": "Forum list",
+                    "value1": "Username",
+                    "value2": "Password"
+                }
+            }
+        }
+    },
+    "vi": {
+        "messages":{
+            "post_success":"Bình luận lên bài viết thành công",
+            "profile_required": "Vui lòng chọn tài khoản !",
+            "content_required": "Vui lòng nhập nội dung !"
+        },
+        "translations": {
+            "type_comment": "Nhập bình luận",
+            "warning_post": "Nội dung yêu cầu chưa lưu sẽ mất sau khi bình luận.",
+            "choose_profile": "Chọn tài khoản",
+            "not_found_forum": "Không tìm thấy diễn đàn",
+            "refresh": "Làm mới",
+            "forum": "Diễn đàn"
+        },
+        "parameters": {
+            "custom_field": {
+                "label": {
+                    "value": "Trường yêu cầu"
+                }
+            },
+            "poster_name": {
+                "label": {
+                    "value": "Người đăng bài"
+                }
+            },
+            "list_forum": {
+                "label": {
+                    "value": "Danh sách diễn đàn",
+                    "value1": "Tên tài khoản",
+                    "value2": "Mật khẩu"
+                }
+            }
+        }
+    }
+}

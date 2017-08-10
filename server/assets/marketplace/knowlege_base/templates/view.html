@@ -1,0 +1,169 @@
+<script id="tpl_view_index" type="text/html">
+    <required from="./attributes/show"></required>
+    <!--    VIEW PAGE-->
+    <!--    Search Home-->
+    <div class="mde-pT10 mde-pB20 mde-pR48">
+        <form class="mde-search w100per" submit.delegate="parent.search()">
+            <input type="text" autocomplete="on" value.bind="parent.query" placeholder="${'search.enter_value' | t & signal: 'translation'}"><i></i>
+            <label for="mde-reset" class="mde-close-btn mde-icon-small-btn"><i class="material-icons">clear</i>
+                <input type="reset" id="mde-reset">
+            </label>
+            <button class="mde-dN">submit</button>
+        </form>
+    </div>
+    <div class="mde-dIB-wrapper">
+        <div class="mde-dIB mde-wCol7 mde-pR10 mde-vaTop">
+            <!--           class="view-content category-list"-->
+            <div class="mde-list-items">
+                <ul>
+                    <li class="mde-bg-white" repeat.for="cat of model.categories">
+
+                        <div>
+                            <div>
+                                <a class="mde-dB mde-fBold mde-ell" click.delegate="parent.route('category_view', {id: cat._id})">${cat.title}</a>
+                            </div>
+                            <compose view.bind="app_data.templates['tpl_view_section_list']" view-model.bind="cat.sections" />
+                        </div>
+                        <div>
+                            <label for="${cat._id}">
+                                <input id="${cat._id}" type="checkbox" class="mde-hidden" checked.bind="cat.open" />
+                                <span class="mde-icon-small-btn"><i class="material-icons">keyboard_arrow_${cat.open? 'up': 'down'}</i></span>
+                            </label>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="mde-dIB mde-wCol3 mde-pL10">
+            <div class="mde-br mde-bg-white mde-brRa5 mde-pT10">
+                <h4 class="mde-tCenter mde-tUpper">${parent.app_data.lng.translates.top_latest_article}</h4>
+                <div class="mde-ouli mde-pL10 mde-pR10 mde-pBottom">
+                    <ul class="mde-list-latest">
+                        <li class="mde-mB5" repeat.for="art of model.recentArticles">
+                            <a class="mde-cl-main" click.delegate="parent.route('article_view', {id: art._id})"><span>${art.title}</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script id="tpl_view_search" type="text/html">
+    <require from="./resources/value-converters/datetime-format"></require>
+    <!--    SEARCH RESULTS PAGE-->
+    <div class="mde-p10">
+        <span><a click.delegate="parent.route('index')">Home</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+        <span>${parent.app_data.lng.translates.search_results}</span>
+    </div>
+    <div class="mde-pL10 mde-pR48 mde-pT10">
+        <form class="mde-search w100per" submit.delegate="parent.search()">
+            <input type="text" autocomplete="on" value.bind="parent.query" placeholder="${'search.enter_value' | t & signal: 'translation'}"><i></i>
+            <label for="mde-reset" class="mde-close-btn mde-icon-small-btn"><i class="material-icons">clear</i>
+                <input type="reset" id="mde-reset">
+            </label>
+        </form>
+    </div>
+    <div class="mde-dIB-wrapper w100per">
+        <div class="mde-dIB mde-wCol7 mde-vaTop">
+            <div class="mde-pL10 mde-pR10">
+                <div class="mde-mB10">
+                    <h4>${parent.app_data.lng.translates.result_for} "${model.query}"</h4>
+                </div>
+                <div class="mde-ouli mde-bg-white mde-boxShadow">
+                    <ul>
+                        <li class="mde-brBottom mde-brBHidden mde-p10" repeat.for="art of model.articles">
+                            <a click.delegate="parent.route('article_view', {id: art._id})"><strong>${art.title}</strong></a>
+                            <br>
+                            <span>${app_data.lng.translates.by}</span>
+                            <span if.bind="parent.me.roles[0] == 'agent'">${art.user_created.name}</span>
+                            <a if.bind="parent.me.roles[0] != 'agent'" route-href="route:manageUserModify; params.bind:{id:art.user_created._id}" target="_blank">${art.user_created.name}</a>
+                            <time title="${art.created | datetimeFormat:true}">${art.created | timeFromNow}</time>
+                            ${app_data.lng.translates.in}
+                            <a click.delegate="parent.route('section_view', {id:art.section_id._id})">${art.section_id.title}</a>
+
+                        </li>
+                    </ul>
+                </div>
+                <a class="see-all mde-mT10 mde-btn-default" if.bind="model.canLoadMore" click.delegate="model.loadMore()" t="common.load_more"></a>
+            </div>
+        </div>
+        <div class="mde-dIB mde-wCol3 mde-p10 mde-mTop">
+            <div class="mde-br mde-bg-white mde-brRa5">
+                <h6 class="mde-tCenter mde-tUpper">${parent.app_data.lng.translates.top_latest_article}</h6>
+                <div class="mde-ouli mde-pL10 mde-pR10 mde-pBottom">
+                    <ul>
+                        <li repeat.for="art of model.recentArticles"><a class="mde-dB mde-ell" click.delegate="parent.route('article_view', {id: art._id})"><span>${art.title}</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script id="tpl_view_report" type="text/html">
+    <require from="./resources/value-converters/datetime-format"></require>
+    <!--    REPORT PAGE-->
+    <div class="mde-p10">
+
+        <span>
+                <a click.delegate="parent.route('index')">Home</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            </span>
+        <span>
+                 ${parent.app_data.lng.translates.report}
+            </span>
+
+    </div>
+    <div class="mde-p10 mde-pR48">
+        <form class="mde-search w100per" submit.delegate="parent.search()">
+            <input type="text" autocomplete="on" value.bind="parent.query" placeholder="${'search.enter_value' | t & signal: 'translation'}"><i></i>
+            <label for="mde-reset" class="mde-close-btn mde-icon-small-btn"><i class="material-icons">clear</i>
+                <input type="reset" id="mde-reset">
+            </label>
+        </form>
+    </div>
+    <div>
+        <div class="mde-p10">
+            <div class="mde-dIB-wrapper w100per">
+                <!--
+                <div class="mde-dIB mde-wDi2 mde-vaTop">
+                    <strong>${parent.app_data.lng.translates.system_search}</strong>
+                </div>
+-->
+                <div class="mde-dIB w100per mde-mB10">
+                    <div class="mde-dIB mde-fRight">
+                        <div class="mde-cl-gray-light mde-dIB">Top by agent:</div>
+                        <mde-autocomplete id="agent" chooser.bind="model.agent" search-param="name" url.bind="master.agents.url" mapping.bind="master.agents.mapping" change.trigger="model.agentChanged($event)"></mde-autocomplete>
+                    </div>
+                    <button class="mde-fRight mde-mRight mde-default-btn ${isProgress? 'mde-actived-loading': ''}" disabled.bind="isProgress" click.delegate="model.getChartData('top')">
+                        <span>${parent.app_data.lng.translates.system_search}</span>
+                        <span class="mde-loading"></span>
+                    </button>
+                    <button class="mde-fRight mde-mRight mde-default-btn ${isProgress? 'mde-actived-loading': ''}" disabled.bind="isProgress" click.delegate="model.getChartData('user', me._id)">
+                        <span>${parent.app_data.lng.translates.my_search}</span>
+                        <span class="mde-loading"></span>
+                    </button>
+                </div>
+                <div id="chart_top"></div>
+                <div id="chart"></div>
+            </div>
+        </div>
+        <!--
+        <div class="mde-p10">
+            <div class="mde-dIB-wrapper w100per">
+                <div class="mde-dIB mde-wDi2 mde-vaTop">
+                    <strong>${parent.app_data.lng.translates.my_search}</strong>
+                </div>
+                <div class="mde-dIB mde-wDi2">
+                    <button class="mde-fRight mde-default-btn" click.delegate="model.getChartData('user')">
+                        <span>${parent.app_data.lng.translates.report}</span>
+                        <span class="mde-loading"></span>
+                    </button>
+                </div>
+                <div id="chart_user"></div>
+            </div>
+        </div>
+-->
+    </div>
+</script>

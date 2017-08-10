@@ -1,0 +1,77 @@
+<script id="tpl_tab_report" type="text/html">
+    <require from="./resources/value-converters/datetime-format"></require>
+    <require from="./resources/custom-elements/datetime"></require>
+    <style>
+        #tab-item-report .content-query {
+            max-width: 1000px;
+            margin: auto;
+        }
+    </style>
+    <div id="tab-item-report">
+        <div class="mde-p10">
+            <div>
+                <div class="mde-dIB mde-mBottom mde-mRight">
+                    <div class="mde-cl-gray-light">${_t.ticket_type}</div>
+                    <mde-dropdown id="dateSelect" chooser.bind="filterData.contact_type" options.bind="master.ticketType"></mde-dropdown>
+                </div>
+                <div class="mde-dIB mde-mBottom">
+                    <div class="mde-dIB mde-mRight">
+                        <div class="mde-cl-gray-light">${_t.select_date}</div>
+                        <mde-dropdown id="date_type" chooser.bind="filterData.date_type" options.bind="master.dateOptions"></mde-dropdown>
+                    </div>
+                    <div class="mde-dIB">
+                        <div class="mde-cl-gray-light">${_t.select_month}</div>
+                        <datetime id.bind="start_date" name.bind="filterData.month" value.bind="filterData.month | datetimeFormat: false" format.bind="{timepicker: false}" />
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="mde-table mde-mTop">
+                <!--                <compose view.bind="templates.tpl_fields" view-model.bind="fieldModel"></compose>-->
+                <!--
+                <div class="mde-mBottom">
+                    <div class="mde-dIB mde-mRight">
+                        <div>${_t.group}</div>
+                        <mde-autocomplete id="group"  chooser.bind="group" url.bind="master.group.url" mapping.bind="master.group.mapping" change.trigger="groupChange($event)"></mde-autocomplete>
+                    </div>
+                    <div class="mde-dIB mde-mRight">
+                        <div>${_t.assignee}</div>
+                        <mde-autocomplete id="agent"  chooser.bind="agent" url.bind="master.agent.url" mapping.bind="master.agent.mapping" change.trigger="agentChange($event)"></mde-autocomplete>
+                    </div>
+                </div>
+                <div>
+                    <div class="mde-dIB mde-mRight">
+                        <div >${_t.status}</div>
+                        <mde-dropdown id="status"  chooser.bind="status" options.bind="master.ticketStatus" change.trigger="statusChange($event)"></mde-dropdown>
+                    </div>
+                </div>
+-->
+                <div class="mde-div-row" repeat.for="field of ticket_fields">
+                    <div class="mde-table-cell mde-vaMiddle">
+                        <label class="mde-checkbox">
+                            <input type="checkbox" checked.bind="field.checked"><i></i>
+                            <strong>${field.name}</strong>
+                        </label>
+                    </div>
+                    <div class="mde-table-cell mde-vaMiddle" if.bind="field.checked">
+                        <compose view.bind="templates['tpl_field_'+field.field_type]" view-model.bind="field" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mde-mTop">
+                <button class="mde-default-btn mde-mRight ${isProgress? 'mde-actived-loading': ''}" disabled.bind="isProgress" click.delegate="report()">
+                    <span>${_t.report}</span>
+                    <span class="mde-loading"></span>
+                </button>
+            </div>
+
+        </div>
+
+        <div class="mde-mTop mde-p10 content-chart">
+            <div id="chart"></div>
+        </div>
+    </div>
+</script>

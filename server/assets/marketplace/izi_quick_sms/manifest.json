@@ -1,0 +1,15 @@
+{
+  "name": "Izi Quick SMS",
+  "author": {
+    "name": "IZIHelp",
+    "email": "support@support.izihelp.com",
+    "url": "https://izihelp.com/"
+  },
+  "templateData": {},
+  "defaultLocale": "en",
+  "private": true,
+  "location": "nav_bar",
+  "version": "1.0",
+  "frameworkVersion": "1.0",
+  "parameters": []
+}

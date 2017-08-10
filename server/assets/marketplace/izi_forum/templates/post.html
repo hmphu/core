@@ -1,0 +1,115 @@
+<script id="tpl_tab_post" type="text/html">
+    <require from="./resources/custom-elements/mde-wysiwyg"></require>
+    <require from="./resources/custom-elements/datetime"></require>
+    <require from="./resources/value-converters/datetime-format"></require>
+    <div class="mde-pT10 mde-pB80">
+        <h4 class="mde-pL10 mde-mB10">${_t.title_app}</h4>
+        <div class="mde-clearfix w100per">
+            <!--Create forum-->
+            <div class="mde-fLeft mde-vaTop mde-wCol7 mde-wCol-mobile mde-pL10 mde-pR10">
+                <h5>${_t.select_forum}</h5>
+                <div class="mde-br mde-brRa5 mde-p20 mde-bg-white">
+                    <div class="mde-form-group">
+                        <label class="mde-cl-gray-light">${_t.forum}<span class="mde-cl-danger"> *</span></label>
+                        <mde-autocomplete url.bind="master.forums.url" mapping.bind="master.forums.mapping" change.delegate="forumChanged($event)" chooser.bind="selectForm.forum" mde-style="width:100%; max-width:360px;"></mde-autocomplete>
+                    </div>
+                    <div class="mde-form-group">
+                        <label class="mde-cl-gray-light">${_t.category}<span class="mde-cl-danger"> *</span></label>
+                        <mde-autocomplete-v2 url.bind="master.category.url" mapping.bind="master.category.mapping" chooser.bind="selectForm.category" me.delegate="categoryChanged($event)" mde-id="app-forum-category" mde-style="width:100%; max-width:360px;"></mde-autocomplete-v2>
+                    </div>
+                    <div class="mde-form-group" if.bind="selectForm.prefixs">
+                        <label class="mde-cl-gray-light">${_t.prefix} <span class="mde-cl-danger">*</span></label>
+                        <mde-dropdown options.bind="selectForm.prefixs" chooser.bind="selectForm.prefix"></mde-dropdown>
+                    </div>
+                    <div class="mde-cl-gray-light mde-mB20 mde-fs13">(<span class="mde-cl-danger">*</span>) Category nay co the khong post duoc</div>
+                    <div class="mde-form-group">
+                        <label class="mde-cl-gray-light">${_t.account}<span class="mde-cl-danger"> *</span></label>
+                        <mde-autocomplete-v2 url.bind="master.accounts.url" mapping.bind="master.accounts.mapping" chooser.bind="selectForm.account" me.delegate="accountChanged($event)" mde-id="app-forum-account" mde-style="width:100%; max-width:360px;"></mde-autocomplete-v2>
+                        <!--                    <mde-chips chooser.bind="selectForm.accounts" options.bind="master.accounts.options" istag="true"></mde-chips>-->
+                    </div>
+                    <a class="mde-default-btn mde-mB10 mde-mT10" click.delegate="selectProvider()"><span>${_t.select_provider}</span></a>
+                    <div class="mde-cl-gray-light mde-fItalic">${_t.note_forum}</div>
+                </div>
+            </div>
+            <!--List forum-->
+            <div class="mde-fRight mde-wCol3 mde-wCol-mobile mde-pL10 mde-pR10">
+                <h5>${_t.list_forum}</h5>
+                <div class="mde-list-items  mde-bg-white">
+                    <ul>
+                        <li repeat.for="provider of selectedProviders">
+                            <div>
+                                <div class="mde-table-ell">
+                                    <div>
+                                        <span class="mde-icon-small mde-mR5"><i class="material-icons mde-cl-main">link</i></span>
+                                        <a href="${provider.category_url}" target="_blank"><span>${provider.category_url} </span></a> |<span>${provider.account}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div><a class="mde-cIn" click.delegate="removeProvider(provider.id)"><span><strong t="common.delete_title"></strong></span></a></div>
+                        </li>
+                        <li if.bind="selectedProviders.length == 0" class="mde-tCenter">
+                            <!--                         <div class="mde-table-ell mde-tCenter">-->
+                            <span>${_t.empty_data}</span>
+                            <!--                        </div>-->
+                        </li>
+                    </ul>
+                    <!--                <div class="mde-loadmore-btn mde-mTop"><a class="mde-default-btn"><span>Load more</span></a></div>-->
+                </div>
+            </div>
+            <div class="mde-fLeft mde-vaTop mde-wCol7 mde-wCol-mobile mde-pL10 mde-pR10">
+
+                <h5 class="mde-mT20">${_t.post_content}</h5>
+                <div class="mde-p20 mde-br mde-brRa5 mde-bg-white">
+                    <div class="mde-mB20">
+                        <div class="mde-form-group">
+                            <label class="mde-cl-gray-light">${_t.title}<span class="mde-cl-danger"> *</span></label>
+                            <mde-input mde-class="w100per" value.bind="postForm.title"></mde-input>
+                        </div>
+                    </div>
+                    <div class="mde-mB20">
+                        <div class="mde-form-group">
+                            <label class="mde-cl-gray-light">${_t.content}<span class="mde-cl-danger"> *</span></label>
+                            <mde-wysiwyg content.two-way="postForm.content" placeholder="${'ticket.enter_text'| t}" mde-class="mde-mBottom" mde-content-style="height:150px"></mde-wysiwyg>
+                        </div>
+                    </div>
+                    <label class="mde-checkbox mde-mR20">
+                        <strong class="mde-cl-gray-light mde-mR10">${_t.setting_time}</strong>
+                        <input type="checkbox" checked.bind="setting_time"><i></i>
+                    </label>
+                    <div class="mde-dIB" if.bind="setting_time">
+                        <datetime change.delegate="startChanged($event)" value.one-way="postForm.start | datetimeFormat: true"></datetime>
+                    </div>
+                    <div>
+                        <a class="mde-default-btn mde-mT10" if.bind="postForm.title != '' && postForm.content != ''" click.delegate="post()"><span>${_t.post}</span></a>
+                    </div>
+                </div>
+            </div>
+            <!--list post time-->
+            <div class="mde-fLeft mde-vaTop mde-wCol7 mde-wCol-mobile mde-pL10 mde-pR10 mde-mB20">
+                <h5>${t.schedule_post_recent}</h5>
+                <div class="mde-list-items mde-bg-white">
+                    <ul>
+                        <li class="mde-ell" repeat.for="schedule of schedulePosts">
+                            <div class="mde-pR10">
+                                <div class="mde-table-ell">
+                                    <div>
+                                        <span class="mde-icon-small mde-mR5"><i class="material-icons mde-cl-success">access_alarm</i></span>
+                                        <a href="${schedule.provider_data.url}">${schedule.provider_data.url}</a><span> | ${schedule.provider_data.username}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mde-pR20">
+                                <span>${schedule.start | datetimeFormat: true}</span>
+                            </div>
+                            <div class="mde-tRight">
+                                <a class="mde-cIn mde-mR10"><span>${_t.post_now}</span></a>
+                                <!--                            <a class="mde-cIn mde-mR10" t= "common.edit"><span></span></a>-->
+                                <a class="mde-cIn" click.delegate="removeSchedule(schedule)"><strong t="common.delete_title"></strong></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,54 @@
+<!--LAYOUT PAGE======-->
+
+
+<div class="mde-p10 mde-pR mde-pR50 mde-pB80">
+    <div>
+        <span class="mde-img-general mde-brRa5 mde-mR10 mde-vaMiddle"><img src="/api/apps/assets/585b3d573635875008db9579/user/logo-small.png"></span><h4 class="mde-dIB">Knowlege base</h4>
+    </div>
+    <compose compile-spy view.bind="app_data.templates['tpl_view_'+currentModelName]" view-model.bind="viewModel" model.bind="currentModel" />
+    <!--    MENU-->
+    <div class="mde-menu-knowlege" if.bind="!currentModelName.includes('edit')">
+        <div class="mde-bg-gray">
+            <!--<input type="checkbox" class="mde-hidden" checked.bind="toggleNav" id="toggle-nav" />-->
+            <div class="mde-ouli mde-content">
+                <!--           class="mde-pLeft ${toggleNav? 'active':''}"-->
+                <ul>
+                    <!--<li class="mde-item">
+                        <label class="mde-cP" for="toggle-nav"><i class="fa fa-bars"></i></label>
+                    </li>-->
+                    <li class="mde-item" if.bind="currentModelName == 'category_view' && me.roles[0] != 'agent'" click.trigger="route('category_edit', params)" title="edit category">
+                        <span>${app_data.lng.translates.edit_category}</span><span><i class="fa fa-pencil-square-o"></i></span>
+                    </li>
+                    <li class="mde-item" if.bind="currentModelName == 'section_view' && me.roles[0] != 'agent'" click.trigger="route('section_edit', params)" title="edit section">
+                        <span>${app_data.lng.translates.edit_section}</span><span><i class="fa fa-pencil-square-o"></i></span>
+                    </li>
+                    <li class="mde-item" if.bind="currentModelName == 'article_view' && me.roles[0] != 'agent'" click.trigger="route('article_edit', params)" title="edit article">
+                        <span>${app_data.lng.translates.edit_article}</span><span><i class="fa fa-pencil-square-o"></i></span>
+                    </li>
+                    <li class="mde-item" click.trigger="route('report')" title="${app_data.lng.translates.report}" title="report">
+                        <span>${app_data.lng.translates.report}</span><span><i class="fa fa-bar-chart"></i></span>
+                    </li>
+                    <li if.bind="me.roles[0] != 'agent'">
+                        <div class="mde-menu-wrapper">
+                            <label class="mde-item" for="mdenu-two" title="${app_data.lng.translates.add_content}">
+                                <span>${app_data.lng.translates.add_content}</span><span><i class="fa fa-plus"></i></span>
+
+                            </label>
+                            <div class="mde-menu">
+                                <input id="mdenu-two" type="checkbox" checked.bind="showMenu">
+                                <label for="mdenu-two" class="mde-bg-overlay-mask"></label>
+                                <div class="mde-results mde-moveLeft">
+                                    <ul class="mde-results-content">
+                                        <li click.trigger="route('article_edit',{sect_id: currentModelName == 'section_view'? params.id: null, cate_id:currentModelName == 'section_view'?params.cate_id: null})"><span>${app_data.lng.translates.article}</span></li>
+                                        <li click.trigger="route('section_edit', {cate_id: currentModelName == 'category_view'? params.id: null})"><span>${app_data.lng.translates.section}</span></li>
+                                        <li click.trigger="route('category_edit')"><span>${app_data.lng.translates.category}</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

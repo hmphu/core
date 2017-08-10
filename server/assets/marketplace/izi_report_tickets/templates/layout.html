@@ -1,0 +1,299 @@
+<link rel="stylesheet" type="text/css" href="/js/select2-4.0.0/css/select2.min.css" />
+<script type="text/javascript" src="/js/select2-4.0.0/js/select2.min.js"></script>
+<script>
+    var log_info = {{logged_in_info|json|safe}};
+</script>
+
+<!-- Modal -->
+<div id="modal_prev1" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{lng.template}}</h4>
+      </div>
+      <div class="modal-body" id="content_prev">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="body_menu2" style="height: 100%">
+    <div class="content main-content">
+        <div class="report_filter promoter">
+            <div class="report_filter_paddding">
+                <div class="heading">
+                    <strong>{{lng.header}}</strong>
+
+                </div>
+                <div class="stat-row body_content">
+                    <div class="container">
+
+                        <div class="row ">
+                            <div class="col-md-3" >
+                                <input type="radio" id="report_with_id" checked="checked" value="report_with_id" name="custom_report"/>
+                                <label for="report_with_id">{{lng.report_with_id}}</label>
+                            </div>
+                            <div class="col-md-3" >
+                                <input type="radio" id="report_without_id" value="custom" name="custom_report"/>
+                                <label for="report_without_id">{{lng.report_without_id}}</label>
+                            </div>
+                        </div>
+                        
+                        <br/>
+                        <div class="row reports report_custom" style="display: none;">
+                            <table>
+                                <tr>
+                                    <td><span class="title fitler-type title_custom">{{lng.select_date}}</span></td>
+                                    <td style="width: 140px;"><input class="fitler-type value"></td>
+
+                                    <td><span class="title from-date title_custom">{{lng.from_date}}</span></td>
+                                    <td><input id="rp_from_date"></td>
+
+                                    <td><span class="title to-date title_custom">{{lng.to_date}}</span></td>
+                                    <td><input id="rp_to_date"></td>
+
+                                    <td></td>
+
+                                </tr>
+
+                                <tr class="report_custom">
+                                    <td><span class="title title_custom">{{lng.time_from}}</span></td>
+                                    <td><input id="time_from_value_custom"></td>
+
+                                    <td><span class="title title_custom">{{lng.time_to}}</span></td>
+                                    <td><input id="time_to_value_custom"></td>
+
+                                    <td></td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><span class="title group title_custom">{{lng.group}}</span></td>
+                                    <td><input class="group value"></td>
+
+                                    <td><span class="title agent title_custom">{{lng.assignee}}</span></td>
+                                    <td><input class="agent value"></td>
+
+                                    <td><span class="title stat title_custom">{{lng.status}}</span></td>
+                                    <td><input class="stat value"></td>
+
+                                </tr>
+
+                                <tr>
+                                    <td><span class="title organization title_custom">{{lng.organization}}</span></td>
+                                    <td><input class="organization value"></td>
+
+                                    <td><span class="title requester name title_custom">{{lng.requester}}</span></td>
+                                    <td><select class="requester value"></select></td>
+
+                                    <td></td>
+                                </tr>
+                                
+                            </table>
+                        </div>
+
+                        <div class="row reports report_by_id">
+                             
+                            <div class="col-sm-2">
+                                <span>{{lng.report_name}}</span>
+                            </div>
+                            <div class="col-sm-4">
+                                <input id="reports">
+                            </div>
+                        </div>
+                        
+                         <div class="row report_by_id">
+                            <div class="col-sm-2">
+                                <span>{{lng.series}}</span>
+                            </div>
+                            <div class="col-sm-4">
+                                <input id="series">
+                            </div>
+                        </div>
+
+                        <div class="row report_by_id">
+                            <div class="col-sm-2">
+                                <span>{{lng.time_create_from}}</span>
+                            </div>
+                            <div class="col-sm-2">
+                                <input id="time_from_value">
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="row report_by_id">
+                            <div class="col-sm-2">
+                                <span>{{lng.time_create_to}}</span>
+                            </div>
+                            <div class="col-sm-2">
+                                <input id="time_to_value">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="report_filter promoter column_view">
+            <div class="report_filter_paddding">
+                <div class="heading">
+                    <strong>{{lng.content}}</strong>
+
+                </div>
+                <div class="stat-row body_content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <p style="text-align: center;">{{lng.not_include}}</p>
+                            </div>
+                            <div class="col-sm-1">
+                            </div>
+                            <div class="col-sm-4">
+                                <span style="text-align: center;"><p>{{lng.include}}</p><p style="font-style:italic;">{{lng.include_max}}</p></span>
+                            </div>
+                            <div class="col-sm-3">
+                                <p style="text-align: center;">{{lng.column_title}}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <ul id="not_include_columns" ></ul>
+                            </div>
+                            <div class="col-sm-1">
+                                <div style="margin-top: 60px; font-size: 25px;">
+                                    <div><i class="fa fa-arrow-right fa-6" style="color: #ffcc33;"></i></div>
+
+                                    <div><i class="fa fa-arrow-left fa-6" style="color: #66cc66;"></i></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <ul id="include_columns" ></ul>
+                            </div>
+                            <div class="col-sm-3">
+                                <div id="title_columns" ></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="report_filter promoter">
+            <div class="report_filter_paddding">
+                <div class="heading">
+                    <strong>{{lng.export_file}}</strong>
+
+                </div>
+                <div class="stat-row body_content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <select id="export_type">
+                                    <option value="">-</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="report_filter promoter" >
+            <div class="report_filter_paddding" style="font-size: 14px;">
+                <div class="heading template_pdf">
+                    <strong>{{lng.template}}</strong>
+                </div>
+                <div class="stat-row body_content">
+                    
+                    <div class="container">
+                        <div class="template_pdf">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    {{lng.title}}:
+                                </div>
+                                <div class="col-sm-6">
+                                        <input type="text" id="txt_title" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    {{lng.export_type}}:
+                                </div>
+                                <div class="col-sm-6">
+                                    <select id="export_file_type">
+                                        <option value="">-</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    {{lng.template}}:
+                                </div>
+                                <div class="col-sm-6">
+                                    <select id="template">
+                                        <option value="">-</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    {{lng.footer}}:
+                                </div>
+                                <div class="col-sm-6">
+                                    <textarea id="txt_footer"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    {{lng.footer_align}}:
+                                </div>
+                                <div class="col-sm-6">
+                                    <select id="footer-align">
+                                        <option value="left">{{lng.left}}</option>
+                                        <option value="center">{{lng.center}}</option>
+                                        <option value="right">{{lng.right}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    {{lng.page_size}}:
+                                </div>
+                                <div class="col-sm-6">
+                                    <select id="page-size">
+                                        <option value="A3">A3</option>
+                                        <option value="A4">A4</option>
+                                        <option value="A5">A5</option>
+                                        <option value="Legal">Legal</option>
+                                        <option value="Letter">Letter</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    {{lng.orientation}}:
+                                </div>
+                                <div class="col-sm-6">
+                                    <select id="orientation">
+                                        <option value="portrait">Portrait</option>
+                                        <option value="landscape">Landscape</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" >
+                            	<button type="button" id="btn_export" data-toggle="modal" style="float:right;margin-left:20px;">{{lng.export}}</button>
+                                <button  class="template_pdf" type="button" id="btn_preview" data-toggle="modal" data-target="#modal_prev" style="float:right;">{{lng.preview}}</button>      	
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

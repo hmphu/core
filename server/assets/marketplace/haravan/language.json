@@ -1,0 +1,116 @@
+{
+    "en": {
+        "package": "Haravan",
+        "description": {
+            "value": "Comprehensive sales solution from websites to store",
+            "title": "Haravan description"
+        },
+        "name": {
+            "value": "Haravan App",
+            "title": "Haravan App"
+        },
+        "parameters": {
+            "api_domain": {
+                "label": {
+                    "value": "Domain Store"
+                },
+                "helpText": {
+                    "value": "Ex: shoptestapp.myharavan.com."
+                }
+            },
+            "api_key": {
+                "label": {
+                    "value": "Key"
+                }
+            }
+        },
+        "text": {
+            "orders": "ORDERS",
+            "fullfillment": "FULFILLMENT",
+            "orders_count": "Orders Count",
+            "total_spent": "Total Spent",
+            "notes": "Notes",
+            "no_notes": "No notes have been added yet",
+            "order_detail_for_id": "Order detail for ID",
+            "payment_status": "Payment Status",
+            "fullfillment_status": "Fulfillment Status",
+            "order_notes": "Order Notes",
+            "subtotal_price": "Subtotal Price",
+            "shipping": "Shipping",
+            "total_price": "Total Price",
+            "items": "Items",
+            "name": "Name",
+            "price": "Price",
+            "address_shipping": "Shipping Address",
+            "fullname": "Fullname",
+            "phone": "Phone",
+            "district": "District",
+            "address1": "Address1",
+            "date_created": "Date Created",
+            "no_result": "No request results",
+            "no_orders": "No orders found.",
+            "modify": "Modify",
+            "update": "Update",
+            "cancel": "Cancel",
+            "close": "Close",
+            "count": "Count"
+        }
+    },
+    "vi": {
+        "package": "Haravan",
+        "description": {
+            "value": "Giải pháp bán hàng toàn diện từ các trang web lưu trữ.",
+            "title": "Haravan description"
+        },
+        "name": {
+            "value": "Haravan ứng dụng",
+            "title": "Haravan ứng dụng"
+        },
+        "parameters": {
+            "api_domain": {
+                "label": {
+                    "value": "Domain Store"
+                },
+                "helpText": {
+                    "value": "Ex: shoptestapp.myharavan.com."
+                }
+            },
+            "api_key": {
+                "label": {
+                    "value": "Key"
+                }
+            }
+        },
+        "text": {
+            "orders": "Đơn hàng",
+            "fullfillment": "Hoàn thành",
+            "orders_count": "Số lượng đơn hàng",
+            "total_spent": "Tổng tiến",
+            "notes": "Lưu ý",
+            "no_notes": "Không có lưu ý",
+            "order_detail_for_id": "Thông tin đơn hàng",
+            "payment_status": "Trạng thái thanh toán",
+            "fullfillment_status": "Hoàn thành",
+            "order_notes": "Lưu ý",
+            "subtotal_price": "Tổng tiền",
+            "shipping": "Tiền giao hàng",
+            "total_price": "Tổng tiền trả",
+            "items": "Danh sách",
+            "name": "Sản phẩm",
+            "price": "Giá",
+            "address_shipping": "Đia chỉ giao hàng",
+            "fullname": "Tên",
+            "phone": "Điện thoại",
+            "district": "Quận",
+            "address1": "Địa chỉ",
+            "date_created": "Ngày tạo đơn hàng",
+            "no_result": "Không có dữ liệu",
+            "no_orders": "Không có đơn hàng.",
+            "modify": "Chỉnh sửa",
+            "update": "Cập nhập",
+            "cancel": "Hủy bỏ",
+            "close": "Đóng",
+            "count": "Số lượng"
+        }
+    }
+}
